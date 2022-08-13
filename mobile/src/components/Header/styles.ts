@@ -4,7 +4,7 @@ export const HeaderContainer = styled.View`
   height: 75px;
   width: 100%;
   flex-direction: row;
-  background-color: #008dd5;
+  background-color: ${props => props.theme.PRIMARY_COLOR};
   align-items: center;
   justify-content: space-around;
 `;
@@ -12,7 +12,7 @@ export const HeaderContainer = styled.View`
 export const HeaderTitle = styled.Text`
   font-size: 20px;
   font-weight: medium;
-  color: #f6f6f6;
+  color: ${props => props.theme.TITLE_COLOR};
 `;
 
 export const HeaderButton = styled.TouchableOpacity`

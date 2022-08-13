@@ -1,9 +1,18 @@
 import React from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 import Header from '../../components/Header';
+import SideBar from '../../components/SideBar';
+import {Container} from './styles';
 
-function Home({navigation}) {
-  return <Header />;
+function Home() {
+  return (
+    <>
+      <Header />
+      <Container>
+        <SideBar />
+      </Container>
+    </>
+  );
 }
 
 export default Home;

@@ -1,0 +1,18 @@
+const darkTheme = {
+  PRIMARY_COLOR: '#008DD5',
+  SECONDARY_COLOR: '#FE9000',
+  TITLE_COLOR: '#F6F6F6',
+  TEXT_COLOR: '#808080',
+  BACKGROUND_COLOR: '#19323C',
+  BUTTON_COLOR: '#FE9000',
+};
+const lightTheme = {
+  PRIMARY_COLOR: '#008DD5',
+  SECONDARY_COLOR: '#FE9000',
+  TITLE_COLOR: '#19323C',
+  TEXT_COLOR: '#808080',
+  BACKGROUND_COLOR: '#F6F6F6',
+  BUTTON_COLOR: '#FE9000',
+};
+
+export {lightTheme, darkTheme};

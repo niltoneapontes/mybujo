@@ -5,7 +5,7 @@ export const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: ${props => props.theme.BACKGROUND_COLOR};
 `;
 
 export const OrangeCircle = styled(MotiView)`
