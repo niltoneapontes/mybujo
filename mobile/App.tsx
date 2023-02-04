@@ -14,11 +14,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from 'styled-components/native';
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {useColorScheme} from 'react-native';
+import {Alert, useColorScheme} from 'react-native';
 
 import SplashScreen from './src/pages/SplashScreen';
 import {Routes} from './src/routes';
 import {darkTheme, lightTheme} from './src/tokens/colors';
+import TouchID from 'react-native-touch-id';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -41,6 +42,28 @@ const App = () => {
     };
     saveThemePreference();
     const timeout = setTimeout(() => {
+      TouchID.isSupported()
+        .then(biometryType => {
+          console.info('biometryType: ', biometryType);
+          TouchID.authenticate('Para acessar o MyBujo', {
+            title: 'Authentication Required',
+            fallbackLabel: 'Show Passcode',
+            sensorDescription: 'Para acessar o MyBujo',
+            passcodeFallback: true,
+          })
+            .then(success => {
+              Alert.alert('Authenticated Successfully');
+              console.info('success: ', success);
+            })
+            .catch(error => {
+              Alert.alert('Authentication Failed');
+              console.error('failed: ', error);
+            });
+        })
+        .catch(error => {
+          Alert.alert('TouchID não é suportado');
+          console.error('[isNotSupported] ', error);
+        });
       setShowSplashScreen(false);
     }, 7000);
     return () => clearTimeout(timeout);
