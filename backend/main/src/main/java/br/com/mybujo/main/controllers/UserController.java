@@ -1,19 +1,30 @@
 package br.com.mybujo.main.controllers;
 
-import br.com.mybujo.main.entities.Item;
+import br.com.mybujo.main.CustomUserDetailsService;
 import br.com.mybujo.main.entities.User;
+import br.com.mybujo.main.jwt.JwtUtils;
 import br.com.mybujo.main.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+
 
 @RestController
 @RequestMapping(value="/users")
 public class UserController {
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     private BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,6 +48,27 @@ public class UserController {
         return userRepository.findAll(
             example
         );
+    }
+
+    @PostMapping(value="/login")
+    public ResponseEntity<String> login(@RequestBody User user, HttpServletResponse response) {
+        try {
+            if (user != null) {
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
+                String jwt = jwtUtils.generateToken(userDetails);
+                Cookie cookie = new Cookie("jwt", jwt);
+                cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+//                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
+                cookie.setPath("/"); // Global
+                response.addCookie(cookie);
+                return ResponseEntity.ok(jwt);
+            }
+            return ResponseEntity.status(400).body("Error authenticating");
+        } catch(Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(400).body("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping
