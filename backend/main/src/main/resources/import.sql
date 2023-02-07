@@ -7,7 +7,7 @@ CREATE TABLE tb_items(id INT NOT NULL AUTO_INCREMENT, title VARCHAR(255), date V
 INSERT INTO tb_roles(id, name) VALUES ('123456', 'USER');
 INSERT INTO tb_roles(id, name) VALUES ('654321', 'ADMIN');
 
-INSERT INTO tb_users(id, name, password) VALUES ('1', 'niltoneapontes', '1234');
+INSERT INTO tb_users(id, name, password) VALUES ('1', 'niltoneapontes', '$2a$10$IvvN2LmAozzaDUCbGnuHJO.93ZX6XsLvHahgFwBpq/zcUCPrMcgwy');
 
 INSERT INTO tb_items(id , title, date, type, user_id) VALUES ("1", "Exemplo de tarefa 1", "2023-02-04T02:10:51Z", "task", "1");
 INSERT INTO tb_items(id , title, date, type, user_id) VALUES ("2", "Exemplo de tarefa 2", "2023-02-04T02:10:51Z", "task", "1");
