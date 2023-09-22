@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fastify_1 = __importDefault(require("fastify"));
-const mongodb_1 = __importDefault(require("@fastify/mongodb"));
 const oauth2_1 = __importDefault(require("@fastify/oauth2"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const userController_1 = __importDefault(require("./src/adapters/user/userController"));
+const database_1 = require("./src/infrastructure/database");
 dotenv_1.default.config();
 const fastify = (0, fastify_1.default)({
     logger: true,
@@ -18,15 +19,6 @@ fastify.get("/", (_request, reply) => {
         body: {},
     });
 });
-async function dbConnector(fastify) {
-    fastify
-        .register(mongodb_1.default, {
-        url: "mongodb://localhost:27017/mybujo",
-    })
-        .then((response) => {
-        fastify.log.info("Connected to database");
-    });
-}
 fastify.decorate("verifyJwt", () => {
     return {
         user: "Name",
@@ -36,19 +28,8 @@ fastify.decorate("verifyJwt", () => {
 fastify.addHook("onRequest", async () => {
     fastify.log.info("Got a request");
 });
-async function userRoutes(fastify) {
-    fastify.post("/", {
-        handler: async (request, reply) => {
-            return reply.send({
-                code: 201,
-                message: "User Created",
-                body: fastify.verifyJwt(),
-            });
-        },
-    });
-}
-fastify.register(dbConnector);
-fastify.register(userRoutes, {
+fastify.register(database_1.dbConnector);
+fastify.register(userController_1.default, {
     prefix: "/users",
 });
 fastify.register(oauth2_1.default, {

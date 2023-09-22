@@ -1,15 +1,8 @@
-import Fastify, {
-  FastifyInstance,
-  FastifyReply,
-  FastifyRequest,
-} from "fastify";
-import fastifyMongo from "@fastify/mongodb";
-import oauthPlugin, {
-  FastifyOAuth2Options,
-  OAuth2Namespace,
-  OAuth2Token,
-} from "@fastify/oauth2";
+import Fastify, { FastifyInstance } from "fastify";
+import oauthPlugin, { OAuth2Namespace } from "@fastify/oauth2";
 import dotenv from "dotenv";
+import userRoutes from "./src/adapters/user/userController";
+import { dbConnector } from "./src/infrastructure/database";
 
 dotenv.config();
 
@@ -51,16 +44,6 @@ fastify.get<{ QueryString: IQueryInterface; Headers: IHeaders; Reply: IReply }>(
   }
 );
 
-async function dbConnector(fastify: FastifyInstance) {
-  fastify
-    .register(fastifyMongo, {
-      url: "mongodb://localhost:27017/mybujo",
-    })
-    .then((response) => {
-      fastify.log.info("Connected to database");
-    });
-}
-
 fastify.decorate("verifyJwt", () => {
   return {
     user: "Name",
@@ -71,26 +54,6 @@ fastify.decorate("verifyJwt", () => {
 fastify.addHook("onRequest", async () => {
   fastify.log.info("Got a request");
 });
-
-async function userRoutes(fastify: FastifyInstance) {
-  fastify.post("/", {
-    handler: async (
-      request: FastifyRequest<{
-        Body: {
-          name: string;
-          age: number;
-        };
-      }>,
-      reply: FastifyReply
-    ) => {
-      return reply.send({
-        code: 201,
-        message: "User Created",
-        body: fastify.verifyJwt(),
-      });
-    },
-  });
-}
 
 fastify.register(dbConnector);
 fastify.register(userRoutes, {
