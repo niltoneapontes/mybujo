@@ -10,10 +10,10 @@ async function collectionController(fastify) {
                 content: "* Task",
             });
             collection.save();
-            reply.send({ message: "created collection" });
+            return reply.send({ message: "created collection" });
         }
         catch (error) {
-            reply.status(500).send({ message: error });
+            return reply.status(500).send({ message: error });
         }
     });
 }

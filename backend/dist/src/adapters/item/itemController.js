@@ -11,10 +11,10 @@ async function itemController(fastify) {
                 type: item_1.ItemType.Daily,
             });
             item.save();
-            reply.send({ message: "created item" });
+            return reply.send({ message: "created item" });
         }
         catch (error) {
-            reply.status(500).send({ message: error });
+            return reply.status(500).send({ message: error });
         }
     });
 }

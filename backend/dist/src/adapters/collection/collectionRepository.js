@@ -32,5 +32,9 @@ class CollectionRepository {
         });
         return foundCollection;
     }
+    async delete(id) {
+        const deletedCollection = await collection_1.Collection.findByIdAndDelete(id);
+        return deletedCollection;
+    }
 }
 exports.CollectionRepository = CollectionRepository;

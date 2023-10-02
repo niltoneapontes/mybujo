@@ -1,44 +1,50 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const googleApi_1 = require("../../infrastructure/googleApi");
-const user_1 = require("../../domain/user");
+const userRepository_1 = require("./userRepository");
 async function userController(fastify) {
-    fastify.post("/login", {
-        handler: async (request, reply) => {
+    const userRepository = new userRepository_1.UserRepository();
+    fastify.post("/login", (request, reply) => {
+        googleApi_1.googleApi
+            .get("/userinfo?alt=json", {
+            headers: {
+                Authorization: `Bearer ${request.body.access_token}`,
+            },
+        })
+            .then(async (response) => {
             try {
-                const response = await googleApi_1.googleApi.get("/userinfo?alt=json", {
-                    headers: {
-                        Authorization: `Bearer ${request.body.access_token}`,
-                    },
-                });
-                return reply.status(201).send({
-                    id: response.id,
-                    email: response.email,
-                    name: response.name,
-                    picture: response.picture,
-                });
+                const foundUser = await userRepository.findByEmail(response.data.email);
+                if (!foundUser) {
+                    const savedUser = await userRepository.save({
+                        email: response.data.email,
+                        name: response.data.name,
+                        picture: response.data.picture,
+                        id: response.data.id,
+                    });
+                    return reply.status(201).send(savedUser);
+                }
+                return reply.status(200).send(foundUser);
             }
             catch (error) {
                 return reply.status(500).send({
                     error: error,
                 });
             }
-        },
-    });
-    fastify.get("/", async (request, reply) => {
-        try {
-            const newUser = new user_1.User({
-                email: "niltoneapontes@gmail.com",
-                name: "Nilton Pontes",
-                picture: "none",
-                birthdate: "01-02-03",
-                location: "lat0.23, long2.03",
+        })
+            .catch((error) => {
+            return reply.status(404).send({
+                message: "Google API Error",
+                error: error,
             });
-            await newUser.save();
-            reply.send(newUser);
+        });
+    });
+    fastify.get("/profile", async (request, reply) => {
+        try {
+            const foundUser = await userRepository.findByEmail("niltoneapontes@gmail.com");
+            return reply.send(foundUser);
         }
         catch (error) {
-            reply.status(500).send({ message: error });
+            return reply.status(500).send({ message: error });
         }
     });
 }

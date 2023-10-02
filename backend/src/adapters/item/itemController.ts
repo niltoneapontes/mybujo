@@ -11,9 +11,9 @@ export default async function itemController(fastify: FastifyInstance) {
         type: ItemType.Daily,
       });
       item.save();
-      reply.send({ message: "created item" });
+      return reply.send({ message: "created item" });
     } catch (error) {
-      reply.status(500).send({ message: error });
+      return reply.status(500).send({ message: error });
     }
   });
 }

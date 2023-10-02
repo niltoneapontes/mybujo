@@ -1,4 +1,4 @@
-import { IUser, User } from "src/domain/user";
+import { IUser, User } from "../../domain/user";
 
 export interface IUserRepository {
   findByEmail(id: string): Promise<IUser | null>;
@@ -15,6 +15,7 @@ export class UserRepository implements IUserRepository {
 
   async save(user: IUser): Promise<any> {
     const newUser = new User({
+      id: user.id,
       email: user.email,
       name: user.name,
       picture: user.picture,
@@ -23,5 +24,13 @@ export class UserRepository implements IUserRepository {
     });
     await newUser.save();
     return newUser;
+  }
+
+  async delete(user: IUser): Promise<any> {
+    const deletedUser = await User.findOneAndDelete({
+      email: user.email,
+    });
+
+    return deletedUser;
   }
 }

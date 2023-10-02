@@ -43,4 +43,9 @@ export class CollectionRepository implements ICollectionRepository {
     );
     return foundCollection;
   }
+
+  async delete(id: string): Promise<any> {
+    const deletedCollection = await Collection.findByIdAndDelete(id);
+    return deletedCollection;
+  }
 }

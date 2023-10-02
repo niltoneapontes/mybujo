@@ -24,11 +24,11 @@ async function oAuthGoogle(fastify) {
     });
     fastify.get("/login/google/callback", async function (request, reply) {
         const { token } = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
-        reply.send({ token: token });
+        return reply.send({ token: token });
     });
     fastify.post("/login/google/refresh", async function (request, reply) {
         const { token: newToken } = await this.googleOAuth2.getNewAccessTokenUsingRefreshToken(request.body.token, {});
-        reply.send({ newToken: newToken });
+        return reply.send({ newToken: newToken });
     });
 }
 exports.oAuthGoogle = oAuthGoogle;

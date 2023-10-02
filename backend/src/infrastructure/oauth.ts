@@ -23,7 +23,7 @@ export async function oAuthGoogle(fastify: FastifyInstance) {
     const { token } =
       await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
 
-    reply.send({ token: token });
+    return reply.send({ token: token });
   });
 
   fastify.post(
@@ -35,7 +35,7 @@ export async function oAuthGoogle(fastify: FastifyInstance) {
           {}
         );
 
-      reply.send({ newToken: newToken });
+      return reply.send({ newToken: newToken });
     }
   );
 }
