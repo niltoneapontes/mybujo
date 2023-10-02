@@ -1,5 +1,5 @@
 import { IUserRepository } from "src/adapters/user/userRepository";
-import { User } from "src/domain/user";
+import { IUser, User } from "src/domain/user";
 
 export class RemoveUser {
   private userRepository: IUserRepository;
@@ -8,8 +8,13 @@ export class RemoveUser {
     this.userRepository = userRepository;
   }
 
-  async execute(user: User): Promise<User> {
+  async execute(user: IUser): Promise<any> {
     // manage user in db
-    return new User("1", "niltoneapontes@gmail.com", "Nilton", "none");
+    return new User({
+      id: "1",
+      email: "niltoneapontes@gmail.com",
+      name: "Nilton",
+      picture: "none",
+    });
   }
 }

@@ -8,9 +8,11 @@ const mongodb_1 = __importDefault(require("@fastify/mongodb"));
 async function dbConnector(fastify) {
     fastify
         .register(mongodb_1.default, {
-        url: "mongodb://localhost:27017/mybujo",
+        name: "mongo",
+        url: "mongodb://localhost:27017/",
+        forceClose: true,
     })
-        .then((response) => {
+        .then((_) => {
         fastify.log.info("Connected to database");
     });
 }

@@ -1,5 +1,5 @@
 import { IUserRepository } from "src/adapters/user/userRepository";
-import { User } from "src/domain/user";
+import { IUser, User } from "../../domain/user";
 
 export class AddUser {
   private userRepository: IUserRepository;
@@ -8,8 +8,12 @@ export class AddUser {
     this.userRepository = userRepository;
   }
 
-  async execute(user: User): Promise<User> {
-    // manage user in db
-    return new User("1", "niltoneapontes@gmail.com", "Nilton", "none");
+  async execute(user: IUser): Promise<any> {
+    return new User({
+      id: "1",
+      email: "niltoneapontes@gmail.com",
+      name: "Nilton",
+      picture: "none",
+    });
   }
 }

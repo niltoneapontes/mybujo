@@ -1,16 +1,27 @@
-import { User } from "src/domain/user";
+import { IUser, User } from "src/domain/user";
 
 export interface IUserRepository {
-  findById(id: string): Promise<User | null>;
-  save(user: User): Promise<User | null>;
+  findByEmail(id: string): Promise<IUser | null>;
+  save(user: IUser): Promise<IUser | null>;
 }
 
 export class UserRepository implements IUserRepository {
-  async findById(id: string): Promise<User | null> {
-    return new User("1", "niltoneapontes@gmail.com", "Nilton", "none");
+  async findByEmail(email: string): Promise<any> {
+    const foundUser = await User.findOne({
+      email: email,
+    });
+    return foundUser;
   }
 
-  async save(user: User): Promise<User | null> {
-    return new User("1", "niltoneapontes@gmail.com", "Nilton", "none");
+  async save(user: IUser): Promise<any> {
+    const newUser = new User({
+      email: user.email,
+      name: user.name,
+      picture: user.picture,
+      birthdate: user.birthdate,
+      location: user.location,
+    });
+    await newUser.save();
+    return newUser;
   }
 }

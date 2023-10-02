@@ -1,20 +1,13 @@
-interface IUser {
+import mongoose from "mongoose";
+import { userSchema } from "../infrastructure/database/userSchema";
+
+export interface IUser {
   id: string;
   email: string;
   name: string;
   picture: string;
+  birthdate?: string;
+  location?: string;
 }
 
-export class User implements IUser {
-  id: string;
-  email: string;
-  name: string;
-  picture: string;
-
-  constructor(id: string, email: string, name: string, picture: string) {
-    this.id = id;
-    this.email = email;
-    this.name = name;
-    this.picture = picture;
-  }
-}
+export const User = mongoose.model("User", userSchema);
