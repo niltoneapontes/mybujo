@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 import { IUser } from "../../domain/models/IUser";
-
-export interface IUserRepository {
-  findByEmail(id: string): Promise<IUser | null>;
-  save(user: IUser): Promise<IUser | null>;
-}
+import { IUserRepository } from "src/domain/interfaces/IUserRepository";
 
 export class UserRepository implements IUserRepository {
   constructor(private User: mongoose.Model<any>) {}

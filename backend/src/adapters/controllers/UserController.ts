@@ -1,11 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { googleApi } from "../infrastructure/googleApi";
+import CreateUserService from "../../../src/domain/application/users/CreateUserService";
 import { UserRepository } from "../repositories/UserRepository";
-import { LoginProvider } from "../../domain/models/IUser";
 import { User } from "../infrastructure/entities/User";
+import GetUserService from "../../../src/domain/application/users/GetUserService";
 
 export default async function userController(fastify: FastifyInstance) {
-  const userRepository = new UserRepository(User);
+  const createUserService = new CreateUserService(new UserRepository(User));
+  const getUserService = new GetUserService(new UserRepository(User));
 
   fastify.post(
     "/login/google",
@@ -25,26 +27,10 @@ export default async function userController(fastify: FastifyInstance) {
         })
         .then(async (response) => {
           try {
-            const foundUser = await userRepository.findByEmail(
-              response.data.email
-            );
-
-            if (!foundUser) {
-              const savedUser = await userRepository.save({
-                email: response.data.email,
-                name: response.data.name,
-                picture: response.data.picture,
-                loginProvider: LoginProvider.GOOGLE,
-                id: response.data.id,
-              });
-              return reply.status(201).send(savedUser);
-            }
-
-            return reply.status(200).send(foundUser);
+            const user = await createUserService.execute(response);
+            return reply.status(200).send(user);
           } catch (error) {
-            return reply.status(500).send({
-              error: error,
-            });
+            return reply.status(500).send(error);
           }
         })
         .catch((error) => {
@@ -58,12 +44,10 @@ export default async function userController(fastify: FastifyInstance) {
 
   fastify.get("/profile", async (request, reply) => {
     try {
-      const foundUser = await userRepository.findByEmail(
-        "niltoneapontes@gmail.com"
-      );
-      return reply.send(foundUser);
+      const user = await getUserService.execute();
+      return reply.status(200).send(user);
     } catch (error) {
-      return reply.status(500).send({ message: error });
+      return reply.status(500).send(error);
     }
   });
 }

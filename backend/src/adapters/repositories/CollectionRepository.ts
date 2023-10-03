@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
 import { ICollection } from "../../domain/models/ICollection";
-
-export interface ICollectionRepository {
-  findAllByUser(userId: string): Promise<ICollection[] | null>;
-  findById(id: string): Promise<any>;
-  save(user: ICollection): Promise<any>;
-  update(id: string, collection: ICollection): Promise<ICollection | null>;
-}
+import { ICollectionRepository } from "src/domain/interfaces/ICollectionRepository";
 
 export class CollectionRepository implements ICollectionRepository {
   constructor(private Collection: mongoose.Model<any>) {}

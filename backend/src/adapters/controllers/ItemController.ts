@@ -1,10 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { ItemRepository } from "../repositories/ItemRepository";
 import { Item } from "../infrastructure/entities/Item";
-import { ItemType } from "../../domain/models/IItem";
+import CreateItemService from "../../../src/domain/application/items/CreateItemService";
+import ListItemsService from "../../../src/domain/application/items/ListItemsService";
+import { ItemType } from "../../../src/domain/models/IItem";
 
 export default async function itemController(fastify: FastifyInstance) {
-  const itemRepository = new ItemRepository(Item);
+  const createItemService = new CreateItemService(new ItemRepository(Item));
+  const listItemsService = new ListItemsService(new ItemRepository(Item));
 
   fastify.post(
     "/create",
@@ -18,15 +21,15 @@ export default async function itemController(fastify: FastifyInstance) {
       reply
     ) => {
       try {
-        const newItem = await itemRepository.save({
-          userId: request.body.user_id,
+        const item = await createItemService.execute({
+          user_id: request.body.user_id,
           content: request.body.content,
           date: Date.now().toString(),
           type: ItemType.Daily,
         });
-        return reply.status(201).send(newItem);
+        return reply.status(200).send(item);
       } catch (error) {
-        return reply.status(500).send({ message: error });
+        return reply.status(500).send(error);
       }
     }
   );
@@ -42,10 +45,8 @@ export default async function itemController(fastify: FastifyInstance) {
       reply
     ) => {
       try {
-        const itemsList = await itemRepository.findAllByUser(
-          request.query.user_id
-        );
-        return reply.status(200).send(itemsList);
+        const item = await listItemsService.execute(request.query.user_id);
+        return reply.status(200).send(item);
       } catch (error) {
         return reply.status(500).send(error);
       }

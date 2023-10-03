@@ -1,11 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const googleApi_1 = require("../infrastructure/googleApi");
+const CreateUserService_1 = __importDefault(require("../../../src/domain/application/users/CreateUserService"));
 const UserRepository_1 = require("../repositories/UserRepository");
-const IUser_1 = require("../../domain/models/IUser");
 const User_1 = require("../infrastructure/entities/User");
+const GetUserService_1 = __importDefault(require("../../../src/domain/application/users/GetUserService"));
 async function userController(fastify) {
-    const userRepository = new UserRepository_1.UserRepository(User_1.User);
+    const createUserService = new CreateUserService_1.default(new UserRepository_1.UserRepository(User_1.User));
+    const getUserService = new GetUserService_1.default(new UserRepository_1.UserRepository(User_1.User));
     fastify.post("/login/google", (request, reply) => {
         googleApi_1.googleApi
             .get("/userinfo?alt=json", {
@@ -15,23 +20,11 @@ async function userController(fastify) {
         })
             .then(async (response) => {
             try {
-                const foundUser = await userRepository.findByEmail(response.data.email);
-                if (!foundUser) {
-                    const savedUser = await userRepository.save({
-                        email: response.data.email,
-                        name: response.data.name,
-                        picture: response.data.picture,
-                        loginProvider: IUser_1.LoginProvider.GOOGLE,
-                        id: response.data.id,
-                    });
-                    return reply.status(201).send(savedUser);
-                }
-                return reply.status(200).send(foundUser);
+                const user = await createUserService.execute(response);
+                return reply.status(200).send(user);
             }
             catch (error) {
-                return reply.status(500).send({
-                    error: error,
-                });
+                return reply.status(500).send(error);
             }
         })
             .catch((error) => {
@@ -43,11 +36,11 @@ async function userController(fastify) {
     });
     fastify.get("/profile", async (request, reply) => {
         try {
-            const foundUser = await userRepository.findByEmail("niltoneapontes@gmail.com");
-            return reply.send(foundUser);
+            const user = await getUserService.execute();
+            return reply.status(200).send(user);
         }
         catch (error) {
-            return reply.status(500).send({ message: error });
+            return reply.status(500).send(error);
         }
     });
 }

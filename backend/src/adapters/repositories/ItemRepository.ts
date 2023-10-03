@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
 import { IItem } from "../../domain/models/IItem";
-
-export interface IItemRepository {
-  findAllByUser(userId: string): Promise<IItem[] | null>;
-  findById(id: string): Promise<IItem | null>;
-  save(item: IItem): Promise<IItem | null>;
-  update(id: string, item: IItem): Promise<IItem | null>;
-}
+import { IItemRepository } from "src/domain/interfaces/IItemRepository";
 
 export class ItemRepository implements IItemRepository {
   constructor(private Item: mongoose.Model<any>) {}
