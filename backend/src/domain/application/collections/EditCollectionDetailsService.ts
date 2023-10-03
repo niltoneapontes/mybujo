@@ -4,7 +4,10 @@ import { ICollectionRepository } from "../../interfaces/ICollectionRepository";
 export default class EditCollectionDetailsService {
   constructor(private collectionRepository: ICollectionRepository) {}
 
-  public async execute(id: string, editedCollection: ICollection) {
+  public async execute(
+    id: string,
+    editedCollection: Omit<ICollection, "userId">
+  ) {
     try {
       const collection = await this.collectionRepository.findById(id);
       if (collection) {
