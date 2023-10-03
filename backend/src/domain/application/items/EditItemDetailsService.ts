@@ -4,7 +4,7 @@ import { IItemRepository } from "../../interfaces/IItemRepository";
 export default class EditItemDetailsService {
   constructor(private itemRepository: IItemRepository) {}
 
-  public async execute(id: string, editedItem: IItem) {
+  public async execute(id: string, editedItem: Omit<IItem, "userId">) {
     try {
       const item = await this.itemRepository.findById(id);
       if (!item) return null;

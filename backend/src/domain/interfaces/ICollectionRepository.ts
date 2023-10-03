@@ -4,6 +4,9 @@ export interface ICollectionRepository {
   findAllByUser(userId: string): Promise<ICollection[] | null>;
   findById(id: string): Promise<any>;
   save(user: ICollection): Promise<any>;
-  update(id: string, collection: ICollection): Promise<ICollection | null>;
+  update(
+    id: string,
+    collection: Omit<ICollection, "userId">
+  ): Promise<ICollection | null>;
   delete(id: string): Promise<ICollection | null>;
 }

@@ -42,12 +42,22 @@ export default async function userController(fastify: FastifyInstance) {
     }
   );
 
-  fastify.get("/profile", async (request, reply) => {
-    try {
-      const user = await getUserService.execute();
-      return reply.status(200).send(user);
-    } catch (error) {
-      return reply.status(500).send(error);
+  fastify.get(
+    "/profile",
+    async (
+      request: FastifyRequest<{
+        Body: {
+          email: string;
+        };
+      }>,
+      reply
+    ) => {
+      try {
+        const user = await getUserService.execute(request.body.email);
+        return reply.status(200).send(user);
+      } catch (error) {
+        return reply.status(500).send(error);
+      }
     }
-  });
+  );
 }
