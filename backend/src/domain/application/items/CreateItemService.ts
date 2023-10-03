@@ -21,7 +21,7 @@ export default class CreateItemService {
       });
       return newItem;
     } catch (error) {
-      throw new Error("Não foi poss~ivel criar o item.");
+      throw new Error("Não foi possível criar o item.");
     }
   }
 }
