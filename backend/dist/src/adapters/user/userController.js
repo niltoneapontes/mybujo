@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const googleApi_1 = require("../../infrastructure/googleApi");
-const userRepository_1 = require("./userRepository");
+const googleApi_1 = require("../infrastructure/googleApi");
+const UserRepository_1 = require("./UserRepository");
+const User_1 = require("../../domain/models/User");
 async function userController(fastify) {
-    const userRepository = new userRepository_1.UserRepository();
-    fastify.post("/login", (request, reply) => {
+    const userRepository = new UserRepository_1.UserRepository();
+    fastify.post("/login/google", (request, reply) => {
         googleApi_1.googleApi
             .get("/userinfo?alt=json", {
             headers: {
@@ -19,6 +20,7 @@ async function userController(fastify) {
                         email: response.data.email,
                         name: response.data.name,
                         picture: response.data.picture,
+                        loginProvider: User_1.LoginProvider.GOOGLE,
                         id: response.data.id,
                     });
                     return reply.status(201).send(savedUser);

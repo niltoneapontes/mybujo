@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectionRepository = void 0;
-const collection_1 = require("../../domain/collection");
+const collection_1 = require("../../domain/collection/collection");
 class CollectionRepository {
     async findAllByUser(userId) {
         return await collection_1.Collection.where({

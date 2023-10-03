@@ -1,11 +1,11 @@
 import Fastify, { FastifyInstance } from "fastify";
 import dotenv from "dotenv";
 import { OAuth2Namespace } from "@fastify/oauth2";
-import { oAuthGoogle } from "./src/infrastructure/oauth";
-import userController from "./src/adapters/user/userController";
-import { connect } from "./src/infrastructure/database/database";
-import itemController from "./src/adapters/item/itemController";
-import collectionController from "./src/adapters/collection/collectionController";
+import { oAuthGoogle } from "./src/adapters/infrastructure/oauth";
+import userController from "./src/adapters/controllers/UserController";
+import { connect } from "./src/adapters/infrastructure/database/database";
+import itemController from "./src/adapters/controllers/ItemController";
+import collectionController from "./src/adapters/controllers/CollectionController";
 
 dotenv.config();
 

@@ -1,19 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const collection_1 = require("../../domain/collection");
+const collectionRepository_1 = require("./collectionRepository");
 async function collectionController(fastify) {
-    fastify.get("/all", async (request, reply) => {
+    const collectionRepository = new collectionRepository_1.CollectionRepository();
+    fastify.post("/create", async (request, reply) => {
         try {
-            const collection = new collection_1.Collection({
-                userId: "123456",
-                title: "Idk",
-                content: "* Task",
+            const newCollection = await collectionRepository.save({
+                userId: request.body.user_id,
+                content: request.body.content,
+                title: request.body.title,
             });
-            collection.save();
-            return reply.send({ message: "created collection" });
+            return reply.status(201).send(newCollection);
         }
         catch (error) {
             return reply.status(500).send({ message: error });
+        }
+    });
+    fastify.get("/", async (request, reply) => {
+        try {
+            const collectionList = await collectionRepository.findAllByUser(request.query.user_id);
+            return reply.status(200).send(collectionList);
+        }
+        catch (error) {
+            return reply.status(500).send(error);
         }
     });
 }

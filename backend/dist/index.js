@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fastify_1 = __importDefault(require("fastify"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const oauth_1 = require("./src/infrastructure/oauth");
-const userController_1 = __importDefault(require("./src/adapters/user/userController"));
-const database_1 = require("./src/infrastructure/database/database");
-const itemController_1 = __importDefault(require("./src/adapters/item/itemController"));
-const collectionController_1 = __importDefault(require("./src/adapters/collection/collectionController"));
+const oauth_1 = require("./src/adapters/infrastructure/oauth");
+const UserController_1 = __importDefault(require("./src/adapters/controllers/UserController"));
+const database_1 = require("./src/adapters/infrastructure/database/database");
+const ItemController_1 = __importDefault(require("./src/adapters/controllers/ItemController"));
+const CollectionController_1 = __importDefault(require("./src/adapters/controllers/CollectionController"));
 dotenv_1.default.config();
 const fastify = (0, fastify_1.default)({
     logger: true,
@@ -17,13 +17,13 @@ const fastify = (0, fastify_1.default)({
 fastify.addHook("onRequest", async () => {
     fastify.log.info("Incomming request");
 });
-fastify.register(userController_1.default, {
+fastify.register(UserController_1.default, {
     prefix: "/users",
 });
-fastify.register(itemController_1.default, {
+fastify.register(ItemController_1.default, {
     prefix: "/items",
 });
-fastify.register(collectionController_1.default, {
+fastify.register(CollectionController_1.default, {
     prefix: "/collections",
 });
 fastify.register(oauth_1.oAuthGoogle);

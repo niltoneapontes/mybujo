@@ -1,18 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemRepository = void 0;
-const item_1 = require("../../domain/item");
+const Item_1 = require("../../domain/item/Item");
 class ItemRepository {
     async findAllByUser(userId) {
-        return await item_1.Item.where({
+        console.log(userId);
+        return await Item_1.Item.where({
             userId: userId,
         });
     }
     async findById(id) {
-        return await item_1.Item.findById(id);
+        return await Item_1.Item.findById(id);
     }
     async save(item) {
-        const createItem = new item_1.Item({
+        const createItem = new Item_1.Item({
             userId: item.userId,
             content: item.content,
             date: item.date,
@@ -22,7 +23,7 @@ class ItemRepository {
         return item;
     }
     async update(id, item) {
-        const foundItem = await item_1.Item.updateOne({
+        const foundItem = await Item_1.Item.updateOne({
             $where: id,
         }, {
             $set: {
