@@ -1,15 +1,17 @@
-import { IUser } from "../../../../src/domain/models/IUser";
+import { IUser } from "../../models/IUser";
 import { IUserRepository } from "../../interfaces/IUserRepository";
 
-export default class GetUserService {
+export default class RemoveUserService {
   constructor(private userRepository: IUserRepository) {}
 
   public async execute(email: string): Promise<IUser | null> {
     try {
       const foundUser = await this.userRepository.findByEmail(email);
-      return foundUser;
+      if (!foundUser) return null;
+      const deletedUser = await this.userRepository.delete(foundUser);
+      return deletedUser;
     } catch (error) {
-      throw new Error("Nenhum usuário encontrado");
+      throw new Error("Não foi possível deletar esse usuário.");
     }
   }
 }

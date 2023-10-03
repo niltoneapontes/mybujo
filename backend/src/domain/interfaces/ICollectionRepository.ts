@@ -5,4 +5,5 @@ export interface ICollectionRepository {
   findById(id: string): Promise<any>;
   save(user: ICollection): Promise<any>;
   update(id: string, collection: ICollection): Promise<ICollection | null>;
+  delete(id: string): Promise<ICollection | null>;
 }
