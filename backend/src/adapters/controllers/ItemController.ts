@@ -4,7 +4,7 @@ import { Item } from "../infrastructure/entities/Item";
 import CreateItemService from "../../../src/domain/application/items/CreateItemService";
 import ListItemsService from "../../../src/domain/application/items/ListItemsService";
 import { ItemType, getEnumFromValue } from "../../../src/domain/models/IItem";
-import EditItemDetailsService from "src/domain/application/items/EditItemDetailsService";
+import EditItemDetailsService from "../../../src/domain/application/items/EditItemDetailsService";
 
 export default async function itemController(fastify: FastifyInstance) {
   const createItemService = new CreateItemService(new ItemRepository(Item));

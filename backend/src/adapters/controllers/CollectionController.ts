@@ -3,9 +3,9 @@ import { CollectionRepository } from "../repositories/CollectionRepository";
 import { Collection } from "../infrastructure/entities/Collection";
 import CreateCollectionService from "../../../src/domain/application/collections/CreateCollectionService";
 import ListCollectionsService from "../../../src/domain/application/collections/ListCollectionsService";
-import EditCollectionDetailsService from "src/domain/application/collections/EditCollectionDetailsService";
-import GetCollectionDetailsService from "src/domain/application/collections/GetCollectionDetailsService";
-import RemoveCollectionService from "src/domain/application/collections/RemoveCollectionService";
+import EditCollectionDetailsService from "../../../src/domain/application/collections/EditCollectionDetailsService";
+import GetCollectionDetailsService from "../../../src/domain/application/collections/GetCollectionDetailsService";
+import RemoveCollectionService from "../../../src/domain/application/collections/RemoveCollectionService";
 
 export default async function collectionController(fastify: FastifyInstance) {
   const createCollectionService = new CreateCollectionService(
@@ -100,10 +100,10 @@ export default async function collectionController(fastify: FastifyInstance) {
   );
 
   fastify.get(
-    "/",
+    "/details",
     async (
       request: FastifyRequest<{
-        Querystring: {
+        Params: {
           id: string;
         };
       }>,
@@ -111,7 +111,7 @@ export default async function collectionController(fastify: FastifyInstance) {
     ) => {
       try {
         const collectionList = await getCollectionDetailsService.execute(
-          request.query.id
+          request.params.id
         );
         return reply.status(200).send(collectionList);
       } catch (error) {
