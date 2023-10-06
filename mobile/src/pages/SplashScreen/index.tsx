@@ -1,39 +1,23 @@
 import React from 'react';
-import {BlueCircle, Container, OrangeCircle, TextContainer} from './styles';
-import Logo from '@assets/logo.svg';
+import { Container, LogoWrapper } from './styles';
+import Logo from '../../../assets/splash-logo.svg';
 
 function SplashScreen() {
   return (
     <Container>
-      <OrangeCircle
+      <LogoWrapper
         from={{
-          scale: 0,
-          translateY: 10,
+          translateX: -500,
         }}
         animate={{
-          scale: [1, {value: 0, delay: 1000}],
-          translateY: [0, {value: 10, delay: 1000}],
+          translateX: -265,
         }}
-      />
-      <BlueCircle
-        animate={{
-          scale: [
-            0,
-            1,
-            {value: 50, delay: 1000, type: 'timing', duration: 2000},
-            {value: 10, delay: 1500},
-          ],
-          translateY: [
-            0,
-            0,
-            {value: 0, delay: 1000},
-            {value: 75, delay: 1500, type: 'timing', duration: 1000},
-          ],
-        }}
-      />
-      <TextContainer delay={3000} from={{scale: 0}} animate={{scale: 1.5}}>
+        transition={{
+          type: 'timing',
+          duration: 1000,
+        }}>
         <Logo />
-      </TextContainer>
+      </LogoWrapper>
     </Container>
   );
 }
