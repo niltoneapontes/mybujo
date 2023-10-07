@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { Alert, useColorScheme } from 'react-native';
 
 import SplashScreen from './src/pages/SplashScreen';
-import { Routes } from './src/routes';
+import { Routes } from './src/routes/routes';
 import { darkTheme, lightTheme } from './src/tokens/colors';
 import TouchID from 'react-native-touch-id';
 

@@ -1,17 +1,12 @@
 import React from 'react';
-import {Text} from 'react-native';
 import Header from '../../components/Header';
-import SideBar from '../../components/SideBar';
-import {Container} from './styles';
+import { Container } from './styles';
 
 function Home() {
   return (
-    <>
+    <Container>
       <Header />
-      <Container>
-        <SideBar />
-      </Container>
-    </>
+    </Container>
   );
 }
 

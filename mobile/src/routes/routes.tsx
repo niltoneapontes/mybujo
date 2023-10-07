@@ -1,8 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './pages/Home';
-import Settings from './pages/Settings';
-import Login from './pages/Login';
+import Login from '../pages/Login';
+import { BottomTabNavigator } from './bottomTabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,9 +15,8 @@ export function Routes() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
     </Stack.Navigator>
   );
 }

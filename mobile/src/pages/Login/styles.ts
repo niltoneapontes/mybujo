@@ -4,7 +4,7 @@ export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  background-color: ${props => props.theme.BACKGROUND_COLOR};
+  background-color: ${(props: any) => props.theme.GRAY400};
   position: relative;
 `;
 
@@ -23,8 +23,9 @@ export const GoogleButton = styled.TouchableOpacity`
   flex-direction: row;
   height: 54px;
   width: 100%;
-  background-color: ${props => props.theme.WHITE};
+  background-color: ${(props: any) => props.theme.WHITE};
   border-radius: 10px;
+  elevation: 4;
 `;
 
 export const GoogleButtonText = styled.Text`
@@ -33,7 +34,7 @@ export const GoogleButtonText = styled.Text`
 
 export const Disclaimer = styled.Text`
   font-size: 16px;
-  color: ${props => props.theme.TEXT_COLOR};
+  color: ${(props: any) => props.theme.TEXT_COLOR};
   text-align: center;
   margin: 16px;
 `;

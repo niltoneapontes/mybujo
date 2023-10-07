@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tokenInfo, setTokenInfo] = useState<any>(null);
   const navigation = useNavigation<any>();
 
@@ -41,15 +42,6 @@ function Login() {
     }
   };
 
-  const signOut = async () => {
-    try {
-      await GoogleSignin.signOut();
-      setUser(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['profile', 'email', 'openid'],
@@ -61,7 +53,7 @@ function Login() {
 
   useEffect(() => {
     if (user) {
-      navigation.navigate('Home');
+      navigation.navigate('BottomTabNavigator');
     }
   }, [user, navigation]);
 
