@@ -25,7 +25,7 @@ export default async function userController(fastify: FastifyInstance) {
             Authorization: `Bearer ${request.body.access_token}`,
           },
         })
-        .then(async (response) => {
+        .then(async (response: any) => {
           try {
             const user = await createUserService.execute(response);
             return reply.status(200).send(user);
@@ -33,7 +33,7 @@ export default async function userController(fastify: FastifyInstance) {
             return reply.status(500).send(error);
           }
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           return reply.status(404).send({
             message: "Google API Error",
             error: error,

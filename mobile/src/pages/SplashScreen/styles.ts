@@ -1,28 +1,21 @@
-import {MotiView} from 'moti';
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
+import { darkTheme } from '../../tokens/colors';
+import { MotiView } from 'moti';
 
-export const Container = styled.View`
+// @ts-ignore
+export const Container = styled(LinearGradient).attrs({
+  colors: [
+    darkTheme.BACKGROUND_GRADIENT_START,
+    darkTheme.BACKGEOUND_GRADIENT_END,
+  ],
+  start: { x: 0, y: 0 },
+  end: { x: 1, y: 0.5 },
+})`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.BACKGROUND_COLOR};
 `;
 
-export const OrangeCircle = styled(MotiView)`
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  background-color: #ff9000;
-`;
-
-export const BlueCircle = styled(MotiView)`
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  background-color: #008dd5;
-`;
-
-export const TextContainer = styled(MotiView)`
-  position: absolute;
-  top: 40%;
-`;
+// @ts-ignore
+export const LogoWrapper = styled(MotiView)``;

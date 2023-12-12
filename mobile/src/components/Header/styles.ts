@@ -1,24 +1,28 @@
 import styled from 'styled-components/native';
 
-export const HeaderContainer = styled.View`
+export const Container = styled.View`
+  height: 108px;
   width: 100%;
-  flex-direction: row;
-  background-color: ${props => props.theme.PRIMARY_COLOR};
+`;
+
+export const HeaderContainer = styled.ScrollView`
+  width: 100%;
+  background-color: ${(props: any) => props.theme.BACKGROUND_COLOR};
+  padding: 12px 6px;
+  elevation: 4;
+`;
+
+export const Date = styled.TouchableOpacity`
   align-items: center;
-  padding: 64px 12px 12px;
-  justify-content: space-around;
-`;
-
-export const HeaderTitle = styled.Text`
-  font-size: 20px;
-  font-weight: 600;
-  color: ${props => props.theme.TITLE_COLOR};
-`;
-
-export const HeaderButton = styled.TouchableOpacity`
-  height: 32px;
-  width: 32px;
-  background: transparent;
   justify-content: center;
-  align-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  margin: 0 6px;
+  background-color: ${(props: any) => props.theme.GRAY400};
+`;
+
+export const DateText = styled.Text`
+  font-size: 24px;
+  color: ${(props: any) => props.theme.DARK_TEXT_COLOR};
 `;

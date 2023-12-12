@@ -10,15 +10,15 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
-import {ThemeProvider} from 'styled-components/native';
-import React, {useEffect} from 'react';
-import {useState} from 'react';
-import {Alert, useColorScheme} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from 'styled-components/native';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Alert, useColorScheme } from 'react-native';
 
 import SplashScreen from './src/pages/SplashScreen';
-import {Routes} from './src/routes';
-import {darkTheme, lightTheme} from './src/tokens/colors';
+import { Routes } from './src/routes/routes';
+import { darkTheme, lightTheme } from './src/tokens/colors';
 import TouchID from 'react-native-touch-id';
 
 const App = () => {
@@ -29,7 +29,7 @@ const App = () => {
   useEffect(() => {
     const saveThemePreference = async () => {
       try {
-        const previousValue = await AsyncStorage.getItem('@mybujo/theme');
+        // const previousValue = await AsyncStorage.getItem('@mybujo/theme');
         // if (previousValue !== null) {
         //   setTheme(previousValue);
         //   return;

@@ -1,7 +1,5 @@
 import Fastify, { FastifyInstance } from "fastify";
 import dotenv from "dotenv";
-import { OAuth2Namespace } from "@fastify/oauth2";
-import { oAuthGoogle } from "./src/adapters/infrastructure/oauth";
 import userController from "./src/adapters/controllers/UserController";
 import { connect } from "./src/adapters/infrastructure/database/database";
 import itemController from "./src/adapters/controllers/ItemController";
@@ -12,13 +10,6 @@ dotenv.config();
 const fastify: FastifyInstance = Fastify({
   logger: true,
 });
-
-declare module "fastify" {
-  export interface FastifyInstance {
-    googleOAuth2: OAuth2Namespace;
-    facebookOAuth2: OAuth2Namespace;
-  }
-}
 
 fastify.addHook("onRequest", async () => {
   fastify.log.info("Incomming request");
@@ -33,8 +24,6 @@ fastify.register(itemController, {
 fastify.register(collectionController, {
   prefix: "/collections",
 });
-
-fastify.register(oAuthGoogle);
 
 fastify.ready();
 
