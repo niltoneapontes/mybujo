@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Container } from './styles';
 import {
   FONT_SIZE,
@@ -7,25 +13,25 @@ import {
   RichToolbar,
   actions,
 } from 'react-native-pell-rich-editor';
-import { Keyboard, KeyboardAvoidingView, Platform, Text } from 'react-native';
+import {
+  Dimensions,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+} from 'react-native';
 import { StyleSheet, ScrollView } from 'react-native';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { EmojiView } from './emoji';
+import { lightTheme } from '../../tokens/colors';
+import firestore from '@react-native-firebase/firestore';
+import { Daily } from '../../models/Daily';
 
 interface DailyInputProps {
-  selectedDate: String;
+  selectedDate: string;
 }
 
 function DailyInput({ selectedDate }: DailyInputProps) {
-  const imageList = useMemo(
-    () => [
-      'https://img.lesmao.vip/k/h256/R/MeiTu/1293.jpg',
-      'https://pbs.twimg.com/profile_images/1242293847918391296/6uUsvfJZ.png',
-      'https://img.lesmao.vip/k/h256/R/MeiTu/1297.jpg',
-      'https://img.lesmao.vip/k/h256/R/MeiTu/1292.jpg',
-    ],
-    [],
-  );
   const initHTML = '';
 
   console.log(selectedDate);
@@ -37,24 +43,24 @@ function DailyInput({ selectedDate }: DailyInputProps) {
   const theme = useTheme();
   const dark = theme === 'dark';
   const [emojiVisible, setEmojiVisible] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   const phizIcon = require('../../../assets/phiz.png');
-  const htmlIcon = require('../../../assets/html.png');
 
   function createContentStyle(_: DefaultTheme) {
     // Can be selected for more situations (cssText or contentCSSText).
     const contentStyle = {
-      backgroundColor: '#2e3847',
-      color: '#fff',
-      caretColor: 'red', // initial valid// initial valid
-      placeholderColor: 'gray',
+      backgroundColor: lightTheme.WHITE,
+      color: lightTheme.TEXT_COLOR,
+      caretColor: lightTheme.PRIMARY_COLOR, // initial valid// initial valid
+      placeholderColor: lightTheme.DARK_TEXT_COLOR,
       // cssText: '#editor {background-color: #f3f3f3}', // initial valid
       contentCSSText: 'font-size: 16px; min-height: 200px;', // initial valid
     };
     if (theme === 'light') {
-      contentStyle.backgroundColor = '#fff';
-      contentStyle.color = '#000033';
-      contentStyle.placeholderColor = '#a9a9a9';
+      contentStyle.backgroundColor = lightTheme.WHITE;
+      contentStyle.color = lightTheme.TEXT_COLOR;
+      contentStyle.placeholderColor = lightTheme.DARK_TEXT_COLOR;
     }
     return contentStyle;
   }
@@ -64,16 +70,6 @@ function DailyInput({ selectedDate }: DailyInputProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme],
   );
-
-  const onPressAddImage = useCallback(() => {
-    // insert URL
-    richText.current?.insertImage(
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/100px-React-icon.svg.png',
-      'background: gray;',
-    );
-    // insert base64
-    // this.richText.current?.insertImage(`data:${image.mime};base64,${image.data}`);
-  }, []);
 
   const onInsertLink = useCallback(() => {
     // this.richText.current?.insertLink('Google', 'http://google.com');
@@ -94,24 +90,6 @@ function DailyInput({ selectedDate }: DailyInputProps) {
     richText.current?.blurContentEditor();
     setEmojiVisible(!emojiVisible);
   }, [emojiVisible]);
-
-  const handleInsertVideo = useCallback(() => {
-    richText.current?.insertVideo(
-      'https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4',
-      'width: 50%;',
-    );
-  }, []);
-
-  const handleInsertHTML = useCallback(() => {
-    // this.richText.current?.insertHTML(
-    //     `<span onclick="alert(2)" style="color: blue; padding:0 10px;" contenteditable="false">HTML</span>`,
-    // );
-    richText.current?.insertHTML(
-      `<div style="padding:10px 0;" contentEditable="false">
-                <iframe  width="100%" height="220"  src="https://www.youtube.com/embed/6FrNXgXlCGA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>`,
-    );
-  }, []);
 
   // const onLinkDone = useCallback(
   //   ({ title, url }: { title?: string; url?: string }) => {
@@ -153,19 +131,12 @@ function DailyInput({ selectedDate }: DailyInputProps) {
   }, []);
 
   const handleInput = useCallback(() => {
-    // console.log(inputType, data)
+    // console.log(inputType, data);
   }, []);
 
   const handleMessage = useCallback(
     ({ type, id, data }: { type: string; id: string; data?: any }) => {
       switch (type) {
-        case 'ImgClick':
-          richText.current?.commandDOM(
-            `$('#${id}').src="${
-              imageList[Math.floor(Math.random() * (imageList.length - 1))]
-            }"`,
-          );
-          break;
         case 'TitleClick':
           const color = ['red', 'blue', 'gray', 'yellow', 'coral'];
 
@@ -181,14 +152,14 @@ function DailyInput({ selectedDate }: DailyInputProps) {
       }
       console.log('onMessage', type, id, data);
     },
-    [imageList],
+    [],
   );
 
   const handleFocus = useCallback(() => {
     console.log('editor focus');
   }, []);
 
-  const handleBlur = useCallback(() => {
+  const handleBlur = useCallback(async () => {
     console.log('editor blur');
   }, []);
 
@@ -199,13 +170,66 @@ function DailyInput({ selectedDate }: DailyInputProps) {
 
   const handleChange = useCallback((html: string) => {
     // save html to content ref;
+    console.log(html);
     contentRef.current = html;
   }, []);
+
+  const saveText = useCallback(async () => {
+    console.info('Saving Text to Firestore...');
+    const dailyData: Daily = {
+      userId: '123',
+      content: contentRef.current,
+      date: selectedDate,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const snapshot = await firestore()
+      .collection('Daily')
+      .where('date', '==', selectedDate)
+      .where('userId', '==', '123')
+      .get();
+
+    if (snapshot.docs.length === 0) {
+      firestore().collection('Daily').add(dailyData);
+    } else {
+      firestore()
+        .collection('Daily')
+        .doc(snapshot.docs[0].id)
+        .update({
+          content: contentRef.current,
+          updatedAt: new Date().toISOString(),
+        })
+        .then(() => {
+          console.log('Daily updated!');
+        });
+    }
+  }, [selectedDate]);
 
   const editorInitializedCallback = useCallback(() => {
     // richText.current.registerToolbar(function (items) {
     // console.log('Toolbar click, selected items (insert end callback):', items);
     // });
+  }, []);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+        saveText();
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
   }, []);
 
   return (
@@ -217,18 +241,16 @@ function DailyInput({ selectedDate }: DailyInputProps) {
         nestedScrollEnabled={true}
         scrollEventThrottle={20}>
         <RichEditor
-          // initialFocus={true}
           initialFocus={false}
           firstFocusEnd={false}
           disabled={disabled}
-          editorStyle={contentStyle} // default light style
+          editorStyle={contentStyle}
           ref={richText}
           style={styles.rich}
           useContainer={true}
-          initialHeight={400}
+          initialHeight={Dimensions.get('screen').height}
           enterKeyHint={'done'}
-          // containerStyle={{borderRadius: 24}}
-          placeholder={'please input content'}
+          placeholder={'Planeje o seu dia aqui ✏️'}
           initialContentHTML={initHTML}
           editorInitializedCallback={editorInitializedCallback}
           onChange={handleChange}
@@ -251,20 +273,15 @@ function DailyInput({ selectedDate }: DailyInputProps) {
           flatContainerStyle={styles.flatStyle}
           editor={richText}
           disabled={disabled}
-          // iconTint={color}
+          iconTint={lightTheme.DARK_TEXT_COLOR}
           selectedIconTint={'#2095F2'}
           disabledIconTint={'#bfbfbf'}
-          onPressAddImage={onPressAddImage}
           onInsertLink={onInsertLink}
-          // iconSize={24}
-          // iconGap={10}
           actions={[
             actions.undo,
             actions.redo,
-            actions.insertVideo,
-            actions.insertImage,
             actions.setStrikethrough,
-            // actions.checkboxList,
+            actions.insertBulletsList,
             actions.insertOrderedList,
             actions.blockquote,
             actions.alignLeft,
@@ -272,13 +289,9 @@ function DailyInput({ selectedDate }: DailyInputProps) {
             actions.alignRight,
             actions.code,
             actions.line,
-
-            actions.foreColor,
-            actions.hiliteColor,
-            actions.heading1,
             actions.heading4,
+            actions.setParagraph,
             'insertEmoji',
-            'insertHTML',
             'fontSize',
           ]} // default defaultActions
           iconMap={{
@@ -295,17 +308,14 @@ function DailyInput({ selectedDate }: DailyInputProps) {
                 BC
               </Text>
             ),
-            [actions.heading1]: ({ tintColor }: IconRecord) => (
-              <Text style={[styles.tib, { color: tintColor }]}>H1</Text>
-            ),
             [actions.heading4]: ({ tintColor }: IconRecord) => (
-              <Text style={[styles.tib, { color: tintColor }]}>H4</Text>
+              <Text style={[styles.tib, { color: tintColor }]}>h4</Text>
             ),
-            insertHTML: htmlIcon,
+            [actions.setParagraph]: ({ tintColor }: IconRecord) => (
+              <Text style={[styles.tib, { color: tintColor }]}>p</Text>
+            ),
           }}
           insertEmoji={handleEmoji}
-          insertHTML={handleInsertHTML}
-          insertVideo={handleInsertVideo}
           fontSize={handleFontSize}
           foreColor={handleForeColor}
           hiliteColor={handleHaliteColor}

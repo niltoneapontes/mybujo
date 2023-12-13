@@ -30,8 +30,10 @@ function Header({ onSelect }: HeaderProps) {
                 today.getFullYear(),
                 today.getMonth(),
                 day,
-              );
-              onSelect(selectedDate.toISOString());
+              )
+                .toISOString()
+                .split('T')[0];
+              onSelect(selectedDate);
             }}>
             <DateText>{day}</DateText>
           </DateComponent>

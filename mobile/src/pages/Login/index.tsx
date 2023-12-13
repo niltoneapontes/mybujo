@@ -3,6 +3,9 @@ import {
   ButtonsContainer,
   Container,
   Disclaimer,
+  DisclaimerLink,
+  FacebookButton,
+  FacebookButtonText,
   GoogleButton,
   GoogleButtonText,
   LoginImage,
@@ -15,10 +18,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
-import { Button } from 'react-native';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { User } from '../../models/User';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { lightTheme } from '../../tokens/colors';
+import { Linking, Text } from 'react-native';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
@@ -157,19 +162,26 @@ function Login() {
             <GoogleLogo />
             <GoogleButtonText>Login com Google</GoogleButtonText>
           </GoogleButton>
-          <Button
-            title="Facebook Sign-In"
+          <FacebookButton
             onPress={() =>
               onFacebookButtonPress()
                 .then(response => _handleFacebookLogin(response))
                 .catch(error => console.error('Facebook Login Error: ', error))
-            }
-          />
+            }>
+            <Icon name="facebook" size={24} color={lightTheme.WHITE} />
+            <FacebookButtonText>Continue com Facebook</FacebookButtonText>
+          </FacebookButton>
         </ButtonsContainer>
 
         <Disclaimer>
           Ao acessar utilizando alguma das opções acima, você está concordando
-          com os nossos Termos de Uso.
+          com os nossos
+          <DisclaimerLink
+            onPress={() => {
+              Linking.openURL('https://bubblesolutions.com.br/');
+            }}>
+            Termos de Uso.
+          </DisclaimerLink>
         </Disclaimer>
       </Container>
     </>

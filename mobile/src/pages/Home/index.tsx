@@ -5,7 +5,9 @@ import DailyInput from '../../components/DailyInput';
 
 function Home() {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(today.toISOString());
+  const [selectedDate, setSelectedDate] = useState(
+    today.toISOString().split('T')[0],
+  );
 
   return (
     <Container>
