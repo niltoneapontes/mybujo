@@ -1,4 +1,4 @@
-package com.mybujo.newarchitecture.modules;
+package br.com.bubblesolutions.mybujo.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

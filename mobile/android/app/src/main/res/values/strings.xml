@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">mybujo</string>
+    <string name="facebook_app_id">3394570814187836</string>
+     <string name="facebook_client_token">4fb0fc07b647cce37fa305513c0b4d2f</string>
 </resources>

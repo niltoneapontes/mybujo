@@ -12,7 +12,7 @@ export const HeaderContainer = styled.ScrollView`
   elevation: 4;
 `;
 
-export const Date = styled.TouchableOpacity`
+export const DateComponent = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 72px;

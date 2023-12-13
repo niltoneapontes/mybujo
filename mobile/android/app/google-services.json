@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "383023240379",
+    "firebase_url": "https://mybujo-399813-default-rtdb.firebaseio.com",
+    "project_id": "mybujo-399813",
+    "storage_bucket": "mybujo-399813.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383023240379:android:071afd18ab83c93c25c59e",
+        "android_client_info": {
+          "package_name": "br.com.bubblesolutions.mybujo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383023240379-ef88u314rcea13da2ui7ehpaumumunc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bubblesolutions.mybujo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIfT29koicOrU4RwKA_FQ5KFpkfT2FUcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
