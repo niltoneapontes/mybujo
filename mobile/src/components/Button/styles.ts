@@ -26,6 +26,7 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
 `;
 
 export const ButtonText = styled.Text<Props>`
+  font-family: 'Inter-Regular';
   color: ${(props: any) => {
     switch (props.type) {
       case 'action':

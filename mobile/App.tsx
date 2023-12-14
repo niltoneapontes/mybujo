@@ -9,24 +9,39 @@
  * @format
  */
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Alert, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
 import { Routes } from './src/routes/routes';
 import { darkTheme, lightTheme } from './src/tokens/colors';
 import TouchID from 'react-native-touch-id';
+import { Settings } from 'react-native-fbsdk-next';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { getUserData } from './src/utils/getUserData';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const useDark = useColorScheme() === 'dark';
   const [theme, setTheme] = useState('light');
+  const [initialRoute, setInitialRoute] = useState('Login');
+
+  getUserData().then(response => {
+    console.log(response);
+    if (response) {
+      setInitialRoute('BottomTabNavigator');
+    }
+  });
 
   useEffect(() => {
+    configGoogleLogin();
+
+    configFacebookLogin();
+
     const saveThemePreference = async () => {
       try {
         // const previousValue = await AsyncStorage.getItem('@mybujo/theme');
@@ -52,16 +67,13 @@ const App = () => {
             passcodeFallback: true,
           })
             .then(success => {
-              Alert.alert('Authenticated Successfully');
               console.info('success: ', success);
             })
             .catch(error => {
-              Alert.alert('Authentication Failed');
               console.error('failed: ', error);
             });
         })
         .catch(error => {
-          Alert.alert('TouchID não é suportado');
           console.error('[isNotSupported] ', error);
         });
       setShowSplashScreen(false);
@@ -69,9 +81,20 @@ const App = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    console.log('Theme: ', theme);
-  }, [theme]);
+  function configGoogleLogin() {
+    GoogleSignin.configure({
+      scopes: ['profile', 'email', 'openid'],
+      webClientId:
+        '383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+  }
+
+  function configFacebookLogin() {
+    Settings.setAppID('3394570814187836');
+    Settings.setClientToken('4fb0fc07b647cce37fa305513c0b4d2f');
+    Settings.initializeSDK();
+  }
 
   if (showSplashScreen) {
     return <SplashScreen />;
@@ -80,7 +103,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-        <Routes />
+        <Routes initialRoute={initialRoute} />
       </ThemeProvider>
     </NavigationContainer>
   );

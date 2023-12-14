@@ -19,7 +19,8 @@ export function BottomTabNavigator() {
         tabBarShowLabel: false,
         tabBarActiveTintColor: darkTheme.PRIMARY_COLOR,
         tabBarInactiveTintColor: darkTheme.TEXT_COLOR,
-      }}>
+      }}
+      initialRouteName="Home">
       <Tab.Screen
         options={{
           tabBarIcon: ({ color }) => {

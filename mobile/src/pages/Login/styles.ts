@@ -26,6 +26,7 @@ export const GoogleButton = styled.TouchableOpacity`
   background-color: ${(props: any) => props.theme.WHITE};
   border-radius: 10px;
   elevation: 4;
+  margin-bottom: 12px;
 `;
 
 export const GoogleButtonText = styled.Text`
@@ -33,8 +34,34 @@ export const GoogleButtonText = styled.Text`
 `;
 
 export const Disclaimer = styled.Text`
-  font-size: 16px;
+  font-size: 12px;
+  font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.TEXT_COLOR};
   text-align: center;
   margin: 16px;
+`;
+
+export const DisclaimerLink = styled.Text`
+  font-size: 12px;
+  font-family: 'Inter-Regular';
+  text-decoration: underline;
+  color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  text-align: center;
+  margin: 16px;
+`;
+
+export const FacebookButton = styled.TouchableOpacity`
+  padding: 12px;
+  background-color: ${(props: any) => props.theme.FACEBOOK};
+  border-radius: 8px;
+  height: 54px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+export const FacebookButtonText = styled.Text`
+  color: ${(props: any) => props.theme.WHITE};
+  padding-left: 16px;
 `;

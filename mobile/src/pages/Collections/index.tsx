@@ -1,8 +1,14 @@
 import React from 'react';
-import SelectorHeader from '../../components/SelectorHeader';
+import { CollectionText, Container } from './styles';
 
 function Collections() {
-  return <SelectorHeader />;
+  return (
+    <Container>
+      <CollectionText>
+        Oops... Ainda estamos trabalhando nessa feature :/
+      </CollectionText>
+    </Container>
+  );
 }
 
 export default Collections;

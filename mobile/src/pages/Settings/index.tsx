@@ -10,6 +10,8 @@ import {
 } from './styles';
 import { GoogleSignin, User } from '@react-native-google-signin/google-signin';
 import Button from '../../components/Button';
+import { getUserData } from '../../utils/getUserData';
+import { clearUserData } from '../../utils/clearUserData';
 
 interface IGoogleUser {
   id: string;
@@ -25,8 +27,10 @@ function Settings({ navigation }) {
 
   const signOut = async () => {
     try {
+      clearUserData();
       await GoogleSignin.signOut();
       setUser(undefined);
+
       navigation.navigate('Login');
     } catch (error) {
       console.error(error);
@@ -34,9 +38,9 @@ function Settings({ navigation }) {
   };
 
   useEffect(() => {
-    GoogleSignin.getCurrentUser()
-      .then(response => setUser(response?.user))
-      .catch(error => console.error(error));
+    getUserData()
+      .then(response => setUser(response))
+      .catch(error => console.error('Error reading user data: ', error));
   }, []);
 
   return (

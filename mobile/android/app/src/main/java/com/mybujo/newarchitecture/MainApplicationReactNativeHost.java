@@ -1,4 +1,4 @@
-package com.mybujo.newarchitecture;
+package br.com.bubblesolutions.mybujo.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.mybujo.BuildConfig;
-import com.mybujo.newarchitecture.components.MainComponentsRegistry;
-import com.mybujo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import br.com.bubblesolutions.mybujo.BuildConfig;
+import br.com.bubblesolutions.mybujo.newarchitecture.components.MainComponentsRegistry;
+import br.com.bubblesolutions.mybujo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -12,17 +12,20 @@ export const HeaderContainer = styled.ScrollView`
   elevation: 4;
 `;
 
-export const Date = styled.TouchableOpacity`
+export const DateComponent = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 72px;
   height: 72px;
   border-radius: 36px;
   margin: 0 6px;
-  background-color: ${(props: any) => props.theme.GRAY400};
+  background-color: ${(props: any) =>
+    props.isSelected ? props.theme.PRIMARY_COLOR : props.theme.GRAY400};
 `;
 
 export const DateText = styled.Text`
   font-size: 24px;
-  color: ${(props: any) => props.theme.DARK_TEXT_COLOR};
+  font-family: 'Inter-Regular';
+  color: ${(props: any) =>
+    props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
 `;
