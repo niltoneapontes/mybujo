@@ -34,12 +34,11 @@ interface DailyInputProps {
 }
 
 function DailyInput({ selectedDate }: DailyInputProps) {
-  const initHTML = '';
-
   console.log(selectedDate);
 
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
+  const [initHTML, setInitHTML] = useState('');
   const contentRef = useRef(initHTML);
   const disabled = false;
   const theme = useTheme();
@@ -219,6 +218,26 @@ function DailyInput({ selectedDate }: DailyInputProps) {
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
   }, []);
+
+  useEffect(() => {
+    async function getInitHtml() {
+      const registries = await firestore()
+        .collection('Daily')
+        .where('userId', '==', user?.id)
+        .where('date', '==', selectedDate)
+        .get();
+
+      if (registries.docs.length > 0) {
+        setInitHTML(registries.docs[0].get('content')?.toString()!!);
+      } else {
+        setInitHTML('');
+      }
+
+      richText.current?.forceUpdate();
+    }
+
+    getInitHtml();
+  }, [selectedDate, user?.id]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

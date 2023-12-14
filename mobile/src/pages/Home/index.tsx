@@ -12,7 +12,7 @@ function Home() {
   return (
     <Container>
       <Header onSelect={setSelectedDate} />
-      <DailyInput selectedDate={selectedDate} />
+      {selectedDate && <DailyInput selectedDate={selectedDate} />}
     </Container>
   );
 }
