@@ -31,21 +31,23 @@ import { User } from '../../models/User';
 
 interface DailyInputProps {
   selectedDate: string;
+  initHTML: string;
 }
 
-function DailyInput({ selectedDate }: DailyInputProps) {
+function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   console.log(selectedDate);
 
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
-  const [initHTML, setInitHTML] = useState('');
-  const contentRef = useRef(initHTML);
   const disabled = false;
   const theme = useTheme();
   const dark = theme === 'dark';
   const [emojiVisible, setEmojiVisible] = useState(false);
-  const [__, setKeyboardVisible] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+
+  const contentRef = useRef(initHTML);
 
   const phizIcon = require('../../../assets/phiz.png');
 
@@ -218,26 +220,6 @@ function DailyInput({ selectedDate }: DailyInputProps) {
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
   }, []);
-
-  useEffect(() => {
-    async function getInitHtml() {
-      const registries = await firestore()
-        .collection('Daily')
-        .where('userId', '==', user?.id)
-        .where('date', '==', selectedDate)
-        .get();
-
-      if (registries.docs.length > 0) {
-        setInitHTML(registries.docs[0].get('content')?.toString()!!);
-      } else {
-        setInitHTML('');
-      }
-
-      richText.current?.forceUpdate();
-    }
-
-    getInitHtml();
-  }, [selectedDate, user?.id]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
