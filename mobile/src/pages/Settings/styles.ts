@@ -39,6 +39,7 @@ export const ProfileContentContainer = styled.View`
 export const ProfileName = styled.Text`
   font-size: 32px;
   font-weight: 700;
+  font-family: 'Inter-Bold';
   color: ${(props: any) => props.theme.TEXT_COLOR};
 `;
 
@@ -46,5 +47,6 @@ export const ProfileDescription = styled.Text`
   font-size: 20px;
   font-weight: 400;
   margin-bottom: 24px;
+  font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.TEXT_COLOR};
 `;

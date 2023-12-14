@@ -25,6 +25,7 @@ export const DateComponent = styled.TouchableOpacity`
 
 export const DateText = styled.Text`
   font-size: 24px;
+  font-family: 'Inter-Regular';
   color: ${(props: any) =>
     props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
 `;

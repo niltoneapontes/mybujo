@@ -15,4 +15,5 @@ export const IconButton = styled.TouchableOpacity``;
 export const Title = styled.Text`
   font-size: 24px;
   font-weight: 700;
+  font-family: 'Inter-Bold';
 `;

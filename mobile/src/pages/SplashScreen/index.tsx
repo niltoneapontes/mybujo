@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, LogoWrapper } from './styles';
-import Logo from '../../../assets/splash-logo.svg';
+import Logo from '../../../assets/splashlogo.svg';
 
 function SplashScreen() {
   return (

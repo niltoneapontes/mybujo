@@ -25,17 +25,17 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { EmojiView } from './emoji';
 import { lightTheme } from '../../tokens/colors';
 import firestore from '@react-native-firebase/firestore';
-import { Daily } from '../../models/Daily';
 import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
+import { Monthly } from '../../models/Monthly';
 
-interface DailyInputProps {
-  selectedDate: string;
+interface MonthlyInputProps {
+  selectedMonth: string;
   initHTML: string;
 }
 
-function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
-  console.log(selectedDate);
+function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
+  console.log(selectedMonth);
 
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
@@ -180,34 +180,35 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
 
   const saveText = useCallback(async () => {
     console.info('Saving Text to Firestore...');
-    const dailyData: Daily = {
+    const monthlyData: Monthly = {
       userId: user?.id!!,
       content: contentRef.current,
-      date: selectedDate,
+      month: selectedMonth,
+      year: new Date().getFullYear().toString(),
       updatedAt: new Date().toISOString(),
     };
 
     const snapshot = await firestore()
-      .collection('Daily')
-      .where('date', '==', selectedDate)
+      .collection('Monthly')
+      .where('month', '==', selectedMonth)
       .where('userId', '==', user?.id)
       .get();
 
     if (snapshot.docs.length === 0) {
-      firestore().collection('Daily').add(dailyData);
+      firestore().collection('Monthly').add(monthlyData);
     } else {
       firestore()
-        .collection('Daily')
+        .collection('Monthly')
         .doc(snapshot.docs[0].id)
         .update({
           content: contentRef.current,
           updatedAt: new Date().toISOString(),
         })
         .then(() => {
-          console.log('Daily updated!');
+          console.log('Monthly updated!');
         });
     }
-  }, [selectedDate, user]);
+  }, [selectedMonth, user]);
 
   const editorInitializedCallback = useCallback(() => {
     // richText.current.registerToolbar(function (items) {
@@ -265,7 +266,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           useContainer={true}
           initialHeight={Dimensions.get('screen').height}
           enterKeyHint={'done'}
-          placeholder={'Planeje o seu dia aqui ✏️'}
+          placeholder={'Planeje o seu mês aqui 📅'}
           initialContentHTML={initHTML}
           editorInitializedCallback={editorInitializedCallback}
           onChange={handleChange}
@@ -401,4 +402,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DailyInput;
+export default MonthlyInput;

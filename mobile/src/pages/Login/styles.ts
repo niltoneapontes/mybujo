@@ -35,6 +35,7 @@ export const GoogleButtonText = styled.Text`
 
 export const Disclaimer = styled.Text`
   font-size: 12px;
+  font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.TEXT_COLOR};
   text-align: center;
   margin: 16px;
@@ -42,6 +43,7 @@ export const Disclaimer = styled.Text`
 
 export const DisclaimerLink = styled.Text`
   font-size: 12px;
+  font-family: 'Inter-Regular';
   text-decoration: underline;
   color: ${(props: any) => props.theme.PRIMARY_COLOR};
   text-align: center;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Container, DateComponent, DateText, HeaderContainer } from './styles';
 import { useTheme } from 'styled-components';
 import { ScrollView } from 'react-native';
+import { numDays } from '../../utils/getDaysInMonth';
 
 interface HeaderProps {
   onSelect: React.Dispatch<React.SetStateAction<string>>;
@@ -9,8 +10,11 @@ interface HeaderProps {
 
 function Header({ onSelect }: HeaderProps) {
   const theme = useTheme() as any;
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const today = new Date();
+  const days = Array.from(
+    { length: numDays(today.getFullYear(), today.getMonth() + 1) },
+    (_, i) => i + 1,
+  );
   const [selectedDay, setSelectedDay] = useState(today.getDate());
   const scrollViewRef = useRef<ScrollView>(null);
 

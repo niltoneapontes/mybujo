@@ -10,7 +10,7 @@ import {
   GoogleButtonText,
   LoginImage,
 } from './styles';
-import LoginImageSource from '../../../assets/login-background.png';
+import LoginImageSource from '../../../assets/loginbackground.png';
 import GoogleLogo from '../../../assets/google.svg';
 import {
   GoogleSignin,
