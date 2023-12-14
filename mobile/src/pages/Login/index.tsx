@@ -23,13 +23,22 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { User } from '../../models/User';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { lightTheme } from '../../tokens/colors';
-import { Linking, Text } from 'react-native';
+import { Linking } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tokenInfo, setTokenInfo] = useState<any>(null);
   const navigation = useNavigation<any>();
+
+  const storeData = async (userValue: User) => {
+    try {
+      await AsyncStorage.setItem('mybujo-user', JSON.stringify(userValue));
+    } catch (e) {
+      console.error('Error Saving User to Storage: ', e);
+    }
+  };
 
   const _signInWithGoogle = async () => {
     try {
@@ -54,6 +63,8 @@ function Login() {
         origin: 'GOOGLE',
         phoneNumber: null,
       };
+
+      storeData(userInfo);
 
       const snapshot = await firestore()
         .collection('Users')
@@ -131,6 +142,8 @@ function Login() {
         origin: 'FACEBOOK',
         phoneNumber: phoneNumber,
       };
+
+      storeData(userInfo);
 
       firestore()
         .collection('Users')

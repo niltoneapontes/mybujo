@@ -9,12 +9,12 @@
  * @format
  */
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useColorScheme } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
 import { Routes } from './src/routes/routes';
@@ -22,11 +22,20 @@ import { darkTheme, lightTheme } from './src/tokens/colors';
 import TouchID from 'react-native-touch-id';
 import { Settings } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { getUserData } from './src/utils/getUserData';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const useDark = useColorScheme() === 'dark';
   const [theme, setTheme] = useState('light');
+  const [initialRoute, setInitialRoute] = useState('Login');
+
+  getUserData().then(response => {
+    console.log(response);
+    if (response) {
+      setInitialRoute('BottomTabNavigator');
+    }
+  });
 
   useEffect(() => {
     configGoogleLogin();
@@ -94,7 +103,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-        <Routes />
+        <Routes initialRoute={initialRoute} />
       </ThemeProvider>
     </NavigationContainer>
   );

@@ -26,6 +26,8 @@ import { EmojiView } from './emoji';
 import { lightTheme } from '../../tokens/colors';
 import firestore from '@react-native-firebase/firestore';
 import { Daily } from '../../models/Daily';
+import { getUserData } from '../../utils/getUserData';
+import { User } from '../../models/User';
 
 interface DailyInputProps {
   selectedDate: string;
@@ -43,7 +45,8 @@ function DailyInput({ selectedDate }: DailyInputProps) {
   const theme = useTheme();
   const dark = theme === 'dark';
   const [emojiVisible, setEmojiVisible] = useState(false);
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [__, setKeyboardVisible] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   const phizIcon = require('../../../assets/phiz.png');
 
@@ -177,7 +180,7 @@ function DailyInput({ selectedDate }: DailyInputProps) {
   const saveText = useCallback(async () => {
     console.info('Saving Text to Firestore...');
     const dailyData: Daily = {
-      userId: '123',
+      userId: user?.id!!,
       content: contentRef.current,
       date: selectedDate,
       updatedAt: new Date().toISOString(),
@@ -186,7 +189,7 @@ function DailyInput({ selectedDate }: DailyInputProps) {
     const snapshot = await firestore()
       .collection('Daily')
       .where('date', '==', selectedDate)
-      .where('userId', '==', '123')
+      .where('userId', '==', user?.id)
       .get();
 
     if (snapshot.docs.length === 0) {
@@ -203,7 +206,7 @@ function DailyInput({ selectedDate }: DailyInputProps) {
           console.log('Daily updated!');
         });
     }
-  }, [selectedDate]);
+  }, [selectedDate, user]);
 
   const editorInitializedCallback = useCallback(() => {
     // richText.current.registerToolbar(function (items) {
@@ -212,17 +215,28 @@ function DailyInput({ selectedDate }: DailyInputProps) {
   }, []);
 
   useEffect(() => {
+    getUserData()
+      .then(response => setUser(response))
+      .catch(error => console.error('Error reading user data: ', error));
+  }, []);
+
+  useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
         setKeyboardVisible(true);
+        if (user) {
+          saveText();
+        }
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         setKeyboardVisible(false);
-        saveText();
+        if (user) {
+          saveText();
+        }
       },
     );
 
@@ -230,7 +244,7 @@ function DailyInput({ selectedDate }: DailyInputProps) {
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
     };
-  }, []);
+  }, [saveText, user]);
 
   return (
     <Container>

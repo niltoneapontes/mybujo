@@ -5,13 +5,17 @@ import { BottomTabNavigator } from './bottomTabNavigator';
 
 const Stack = createNativeStackNavigator();
 
-export function Routes() {
+interface RoutesProps {
+  initialRoute: string;
+}
+
+export function Routes({ initialRoute }: RoutesProps) {
   return (
     <Stack.Navigator
       defaultScreenOptions={{
         animation: 'fade',
       }}
-      initialRouteName="Login"
+      initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false,
       }}>
