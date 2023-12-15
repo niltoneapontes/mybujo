@@ -8,7 +8,7 @@ import {
   ProfilePicture,
   SettingsHeader,
 } from './styles';
-import { GoogleSignin, User } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Button from '../../components/Button';
 import { getUserData } from '../../utils/getUserData';
 import { clearUserData } from '../../utils/clearUserData';

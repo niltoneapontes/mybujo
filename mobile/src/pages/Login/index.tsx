@@ -191,7 +191,7 @@ function Login() {
           com os nossos
           <DisclaimerLink
             onPress={() => {
-              Linking.openURL('https://bubblesolutions.com.br/');
+              Linking.openURL('https://terms.bubblesolutions.com.br/');
             }}>
             Termos de Uso.
           </DisclaimerLink>
