@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import SelectorHeader from '../../components/SelectorHeader';
 import { Container } from './styles';
 import moment from 'moment';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import MonthlyInput from '../../components/MonthlyInput';
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import firestore from '@react-native-firebase/firestore';
+import { lightTheme } from '../../tokens/colors';
+import WrappingView from '../../components/WrappingView';
 
 export enum Months {
   JANUARY = 'Janeiro',
@@ -102,10 +104,13 @@ function Monthly() {
         }}
       />
       {loading ? (
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator size={'large'} />
-        </View>
+        <WrappingView>
+          <ActivityIndicator
+            size={'large'}
+            animating
+            color={lightTheme.PRIMARY_COLOR}
+          />
+        </WrappingView>
       ) : (
         <MonthlyInput selectedMonth={selectedMonth} initHTML={initHTML} />
       )}

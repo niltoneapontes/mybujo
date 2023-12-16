@@ -5,7 +5,9 @@ import DailyInput from '../../components/DailyInput';
 import { getUserData } from '../../utils/getUserData';
 import firestore from '@react-native-firebase/firestore';
 import { User } from '../../models/User';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { lightTheme } from '../../tokens/colors';
+import WrappingView from '../../components/WrappingView';
 
 function Home() {
   const today = new Date();
@@ -54,10 +56,13 @@ function Home() {
     <Container>
       <Header onSelect={setSelectedDate} />
       {loading ? (
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator size={'large'} />
-        </View>
+        <WrappingView>
+          <ActivityIndicator
+            size={'large'}
+            animating
+            color={lightTheme.PRIMARY_COLOR}
+          />
+        </WrappingView>
       ) : (
         <DailyInput selectedDate={selectedDate} initHTML={initHTML} />
       )}
