@@ -13,6 +13,7 @@ const darkTheme = {
   GRAY400: '#DEE2E6',
   GRAY600: '#212529',
   FACEBOOK: '#4562A0',
+  ERROR_COLOR: '#C63434',
 };
 const lightTheme = {
   PRIMARY_COLOR: '#226CE0',
@@ -29,6 +30,7 @@ const lightTheme = {
   GRAY400: '#DEE2E6',
   GRAY600: '#212529',
   FACEBOOK: '#4562A0',
+  ERROR_COLOR: '#C63434',
 };
 
 export { lightTheme, darkTheme };

@@ -9,7 +9,7 @@ interface ToastProps {
   type?: 'success' | 'error';
 }
 
-function Toast({ text }: ToastProps) {
+function Toast({ text, type }: ToastProps) {
   return (
     <MotiView
       from={{ opacity: 0 }}
@@ -24,7 +24,7 @@ function Toast({ text }: ToastProps) {
         type: 'timing',
         duration: 350,
       }}>
-      <Container>
+      <Container type={type}>
         <Wrapper>
           <Icon name="info" size={24} color={lightTheme.WHITE} />
           <ToastText multiline>{text}</ToastText>

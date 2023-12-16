@@ -30,10 +30,18 @@ const App = () => {
   const [theme, setTheme] = useState('light');
   const [initialRoute, setInitialRoute] = useState('Login');
 
-  getUserData().then(response => {
+  getUserData().then(async response => {
     console.log(response);
+    const hasSeenTutorial = await AsyncStorage.getItem(
+      '@mybujo/hasSeenTutorial',
+    );
+
     if (response) {
-      setInitialRoute('BottomTabNavigator');
+      if (!hasSeenTutorial || hasSeenTutorial !== 'true') {
+        setInitialRoute('Tutorial');
+      } else {
+        setInitialRoute('BottomTabNavigator');
+      }
     }
   });
 

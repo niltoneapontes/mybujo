@@ -4,7 +4,10 @@ export const Container = styled.View`
   width: 80%;
   border: none;
   border-radius: 8px;
-  background-color: ${props => props.theme.PRIMARY_COLOR_DARKER};
+  background-color: ${props =>
+    props.type === 'error'
+      ? props.theme.ERROR_COLOR
+      : props.theme.PRIMARY_COLOR_DARKER};
   position: absolute;
   bottom: 54px;
   left: 10%;

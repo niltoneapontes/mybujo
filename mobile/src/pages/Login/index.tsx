@@ -224,7 +224,7 @@ function Login() {
           </DisclaimerLink>
         </Disclaimer>
       </Container>
-      {message && <Toast text={message} />}
+      {message && <Toast text={message} type="error" />}
     </>
   );
 }
