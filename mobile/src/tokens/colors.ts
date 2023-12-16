@@ -1,5 +1,6 @@
 const darkTheme = {
   PRIMARY_COLOR: '#226CE0',
+  PRIMARY_COLOR_DARKER: '#0055B2',
   SECONDARY_COLOR: '#FF8900',
   TITLE_COLOR: '#F6F6F6',
   TEXT_COLOR: '#343A40',
@@ -15,6 +16,7 @@ const darkTheme = {
 };
 const lightTheme = {
   PRIMARY_COLOR: '#226CE0',
+  PRIMARY_COLOR_DARKER: '#0055B2',
   SECONDARY_COLOR: '#FF8900',
   TITLE_COLOR: '#19323C',
   TEXT_COLOR: '#343A40',
