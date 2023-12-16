@@ -1,5 +1,6 @@
 const darkTheme = {
   PRIMARY_COLOR: '#226CE0',
+  PRIMARY_COLOR_DARKER: '#0055B2',
   SECONDARY_COLOR: '#FF8900',
   TITLE_COLOR: '#F6F6F6',
   TEXT_COLOR: '#343A40',
@@ -12,9 +13,11 @@ const darkTheme = {
   GRAY400: '#DEE2E6',
   GRAY600: '#212529',
   FACEBOOK: '#4562A0',
+  ERROR_COLOR: '#C63434',
 };
 const lightTheme = {
   PRIMARY_COLOR: '#226CE0',
+  PRIMARY_COLOR_DARKER: '#0055B2',
   SECONDARY_COLOR: '#FF8900',
   TITLE_COLOR: '#19323C',
   TEXT_COLOR: '#343A40',
@@ -27,6 +30,7 @@ const lightTheme = {
   GRAY400: '#DEE2E6',
   GRAY600: '#212529',
   FACEBOOK: '#4562A0',
+  ERROR_COLOR: '#C63434',
 };
 
 export { lightTheme, darkTheme };

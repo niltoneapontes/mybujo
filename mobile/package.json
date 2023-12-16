@@ -24,7 +24,7 @@
     "axios": "^1.5.1",
     "hermes-engine": "0.5.2-rc1",
     "moment": "^2.29.4",
-    "moti": "^0.18.0",
+    "moti": "^0.27.2",
     "react": "18.0.0",
     "react-native": "0.69.4",
     "react-native-fbsdk-next": "^12.1.2",

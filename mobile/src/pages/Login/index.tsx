@@ -23,23 +23,27 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { User } from '../../models/User';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { lightTheme } from '../../tokens/colors';
-import { Alert, Linking } from 'react-native';
+import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from '../../components/Toast';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tokenInfo, setTokenInfo] = useState<any>(null);
   const navigation = useNavigation<any>();
+  const [message, setMessage] = useState<string | null>(null);
+
+  const clearMessage = () => {
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   const storeData = async (userValue: User) => {
     try {
       await AsyncStorage.setItem('mybujo-user', JSON.stringify(userValue));
     } catch (e) {
-      Alert.alert(
-        'Oops... Não esperávamos por isso :(',
-        'Não foi possível se conectar ao servidor.',
-      );
+      setMessage('Oops... Não foi possível se conectar ao servidor.');
+      clearMessage();
       console.error('Error Saving User to Storage: ', e);
     }
   };
@@ -83,20 +87,19 @@ function Login() {
             console.info('User added!');
           })
           .catch(error => {
-            Alert.alert(
-              'Oops... Não esperávamos por isso :(',
-              'Não foi possível se conectar ao banco de dados.',
+            setMessage(
+              'Oops... Não foi possível se conectar ao banco de dados.',
             );
+            clearMessage();
             console.error('Firestore Error: ', error);
           });
       } else {
         console.info('User already in database');
       }
     } catch (error) {
-      Alert.alert(
-        'Oops... Não esperávamos por isso :(',
-        'Não foi possível fazer login com o Google.',
-      );
+      setMessage('Oops... Não foi possível fazer login com o Google.');
+      clearMessage();
+
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.error('Cancel');
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -166,17 +169,13 @@ function Login() {
           console.info('User added!');
         })
         .catch(error => {
-          Alert.alert(
-            'Oops... Não esperávamos por isso :(',
-            'Não foi possível se conectar ao banco de dados.',
-          );
+          setMessage('Oops... Não foi possível se conectar ao banco de dados.');
+          clearMessage();
           console.error('Firestore Error: ', error);
         });
     } catch (error) {
-      Alert.alert(
-        'Oops... Não esperávamos por isso :(',
-        'Não foi possível se conectar ao banco de dados.',
-      );
+      setMessage('Oops... Não foi possível se conectar ao banco de dados.');
+      clearMessage();
       console.error('Error attempting to save user data');
     }
   };
@@ -204,10 +203,8 @@ function Login() {
               onFacebookButtonPress()
                 .then(response => _handleFacebookLogin(response))
                 .catch(error => {
-                  Alert.alert(
-                    'Oops... Não esperávamos por isso :(',
-                    'Não foi possível logar com o Facebook.',
-                  );
+                  setMessage('Oops... Não foi possível logar com o Facebook.');
+                  clearMessage();
                   console.error('Facebook Login Error: ', error);
                 })
             }>
@@ -227,6 +224,7 @@ function Login() {
           </DisclaimerLink>
         </Disclaimer>
       </Container>
+      {message && <Toast text={message} type="error" />}
     </>
   );
 }
