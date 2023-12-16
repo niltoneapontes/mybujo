@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "383023240379-ef88u314rcea13da2ui7ehpaumumunc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bubblesolutions.mybujo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
           "client_type": 3
         }
