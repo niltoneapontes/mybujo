@@ -13,13 +13,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useColorScheme } from 'react-native';
+import { Alert, useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
 import { Routes } from './src/routes/routes';
 import { darkTheme, lightTheme } from './src/tokens/colors';
-import TouchID from 'react-native-touch-id';
+// import TouchID from 'react-native-touch-id';
 import { Settings } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getUserData } from './src/utils/getUserData';
@@ -52,30 +52,35 @@ const App = () => {
         setTheme(useDark ? 'dark' : 'light');
         await AsyncStorage.setItem('@mybujo/theme', useDark ? 'dark' : 'light');
       } catch (error) {
+        Alert.alert(
+          'Oops... Não esperávamos por isso :(',
+          'Não conseguimos carregar as preferências de tema.',
+        );
         console.error('Error saving theme preference', error);
       }
     };
     saveThemePreference();
+
     const timeout = setTimeout(() => {
-      TouchID.isSupported()
-        .then(biometryType => {
-          console.info('biometryType: ', biometryType);
-          TouchID.authenticate('Para acessar o MyBujo', {
-            title: 'Authentication Required',
-            fallbackLabel: 'Show Passcode',
-            sensorDescription: 'Para acessar o MyBujo',
-            passcodeFallback: true,
-          })
-            .then(success => {
-              console.info('success: ', success);
-            })
-            .catch(error => {
-              console.error('failed: ', error);
-            });
-        })
-        .catch(error => {
-          console.error('[isNotSupported] ', error);
-        });
+      // TouchID.isSupported()
+      //   .then(biometryType => {
+      //     console.info('biometryType: ', biometryType);
+      //     TouchID.authenticate('Para acessar o MyBujo', {
+      //       title: 'Authentication Required',
+      //       fallbackLabel: 'Show Passcode',
+      //       sensorDescription: 'Para acessar o MyBujo',
+      //       passcodeFallback: true,
+      //     })
+      //       .then(success => {
+      //         console.info('success: ', success);
+      //       })
+      //       .catch(error => {
+      //         console.error('failed: ', error);
+      //       });
+      //   })
+      //   .catch(error => {
+      //     console.error('[isNotSupported] ', error);
+      //   });
       setShowSplashScreen(false);
     }, 7000);
     return () => clearTimeout(timeout);

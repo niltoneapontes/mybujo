@@ -23,7 +23,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { User } from '../../models/User';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { lightTheme } from '../../tokens/colors';
-import { Linking } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login() {
@@ -36,6 +36,10 @@ function Login() {
     try {
       await AsyncStorage.setItem('mybujo-user', JSON.stringify(userValue));
     } catch (e) {
+      Alert.alert(
+        'Oops... Não esperávamos por isso :(',
+        'Não foi possível se conectar ao servidor.',
+      );
       console.error('Error Saving User to Storage: ', e);
     }
   };
@@ -78,11 +82,21 @@ function Login() {
           .then(() => {
             console.info('User added!');
           })
-          .catch(error => console.error('Firestore Error: ', error));
+          .catch(error => {
+            Alert.alert(
+              'Oops... Não esperávamos por isso :(',
+              'Não foi possível se conectar ao banco de dados.',
+            );
+            console.error('Firestore Error: ', error);
+          });
       } else {
         console.info('User already in database');
       }
     } catch (error) {
+      Alert.alert(
+        'Oops... Não esperávamos por isso :(',
+        'Não foi possível fazer login com o Google.',
+      );
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.error('Cancel');
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -151,8 +165,18 @@ function Login() {
         .then(() => {
           console.info('User added!');
         })
-        .catch(error => console.error('Firestore Error: ', error));
+        .catch(error => {
+          Alert.alert(
+            'Oops... Não esperávamos por isso :(',
+            'Não foi possível se conectar ao banco de dados.',
+          );
+          console.error('Firestore Error: ', error);
+        });
     } catch (error) {
+      Alert.alert(
+        'Oops... Não esperávamos por isso :(',
+        'Não foi possível se conectar ao banco de dados.',
+      );
       console.error('Error attempting to save user data');
     }
   };
@@ -179,7 +203,13 @@ function Login() {
             onPress={() =>
               onFacebookButtonPress()
                 .then(response => _handleFacebookLogin(response))
-                .catch(error => console.error('Facebook Login Error: ', error))
+                .catch(error => {
+                  Alert.alert(
+                    'Oops... Não esperávamos por isso :(',
+                    'Não foi possível logar com o Facebook.',
+                  );
+                  console.error('Facebook Login Error: ', error);
+                })
             }>
             <Icon name="facebook" size={24} color={lightTheme.WHITE} />
             <FacebookButtonText>Continue com Facebook</FacebookButtonText>
@@ -191,9 +221,9 @@ function Login() {
           com os nossos
           <DisclaimerLink
             onPress={() => {
-              Linking.openURL('https://terms.bubblesolutions.com.br/');
+              Linking.openURL('http://terms.bubblesolutions.com.br/');
             }}>
-            Termos de Uso.
+            {''}Termos de Uso.
           </DisclaimerLink>
         </Disclaimer>
       </Container>
