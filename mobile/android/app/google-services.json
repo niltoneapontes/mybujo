@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "383023240379-ef88u314rcea13da2ui7ehpaumumunc4.apps.googleusercontent.com",
+          "client_id": "383023240379-dml1kmhqq5f573rs41o84s9umlb8qmf5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.bubblesolutions.mybujo",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "2d9e5cc2cdd2efe74ffa9dcb6518cdb5940b29f2"
           }
         },
         {
