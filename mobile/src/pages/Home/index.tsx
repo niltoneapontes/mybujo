@@ -5,7 +5,11 @@ import DailyInput from '../../components/DailyInput';
 import { getUserData } from '../../utils/getUserData';
 import firestore from '@react-native-firebase/firestore';
 import { User } from '../../models/User';
-import { ActivityIndicator } from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
 

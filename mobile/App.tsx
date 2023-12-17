@@ -13,13 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  Alert,
-  useColorScheme,
-  SafeAreaView,
-  StatusBar,
-  View,
-} from 'react-native';
+import { Alert, useColorScheme, SafeAreaView, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';

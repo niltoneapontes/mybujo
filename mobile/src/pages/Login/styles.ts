@@ -1,10 +1,11 @@
 import styled from 'styled-components/native';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(props: any) => props.theme.GRAY400};
+  background-color: ${() => lightTheme.GRAY400};
   position: relative;
 `;
 
@@ -23,7 +24,7 @@ export const GoogleButton = styled.TouchableOpacity`
   flex-direction: row;
   height: 54px;
   width: 100%;
-  background-color: ${(props: any) => props.theme.WHITE};
+  background-color: ${() => lightTheme.WHITE};
   border-radius: 10px;
   elevation: 4;
   margin-bottom: 12px;
@@ -33,13 +34,13 @@ export const GoogleButtonText = styled.Text`
   font-size: 14px;
   font-family: 'Inter-Bold';
   margin-left: 16px;
-  color: ${(props: any) => props.theme.DARK_TEXT_COLOR};
+  color: ${() => lightTheme.DARK_TEXT_COLOR};
 `;
 
 export const Disclaimer = styled.Text`
   font-size: 12px;
   font-family: 'Inter-Regular';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${() => lightTheme.TEXT_COLOR};
   text-align: center;
   margin: 16px;
 `;
@@ -48,14 +49,14 @@ export const DisclaimerLink = styled.Text`
   font-size: 12px;
   font-family: 'Inter-Regular';
   text-decoration: underline;
-  color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  color: ${() => lightTheme.PRIMARY_COLOR};
   text-align: center;
   margin: 16px;
 `;
 
 export const FacebookButton = styled.TouchableOpacity`
   padding: 12px;
-  background-color: ${(props: any) => props.theme.FACEBOOK};
+  background-color: ${() => lightTheme.FACEBOOK};
   border-radius: 8px;
   height: 54px;
   width: 100%;
@@ -65,7 +66,7 @@ export const FacebookButton = styled.TouchableOpacity`
 `;
 
 export const FacebookButtonText = styled.Text`
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${() => lightTheme.WHITE};
   padding-left: 16px;
   font-size: 14px;
   font-family: 'Inter-Bold';

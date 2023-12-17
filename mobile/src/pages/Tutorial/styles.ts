@@ -1,11 +1,12 @@
 import styled from 'styled-components/native';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.View`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
   padding: 24px;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${() => lightTheme.PRIMARY_COLOR};
 `;
 
 export const TutorialTitle = styled.Text`
@@ -15,7 +16,7 @@ export const TutorialTitle = styled.Text`
   text-align: left;
   margin-bottom: 40px;
   margin-top: 64px;
-  color: ${props => props.theme.WHITE};
+  color: ${() => lightTheme.WHITE};
 `;
 
 export const TutorialSubTitle = styled.Text`
@@ -24,7 +25,7 @@ export const TutorialSubTitle = styled.Text`
   font-family: 'Inter-Black';
   text-align: left;
   margin-bottom: 16px;
-  color: ${props => props.theme.WHITE};
+  color: ${() => lightTheme.WHITE};
 `;
 
 export const TutorialText = styled.Text`
@@ -33,7 +34,7 @@ export const TutorialText = styled.Text`
   font-family: 'Inter-Bold';
   text-align: left;
   margin-bottom: 8px;
-  color: ${props => props.theme.WHITE};
+  color: ${() => lightTheme.WHITE};
 `;
 
 export const ButtonContainer = styled.View`

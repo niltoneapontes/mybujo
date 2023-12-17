@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.View`
   flex: 1;
@@ -12,5 +13,5 @@ export const CollectionText = styled.Text`
   font-size: 32px;
   font-weight: bold;
   font-family: 'Inter-Bold';
-  color: ${props => props.theme.PRIMARY_COLOR};
+  color: ${() => lightTheme.PRIMARY_COLOR};
 `;

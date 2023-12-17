@@ -251,8 +251,9 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
     <Container>
       <ScrollView
         style={[styles.scroll, dark && styles.scrollDark]}
-        keyboardDismissMode={'none'}
+        keyboardDismissMode={'on-drag'}
         ref={scrollRef}
+        showsVerticalScrollIndicator
         nestedScrollEnabled={true}
         scrollEventThrottle={20}>
         <RichEditor
@@ -263,7 +264,6 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           ref={richText}
           style={styles.rich}
           useContainer={true}
-          initialHeight={Dimensions.get('screen').height}
           enterKeyHint={'done'}
           placeholder={'Planeje o seu dia aqui ✏️'}
           initialContentHTML={initHTML}
@@ -282,7 +282,8 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
         />
       </ScrollView>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
         <RichToolbar
           style={[styles.richBar, dark && styles.richBarDark]}
           flatContainerStyle={styles.flatStyle}
@@ -352,10 +353,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   rich: {
-    minHeight: 300,
-    flex: 1,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ff0000',
+    minHeight: 120,
     padding: 24,
   },
   topVi: {
@@ -367,7 +365,6 @@ const styles = StyleSheet.create({
   },
   richBarDark: {
     backgroundColor: '#191d20',
-    borderColor: '#696969',
   },
   scroll: {
     backgroundColor: '#ffffff',
