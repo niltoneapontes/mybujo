@@ -21,7 +21,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { User } from '../../models/User';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Feather';
 import { lightTheme } from '../../tokens/colors';
 import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

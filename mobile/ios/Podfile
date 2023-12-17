@@ -3,11 +3,18 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
-
+use_frameworks! :linkage => :static
+$RNFirebaseAsStaticFramework = true
 production = ENV["PRODUCTION"] == "1"
 
 target 'mybujo' do
   config = use_native_modules!
+
+  # Pods for Firebase
+  pod 'Firebase/Auth'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -18,7 +25,7 @@ target 'mybujo' do
     :production => production,
     :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
-    :flipper_configuration => FlipperConfiguration.enabled,
+    # :flipper_configuration => FlipperConfiguration.enabled,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -31,5 +38,12 @@ target 'mybujo' do
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    installer.pods_project.targets.each do |target|
+      if target.to_s === 'React-Codegen' 
+        target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.4'
+        end
+      end
+    end
   end
 end

@@ -13,7 +13,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Alert, useColorScheme } from 'react-native';
+import {
+  Alert,
+  useColorScheme,
+  SafeAreaView,
+  StatusBar,
+  View,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
@@ -23,6 +29,7 @@ import { darkTheme, lightTheme } from './src/tokens/colors';
 import { Settings } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getUserData } from './src/utils/getUserData';
+import 'react-native-reanimated';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -114,11 +121,15 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-        <Routes initialRoute={initialRoute} />
-      </ThemeProvider>
-    </NavigationContainer>
+    <View style={{ flex: 1, backgroundColor: lightTheme.PRIMARY_COLOR }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
+            <Routes initialRoute={initialRoute} />
+          </ThemeProvider>
+        </NavigationContainer>
+      </SafeAreaView>
+    </View>
   );
 };
 

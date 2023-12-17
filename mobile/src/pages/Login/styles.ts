@@ -30,7 +30,10 @@ export const GoogleButton = styled.TouchableOpacity`
 `;
 
 export const GoogleButtonText = styled.Text`
+  font-size: 14px;
+  font-family: 'Inter-Bold';
   margin-left: 16px;
+  color: ${(props: any) => props.theme.DARK_TEXT_COLOR};
 `;
 
 export const Disclaimer = styled.Text`
@@ -64,4 +67,6 @@ export const FacebookButton = styled.TouchableOpacity`
 export const FacebookButtonText = styled.Text`
   color: ${(props: any) => props.theme.WHITE};
   padding-left: 16px;
+  font-size: 14px;
+  font-family: 'Inter-Bold';
 `;

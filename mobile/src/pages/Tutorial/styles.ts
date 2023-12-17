@@ -5,7 +5,7 @@ export const Container = styled.View`
   justify-content: flex-start;
   align-items: center;
   padding: 24px;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR_DARKER};
+  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
 `;
 
 export const TutorialTitle = styled.Text`
