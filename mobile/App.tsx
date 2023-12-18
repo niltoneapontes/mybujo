@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
  * Sample React Native App
@@ -96,7 +97,11 @@ const App = () => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: lightTheme.PRIMARY_COLOR }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkTheme ? darkTheme.TAB_BAR : lightTheme.TAB_BAR,
+      }}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
           <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
