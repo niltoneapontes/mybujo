@@ -16,6 +16,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  RefreshControl,
   Text,
   useColorScheme,
 } from 'react-native';
@@ -210,6 +211,16 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
     };
   }, [saveText, user]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    richText.current?.forceUpdate();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
     <Container>
       <ScrollView
@@ -221,7 +232,14 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
         ref={scrollRef}
         nestedScrollEnabled={true}
         scrollEventThrottle={20}
-        showsVerticalScrollIndicator>
+        showsVerticalScrollIndicator
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[lightTheme.PRIMARY_COLOR]}
+          />
+        }>
         <RichEditor
           initialFocus={false}
           firstFocusEnd={false}

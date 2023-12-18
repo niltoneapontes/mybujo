@@ -16,6 +16,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  RefreshControl,
   Text,
   useColorScheme,
 } from 'react-native';
@@ -208,6 +209,16 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
     };
   }, [saveText, user]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    richText.current?.forceUpdate();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
     <Container>
       <ScrollView
@@ -219,7 +230,14 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
         ref={scrollRef}
         nestedScrollEnabled={true}
         showsVerticalScrollIndicator
-        scrollEventThrottle={20}>
+        scrollEventThrottle={20}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[lightTheme.PRIMARY_COLOR]}
+          />
+        }>
         <RichEditor
           initialFocus={false}
           firstFocusEnd={false}
