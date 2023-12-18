@@ -12,6 +12,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Button from '../../components/Button';
 import { getUserData } from '../../utils/getUserData';
 import { clearUserData } from '../../utils/clearUserData';
+import { useNavigation } from '@react-navigation/native';
 
 interface IGoogleUser {
   id: string;
@@ -22,8 +23,9 @@ interface IGoogleUser {
   givenName: string | null;
 }
 
-function Settings({ navigation }) {
+function Settings() {
   const [user, setUser] = useState<IGoogleUser | undefined>(undefined);
+  const navigation = useNavigation<any>();
 
   const signOut = async () => {
     try {
@@ -31,7 +33,7 @@ function Settings({ navigation }) {
       await GoogleSignin.signOut();
       setUser(undefined);
 
-      navigation.navigate('Login');
+      navigation.replace('Login');
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +54,9 @@ function Settings({ navigation }) {
           <ProfileName>{user?.name}</ProfileName>
           <ProfileDescription>{user?.email}</ProfileDescription>
           <Button
-            onPress={() => navigation.navigate('Collections')}
+            onPress={() => {
+              navigation.navigate('Collections');
+            }}
             text="Collections"
             type="action"
           />

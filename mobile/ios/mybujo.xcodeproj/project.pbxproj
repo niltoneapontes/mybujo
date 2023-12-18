@@ -12,7 +12,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		416F50130EE04546A93A20F3 /* phiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 6558806CCD3146AF8B1E1A51 /* phiz.png */; };
 		56661797786ED44788E1E0EA /* Pods_mybujo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F25AD634A1A02990F4EF9FDD /* Pods_mybujo.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		905B6438C12545428D29B99E /* loginbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E2061884E46A4FA8B82337BC /* loginbackground.png */; };
@@ -52,7 +51,6 @@
 		512E6D845929634084E8FF4B /* Pods_mybujo_mybujoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mybujo_mybujoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5709B34CF0A7D63546082F79 /* Pods-mybujo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mybujo.release.xcconfig"; path = "Target Support Files/Pods-mybujo/Pods-mybujo.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-mybujo-mybujoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mybujo-mybujoTests.debug.xcconfig"; path = "Target Support Files/Pods-mybujo-mybujoTests/Pods-mybujo-mybujoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6558806CCD3146AF8B1E1A51 /* phiz.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = phiz.png; path = ../assets/phiz.png; sourceTree = "<group>"; };
 		6DB75F4058B74ED4851E1B91 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		807E019F990947DE9E16074F /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mybujo/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 				1FF22359D23C45F59E0CB12B /* Inter-Thin.ttf */,
 				DF1CAF3F7A0549F88002A091 /* google.svg */,
 				33DC465A698D4A0DB7400BDD /* html.png */,
-				6558806CCD3146AF8B1E1A51 /* phiz.png */,
 				E2061884E46A4FA8B82337BC /* loginbackground.png */,
 				E6A5904F234944769BCB7879 /* splashlogo.svg */,
 			);
@@ -301,7 +298,6 @@
 				97EC50BF632B401A94775F5A /* google.svg in Resources */,
 				963DEF622B2EA28100AA8067 /* GoogleService-Info.plist in Resources */,
 				CA902E8283B24D46A6368F33 /* html.png in Resources */,
-				416F50130EE04546A93A20F3 /* phiz.png in Resources */,
 				96173B962B2F4075000905DC /* fonts in Resources */,
 				96019AFF2B2F458300F7A698 /* main.jsbundle in Resources */,
 				905B6438C12545428D29B99E /* loginbackground.png in Resources */,
