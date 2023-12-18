@@ -12,10 +12,15 @@ import {
   RichToolbar,
   actions,
 } from 'react-native-pell-rich-editor';
-import { Keyboard, KeyboardAvoidingView, Platform, Text } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  useColorScheme,
+} from 'react-native';
 import { StyleSheet, ScrollView } from 'react-native';
-import { DefaultTheme, useTheme } from 'styled-components';
-import { lightTheme } from '../../tokens/colors';
+import { darkTheme, lightTheme } from '../../tokens/colors';
 import firestore from '@react-native-firebase/firestore';
 import { Daily } from '../../models/Daily';
 import { getUserData } from '../../utils/getUserData';
@@ -33,8 +38,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
-  const theme = useTheme();
-  const dark = theme === 'dark';
+  const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -42,27 +46,22 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
 
-  function createContentStyle(_: DefaultTheme) {
+  function createContentStyle() {
     const contentStyle = {
-      backgroundColor: lightTheme.WHITE,
-      color: lightTheme.TEXT_COLOR,
-      caretColor: lightTheme.PRIMARY_COLOR,
-      placeholderColor: lightTheme.PLACEHOLDER,
+      backgroundColor: theme.BACKGROUND_COLOR,
+      color: theme.TEXT_COLOR,
+      caretColor: theme.PRIMARY_COLOR,
+      placeholderColor: theme.PLACEHOLDER,
       initialCSSText: `${FontFamilyStylesheet}`,
       contentCSSText: `font-size: 16px; min-height: 200px; font-family: ${fontFamily};`,
     };
-    if (theme === 'light') {
-      contentStyle.backgroundColor = lightTheme.WHITE;
-      contentStyle.color = lightTheme.TEXT_COLOR;
-      contentStyle.placeholderColor = lightTheme.PLACEHOLDER;
-    }
     return contentStyle;
   }
 
   const contentStyle = useMemo(
-    () => createContentStyle(theme),
+    () => createContentStyle(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [theme],
+    [],
   );
 
   const onInsertLink = useCallback(() => {
@@ -212,7 +211,10 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   return (
     <Container>
       <ScrollView
-        style={[styles.scroll, dark && styles.scrollDark]}
+        style={[
+          styles.scroll,
+          useColorScheme() === 'dark' && styles.scrollDark,
+        ]}
         keyboardDismissMode={'on-drag'}
         ref={scrollRef}
         showsVerticalScrollIndicator
@@ -249,12 +251,15 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
         <RichToolbar
-          style={[styles.richBar, dark && styles.richBarDark]}
+          style={[
+            styles.richBar,
+            useColorScheme() === 'dark' && styles.richBarDark,
+          ]}
           flatContainerStyle={styles.flatStyle}
           editor={richText}
           disabled={disabled}
-          iconTint={lightTheme.DARK_TEXT_COLOR}
-          selectedIconTint={lightTheme.PRIMARY_COLOR}
+          iconTint={theme.DARK_TEXT_COLOR}
+          selectedIconTint={theme.PRIMARY_COLOR}
           disabledIconTint={'#bfbfbf'}
           onInsertLink={onInsertLink}
           actions={[
@@ -303,7 +308,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#efefef',
+    backgroundColor: lightTheme.WHITE,
   },
   nav: {
     flexDirection: 'row',
@@ -315,27 +320,27 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   topVi: {
-    backgroundColor: '#fafafa',
+    backgroundColor: lightTheme.WHITE,
   },
   richBar: {
-    borderColor: '#efefef',
+    borderColor: lightTheme.GRAY200,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   richBarDark: {
-    backgroundColor: '#191d20',
+    backgroundColor: darkTheme.BACKGROUND_COLOR,
   },
   scroll: {
-    backgroundColor: '#ffffff',
+    backgroundColor: lightTheme.WHITE,
   },
   scrollDark: {
-    backgroundColor: '#2e3847',
+    backgroundColor: darkTheme.BACKGROUND_COLOR,
   },
   darkBack: {
-    backgroundColor: '#191d20',
+    backgroundColor: darkTheme.BACKGROUND_COLOR,
   },
   item: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#e8e8e8',
+    borderColor: lightTheme.WHITE,
     flexDirection: 'row',
     height: 40,
     alignItems: 'center',
@@ -348,7 +353,7 @@ const styles = StyleSheet.create({
 
   tib: {
     textAlign: 'center',
-    color: '#515156',
+    color: lightTheme.WHITE,
   },
 
   flatStyle: {

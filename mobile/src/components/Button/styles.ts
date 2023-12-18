@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { lightTheme } from '../../tokens/colors';
 
 interface Props {
   type: 'action' | 'cancel' | 'danger';
@@ -13,13 +12,13 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
   background-color: ${(props: any) => {
     switch (props.type) {
       case 'action':
-        return lightTheme.PRIMARY_COLOR;
+        return props.theme.PRIMARY_COLOR;
       case 'cancel':
-        return lightTheme.GRAY200;
+        return props.theme.GRAY200;
       case 'danger':
-        return lightTheme.GRAY200;
+        return props.theme.GRAY200;
       default:
-        return lightTheme.PRIMARY_COLOR;
+        return props.theme.PRIMARY_COLOR;
     }
   }};
   align-items: center;
@@ -31,13 +30,13 @@ export const ButtonText = styled.Text<Props>`
   color: ${(props: any) => {
     switch (props.type) {
       case 'action':
-        return lightTheme.WHITE;
+        return props.theme.WHITE;
       case 'cancel':
-        return lightTheme.GRAY600;
+        return props.theme.GRAY600;
       case 'danger':
-        return lightTheme.SECONDARY_COLOR;
+        return props.theme.SECONDARY_COLOR;
       default:
-        return lightTheme.WHITE;
+        return props.theme.WHITE;
     }
   }};
   font-size: 14px;
