@@ -7,27 +7,20 @@ import React, {
 } from 'react';
 import { Container } from './styles';
 import {
-  FONT_SIZE,
   IconRecord,
   RichEditor,
   RichToolbar,
   actions,
 } from 'react-native-pell-rich-editor';
-import {
-  Dimensions,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-} from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, Text } from 'react-native';
 import { StyleSheet, ScrollView } from 'react-native';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { EmojiView } from './emoji';
 import { lightTheme } from '../../tokens/colors';
 import firestore from '@react-native-firebase/firestore';
 import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import { Future } from '../../models/Future';
+import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 
 interface FutureInputProps {
   selectedYear: number;
@@ -42,29 +35,26 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
   const disabled = false;
   const theme = useTheme();
   const dark = theme === 'dark';
-  const [emojiVisible, setEmojiVisible] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
   const contentRef = useRef(initHTML);
-
-  const phizIcon = require('../../../assets/phiz.png');
+  const fontFamily = 'Inter';
 
   function createContentStyle(_: DefaultTheme) {
-    // Can be selected for more situations (cssText or contentCSSText).
     const contentStyle = {
       backgroundColor: lightTheme.WHITE,
       color: lightTheme.TEXT_COLOR,
-      caretColor: lightTheme.PRIMARY_COLOR, // initial valid// initial valid
-      placeholderColor: lightTheme.DARK_TEXT_COLOR,
-      // cssText: '#editor {background-color: #f3f3f3}', // initial valid
-      contentCSSText: 'font-size: 16px; min-height: 200px;', // initial valid
+      caretColor: lightTheme.PRIMARY_COLOR,
+      placeholderColor: lightTheme.PLACEHOLDER,
+      initialCSSText: `${FontFamilyStylesheet}`,
+      contentCSSText: `font-size: 16px; min-height: 200px; font-family: ${fontFamily}`,
     };
     if (theme === 'light') {
       contentStyle.backgroundColor = lightTheme.WHITE;
       contentStyle.color = lightTheme.TEXT_COLOR;
-      contentStyle.placeholderColor = lightTheme.DARK_TEXT_COLOR;
+      contentStyle.placeholderColor = lightTheme.PLACEHOLDER;
     }
     return contentStyle;
   }
@@ -74,7 +64,6 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme],
   );
-
   const onInsertLink = useCallback(() => {
     // this.richText.current?.insertLink('Google', 'http://google.com');
     // linkModal.current?.setModalVisible(true);
@@ -82,34 +71,6 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
 
   const handleHeightChange = useCallback((height: number) => {
     console.log('editor height change:', height);
-  }, []);
-
-  const handleInsertEmoji = useCallback((emoji: string) => {
-    richText.current?.insertText(emoji);
-    richText.current?.blurContentEditor();
-  }, []);
-
-  const handleEmoji = useCallback(() => {
-    Keyboard.dismiss();
-    richText.current?.blurContentEditor();
-    setEmojiVisible(!emojiVisible);
-  }, [emojiVisible]);
-
-  // const onLinkDone = useCallback(
-  //   ({ title, url }: { title?: string; url?: string }) => {
-  //     if (title && url) {
-  //       richText.current?.insertLink(title, url);
-  //     }
-  //   },
-  //   [],
-  // );
-
-  const handleFontSize = useCallback(() => {
-    // 1=  10px, 2 = 13px, 3 = 16px, 4 = 18px, 5 = 24px, 6 = 32px, 7 = 48px;
-    let size = [1, 2, 3, 4, 5, 6, 7];
-    richText.current?.setFontSize(
-      size[Math.floor(Math.random() * 6)] as FONT_SIZE,
-    );
   }, []);
 
   const handleForeColor = useCallback(() => {
@@ -279,6 +240,8 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           onBlur={handleBlur}
           onCursorPosition={handleCursorPosition}
           pasteAsPlainText={true}
+          autoCorrect
+          autoCapitalize="sentences"
         />
       </ScrollView>
       <KeyboardAvoidingView
@@ -290,7 +253,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           editor={richText}
           disabled={disabled}
           iconTint={lightTheme.DARK_TEXT_COLOR}
-          selectedIconTint={'#2095F2'}
+          selectedIconTint={lightTheme.PRIMARY_COLOR}
           disabledIconTint={'#bfbfbf'}
           onInsertLink={onInsertLink}
           actions={[
@@ -307,11 +270,8 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
             actions.line,
             actions.heading4,
             actions.setParagraph,
-            'insertEmoji',
-            'fontSize',
           ]} // default defaultActions
           iconMap={{
-            insertEmoji: phizIcon,
             [actions.foreColor]: () => (
               <Text style={[styles.tib, { color: 'blue' }]}>FC</Text>
             ),
@@ -331,12 +291,9 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
               <Text style={[styles.tib, { color: tintColor }]}>p</Text>
             ),
           }}
-          insertEmoji={handleEmoji}
-          fontSize={handleFontSize}
           foreColor={handleForeColor}
           hiliteColor={handleHaliteColor}
         />
-        {emojiVisible && <EmojiView onSelect={handleInsertEmoji} />}
       </KeyboardAvoidingView>
     </Container>
   );
@@ -354,7 +311,7 @@ const styles = StyleSheet.create({
   },
   rich: {
     minHeight: 120,
-    padding: 24,
+    padding: 12,
   },
   topVi: {
     backgroundColor: '#fafafa',

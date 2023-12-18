@@ -215,12 +215,12 @@ function Login() {
 
         <Disclaimer>
           Ao acessar utilizando alguma das opções acima, você está concordando
-          com os nossos
+          com os nossos{' '}
           <DisclaimerLink
             onPress={() => {
               Linking.openURL('http://terms.bubblesolutions.com.br/');
             }}>
-            {''}Termos de Uso.
+            Termos de Uso.
           </DisclaimerLink>
         </Disclaimer>
       </Container>
