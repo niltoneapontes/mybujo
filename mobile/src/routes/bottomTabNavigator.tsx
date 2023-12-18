@@ -3,22 +3,29 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
 import Settings from '../pages/Settings';
 import Icons from 'react-native-vector-icons/Feather';
-import { darkTheme } from '../tokens/colors';
+import { darkTheme, lightTheme } from '../tokens/colors';
 import Monthly from '../pages/Monthly';
 import Future from '../pages/Future';
 import Collections from '../pages/Collections';
+import { useColorScheme } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 export function BottomTabNavigator() {
+  const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { elevation: 4, height: 60 },
+        tabBarStyle: {
+          elevation: 4,
+          height: 60,
+          backgroundColor: theme.TAB_BAR,
+        },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: darkTheme.PRIMARY_COLOR,
-        tabBarInactiveTintColor: darkTheme.TEXT_COLOR,
+        tabBarActiveTintColor: theme.PRIMARY_COLOR,
+        tabBarInactiveTintColor: theme.GRAY500,
       }}
       initialRouteName="Home">
       <Tab.Screen

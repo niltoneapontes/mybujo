@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Alert, useColorScheme, SafeAreaView, View } from 'react-native';
+import { useColorScheme, SafeAreaView, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
@@ -27,8 +27,8 @@ import 'react-native-reanimated';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
-  const useDark = useColorScheme() === 'dark';
-  const [theme, setTheme] = useState('light');
+  const theme = useColorScheme();
+  const isDarkTheme = theme === 'dark';
   const [initialRoute, setInitialRoute] = useState('Login');
 
   getUserData().then(async response => {
@@ -51,25 +51,6 @@ const App = () => {
 
     configFacebookLogin();
 
-    const saveThemePreference = async () => {
-      try {
-        // const previousValue = await AsyncStorage.getItem('@mybujo/theme');
-        // if (previousValue !== null) {
-        //   setTheme(previousValue);
-        //   return;
-        // }
-        setTheme(useDark ? 'dark' : 'light');
-        await AsyncStorage.setItem('@mybujo/theme', useDark ? 'dark' : 'light');
-      } catch (error) {
-        Alert.alert(
-          'Oops... Não esperávamos por isso :(',
-          'Não conseguimos carregar as preferências de tema.',
-        );
-        console.error('Error saving theme preference', error);
-      }
-    };
-    saveThemePreference();
-
     const timeout = setTimeout(() => {
       // TouchID.isSupported()
       //   .then(biometryType => {
@@ -91,7 +72,7 @@ const App = () => {
       //     console.error('[isNotSupported] ', error);
       //   });
       setShowSplashScreen(false);
-    }, 7000);
+    }, 5000);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -118,7 +99,7 @@ const App = () => {
     <View style={{ flex: 1, backgroundColor: lightTheme.PRIMARY_COLOR }}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
+          <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
             <Routes initialRoute={initialRoute} />
           </ThemeProvider>
         </NavigationContainer>

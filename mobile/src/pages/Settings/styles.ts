@@ -1,17 +1,16 @@
 import styled from 'styled-components/native';
-import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.View`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  background-color: ${() => lightTheme.BACKGROUND_COLOR};
+  background-color: ${(props: any) => props.theme.BACKGROUND_COLOR};
 `;
 
 export const SettingsHeader = styled.View`
-    background-color: ${() => lightTheme.PRIMARY_COLOR}
-    height: 144px;
-    width: 100%;
+  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  height: 144px;
+  width: 100%;
 `;
 
 export const ProfilePicture = styled.Image`
@@ -41,7 +40,7 @@ export const ProfileName = styled.Text`
   font-size: 32px;
   font-weight: 700;
   font-family: 'Inter-Bold';
-  color: ${() => lightTheme.TEXT_COLOR};
+  color: ${(props: any) => props.theme.TEXT_COLOR};
 `;
 
 export const ProfileDescription = styled.Text`
@@ -49,5 +48,5 @@ export const ProfileDescription = styled.Text`
   font-weight: 400;
   margin-bottom: 24px;
   font-family: 'Inter-Regular';
-  color: ${() => lightTheme.TEXT_COLOR};
+  color: ${(props: any) => props.theme.TEXT_COLOR};
 `;
