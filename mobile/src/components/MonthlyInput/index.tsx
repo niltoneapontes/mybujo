@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     backgroundColor: darkTheme.BACKGROUND_COLOR,
   },
   scroll: {
-    backgroundColor: lightTheme.WHITE,
+    backgroundColor: lightTheme.BACKGROUND_COLOR,
   },
   scrollDark: {
     backgroundColor: darkTheme.BACKGROUND_COLOR,

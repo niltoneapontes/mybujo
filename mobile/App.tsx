@@ -72,7 +72,7 @@ const App = () => {
       //     console.error('[isNotSupported] ', error);
       //   });
       setShowSplashScreen(false);
-    }, 7000);
+    }, 5000);
     return () => clearTimeout(timeout);
   }, []);
 

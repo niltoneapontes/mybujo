@@ -25,7 +25,7 @@ export function BottomTabNavigator() {
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: theme.PRIMARY_COLOR,
-        tabBarInactiveTintColor: theme.GRAY200,
+        tabBarInactiveTintColor: theme.GRAY500,
       }}
       initialRouteName="Home">
       <Tab.Screen
