@@ -34,8 +34,6 @@ interface DailyInputProps {
 }
 
 function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
-  console.log(selectedDate);
-
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
@@ -43,7 +41,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-
+  const [typingTimer, setTypingTimer] = useState<number>();
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
 
@@ -66,12 +64,11 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   );
 
   const onInsertLink = useCallback(() => {
-    // this.richText.current?.insertLink('Google', 'http://google.com');
-    // linkModal.current?.setModalVisible(true);
+    // Do nothing
   }, []);
 
-  const handleHeightChange = useCallback((height: number) => {
-    console.log('editor height change:', height);
+  const handleHeightChange = useCallback(() => {
+    // Do nothing
   }, []);
 
   const handleForeColor = useCallback(() => {
@@ -82,22 +79,20 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
     richText.current?.setHiliteColor('red');
   }, []);
 
-  const handlePaste = useCallback((data: any) => {
-    console.log('Paste:', data);
+  const handlePaste = useCallback(() => {
+    // Do nothing
   }, []);
 
-  // @deprecated Android keyCode 229
   const handleKeyUp = useCallback(() => {
-    // console.log('KeyUp:', data);
+    // Do nothing
   }, []);
 
-  // @deprecated Android keyCode 229
   const handleKeyDown = useCallback(() => {
-    // console.log('KeyDown:', data);
+    // Do nothing
   }, []);
 
   const handleInput = useCallback(() => {
-    // console.log(inputType, data);
+    // Do nothing
   }, []);
 
   const handleMessage = useCallback(
@@ -116,28 +111,22 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
         case 'SwitchImage':
           break;
       }
-      console.log('onMessage', type, id, data);
+      console.info('onMessage', type, id, data);
     },
     [],
   );
 
   const handleFocus = useCallback(() => {
-    console.log('editor focus');
+    // Do nothing
   }, []);
 
   const handleBlur = useCallback(async () => {
-    console.log('editor blur');
+    // Do nothing
   }, []);
 
   const handleCursorPosition = useCallback((scrollY: number) => {
     // Positioning scroll bar
     scrollRef.current!.scrollTo({ y: scrollY - 30, animated: true });
-  }, []);
-
-  const handleChange = useCallback((html: string) => {
-    // save html to content ref;
-    console.log(html);
-    contentRef.current = html;
   }, []);
 
   const saveText = useCallback(async () => {
@@ -166,15 +155,23 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           updatedAt: new Date().toISOString(),
         })
         .then(() => {
-          console.log('Daily updated!');
+          console.info('Daily updated!');
         });
     }
   }, [selectedDate, user]);
 
+  const handleChange = useCallback(
+    (html: string) => {
+      contentRef.current = html;
+      clearTimeout(typingTimer);
+      const timeout = setTimeout(() => saveText(), 1000);
+      setTypingTimer(timeout);
+    },
+    [saveText, typingTimer],
+  );
+
   const editorInitializedCallback = useCallback(() => {
-    // richText.current.registerToolbar(function (items) {
-    // console.log('Toolbar click, selected items (insert end callback):', items);
-    // });
+    // Do nothing
   }, []);
 
   useEffect(() => {
