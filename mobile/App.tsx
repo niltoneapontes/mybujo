@@ -33,7 +33,6 @@ const App = () => {
   const [initialRoute, setInitialRoute] = useState('Login');
 
   getUserData().then(async response => {
-    console.log(response);
     const hasSeenTutorial = await AsyncStorage.getItem(
       '@mybujo/hasSeenTutorial',
     );
@@ -53,25 +52,6 @@ const App = () => {
     configFacebookLogin();
 
     const timeout = setTimeout(() => {
-      // TouchID.isSupported()
-      //   .then(biometryType => {
-      //     console.info('biometryType: ', biometryType);
-      //     TouchID.authenticate('Para acessar o MyBujo', {
-      //       title: 'Authentication Required',
-      //       fallbackLabel: 'Show Passcode',
-      //       sensorDescription: 'Para acessar o MyBujo',
-      //       passcodeFallback: true,
-      //     })
-      //       .then(success => {
-      //         console.info('success: ', success);
-      //       })
-      //       .catch(error => {
-      //         console.error('failed: ', error);
-      //       });
-      //   })
-      //   .catch(error => {
-      //     console.error('[isNotSupported] ', error);
-      //   });
       setShowSplashScreen(false);
     }, 5000);
     return () => clearTimeout(timeout);

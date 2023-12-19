@@ -17,6 +17,8 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
         return props.theme.GRAY200;
       case 'danger':
         return props.theme.GRAY200;
+      case 'edit':
+        return props.theme.WHITE;
       default:
         return props.theme.PRIMARY_COLOR;
     }
@@ -35,6 +37,8 @@ export const ButtonText = styled.Text<Props>`
         return props.theme.GRAY600;
       case 'danger':
         return props.theme.SECONDARY_COLOR;
+      case 'edit':
+        return props.theme.PRIMARY_COLOR_DARKER;
       default:
         return props.theme.WHITE;
     }

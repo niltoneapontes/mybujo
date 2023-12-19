@@ -2,7 +2,7 @@ import React from 'react';
 import { ButtonContainer, ButtonText } from './styles';
 
 interface ButtonProps {
-  type: 'action' | 'cancel' | 'danger';
+  type: 'action' | 'cancel' | 'danger' | 'edit';
   text: string;
   onPress: (params: any) => void;
 }
