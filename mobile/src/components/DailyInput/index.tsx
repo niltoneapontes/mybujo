@@ -13,7 +13,6 @@ import {
   actions,
 } from 'react-native-pell-rich-editor';
 import {
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
   RefreshControl,
@@ -38,8 +37,6 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [typingTimer, setTypingTimer] = useState<number>();
   const contentRef = useRef(initHTML);
@@ -167,7 +164,8 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
       const timeout = setTimeout(() => saveText(), 1000);
       setTypingTimer(timeout);
     },
-    [saveText, typingTimer],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [saveText],
   );
 
   const editorInitializedCallback = useCallback(() => {
@@ -179,32 +177,6 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
   }, []);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardVisible(true);
-        if (user) {
-          saveText();
-        }
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardVisible(false);
-        if (user) {
-          saveText();
-        }
-      },
-    );
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, [saveText, user]);
 
   const [refreshing, setRefreshing] = useState(false);
 

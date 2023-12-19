@@ -12,7 +12,7 @@ export const Card = styled.View`
 export const TitleInput = styled.TextInput`
   font-size: 16px;
   width: 100%;
-  padding: 2px;
+  padding: 4px 8px;
   font-family: 'Inter-Bold';
   margin-bottom: 8px;
   color: ${(props: any) => props.theme.TEXT_COLOR};
@@ -21,8 +21,9 @@ export const TitleInput = styled.TextInput`
 export const ContentInput = styled.TextInput`
   font-size: 14px;
   width: 100%;
-  padding: 2px;
+  padding: 8px;
   margin-top: 0;
   font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.TEXT_COLOR};
+  margin-bottom: 24px;
 `;

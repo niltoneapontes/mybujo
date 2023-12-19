@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.View`
   flex: 1;
@@ -13,8 +12,15 @@ export const Container = styled.View`
 export const CollectionText = styled.Text`
   max-width: 80%;
   font-size: 24px;
-  font-weight: bold;
   margin-bottom: 32px;
   font-family: 'Inter-Bold';
-  color: ${() => lightTheme.PRIMARY_COLOR};
+  text-align: center;
+  color: ${(props: any) => props.theme.TEXT_COLOR};
+`;
+
+export const FooterComponent = styled.View`
+  width: 100%;
+  height: 240px;
+  align-items: center;
+  justify-content: center;
 `;
