@@ -88,6 +88,10 @@ function CollectionCard({
               setMessage('Oops... Não foi possível salvar a collection.');
               clearMessage();
               console.error('Firestore Error: ', error);
+            })
+            .finally(() => {
+              setTitleInput('');
+              setContentInput('');
             });
         } else {
           const foundCollection = await firestore()
@@ -126,9 +130,6 @@ function CollectionCard({
           clearMessage();
           console.error('Firestore Error: ', error);
         };
-      } finally {
-        setTitleInput('');
-        setContentInput('');
       }
     }
   };

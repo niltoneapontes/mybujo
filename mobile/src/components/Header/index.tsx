@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, DateComponent, DateText, HeaderContainer } from './styles';
 import { useTheme } from 'styled-components';
-import { ScrollView } from 'react-native';
+import { Platform, ScrollView } from 'react-native';
 import { numDays } from '../../utils/getDaysInMonth';
 
 interface HeaderProps {
@@ -19,10 +19,12 @@ function Header({ onSelect }: HeaderProps) {
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
-    scrollViewRef.current?.scrollTo({
-      x: (selectedDay - 1) * 78,
-      animated: true,
-    });
+    if (Platform.OS === 'android') {
+      scrollViewRef.current?.scrollTo({
+        x: (selectedDay - 1) * 78,
+        animated: true,
+      });
+    }
   }, [selectedDay]);
 
   return (
