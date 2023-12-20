@@ -16,6 +16,7 @@ const darkTheme = {
   GRAY600: '#212529',
   PLACEHOLDER: '#A9A9A9',
   FACEBOOK: '#4562A0',
+  GOOGLE_COLOR: '#212529',
   ERROR_COLOR: '#C63434',
   TAB_BAR: '#212529',
 };
@@ -37,6 +38,7 @@ const lightTheme = {
   GRAY600: '#212529',
   PLACEHOLDER: '#6E767C',
   FACEBOOK: '#4562A0',
+  GOOGLE_COLOR: '#212529',
   ERROR_COLOR: '#C63434',
   TAB_BAR: '#FFFFFF',
 };

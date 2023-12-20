@@ -11,15 +11,17 @@ import WrappingView from '../../components/WrappingView';
 
 function Home() {
   const today = new Date();
+
   const [selectedDate, setSelectedDate] = useState(
-    today.toISOString().split('T')[0],
+    new Date(today.getFullYear(), today.getMonth(), today.getDate())
+      .toISOString()
+      .split('T')[0],
   );
   const [initHTML, setInitHTML] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    setLoading(true);
     getUserData()
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
@@ -42,13 +44,11 @@ function Home() {
         }
       } catch (error) {
         console.error('Error getting daily: ', error);
-      } finally {
-        setLoading(false);
       }
     }
 
     if (user && user?.id) {
-      getInitHtml();
+      getInitHtml().finally(() => setLoading(false));
     }
   }, [selectedDate, user]);
 

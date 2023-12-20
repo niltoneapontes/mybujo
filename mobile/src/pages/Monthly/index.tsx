@@ -55,7 +55,6 @@ function Monthly() {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    setLoading(true);
     getUserData()
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));

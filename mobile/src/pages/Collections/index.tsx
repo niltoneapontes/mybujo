@@ -14,15 +14,17 @@ import {
 } from 'react-native';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 import { Collection } from '../../models/Collection';
+import Toast from '../../components/Toast';
 
 function Collections() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>();
   const [collections, setCollections] = useState<Collection[]>([]);
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<'error' | 'success'>('error');
 
   useEffect(() => {
-    setLoading(true);
     getUserData()
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
@@ -71,10 +73,10 @@ function Collections() {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     setLoading(true);
-    getCollections();
+    await getCollections();
     setTimeout(() => {
       setRefreshing(false);
       setLoading(false);
@@ -83,57 +85,73 @@ function Collections() {
   }, []);
 
   return (
-    <Container>
-      <CollectionText>Collections</CollectionText>
-      {loading ? (
-        <WrappingView>
-          <ActivityIndicator
-            size={'large'}
-            animating
-            color={theme.PRIMARY_COLOR}
+    <>
+      <Container>
+        <CollectionText>Collections</CollectionText>
+        {loading ? (
+          <WrappingView>
+            <ActivityIndicator
+              size={'large'}
+              animating
+              color={theme.PRIMARY_COLOR}
+            />
+          </WrappingView>
+        ) : (
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={[lightTheme.PRIMARY_COLOR]}
+              />
+            }
+            keyExtractor={item => item.id}
+            automaticallyAdjustKeyboardInsets
+            data={collections}
+            renderItem={({ item }) => (
+              <CollectionCard
+                id={item.id}
+                title={item.title}
+                content={item.content}
+                collections={collections}
+                setCollections={setCollections}
+                setMessage={setMessage}
+                setMessageType={setMessageType}
+              />
+            )}
+            style={{ flex: 1, width: '100%' }}
+            ItemSeparatorComponent={({}) => (
+              <View style={{ height: 12, width: '100%' }} />
+            )}
+            ListHeaderComponentStyle={{ marginBottom: 16 }}
+            ListHeaderComponent={
+              <CollectionCard
+                isInput
+                collections={collections}
+                setCollections={setCollections}
+                setMessage={setMessage}
+                setMessageType={setMessageType}
+              />
+            }
+            ListEmptyComponent={
+              <FooterComponent>
+                <CollectionText>Você ainda não tem collections</CollectionText>
+              </FooterComponent>
+            }
+            ListFooterComponent={
+              <>
+                {collections.length > 0 && (
+                  <FooterComponent>
+                    <CollectionText>Não há mais itens</CollectionText>
+                  </FooterComponent>
+                )}
+              </>
+            }
           />
-        </WrappingView>
-      ) : (
-        <FlatList
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={[lightTheme.PRIMARY_COLOR]}
-            />
-          }
-          automaticallyAdjustKeyboardInsets
-          data={collections}
-          renderItem={({ item }) => (
-            <CollectionCard
-              id={item.id}
-              title={item.title}
-              content={item.content}
-            />
-          )}
-          style={{ flex: 1, width: '100%' }}
-          ItemSeparatorComponent={({}) => (
-            <View style={{ height: 12, width: '100%' }} />
-          )}
-          ListHeaderComponentStyle={{ marginBottom: 16 }}
-          ListHeaderComponent={<CollectionCard isInput />}
-          ListEmptyComponent={
-            <FooterComponent>
-              <CollectionText>Você ainda não tem collections</CollectionText>
-            </FooterComponent>
-          }
-          ListFooterComponent={
-            <>
-              {collections.length > 0 && (
-                <FooterComponent>
-                  <CollectionText>Não há mais itens</CollectionText>
-                </FooterComponent>
-              )}
-            </>
-          }
-        />
-      )}
-    </Container>
+        )}
+      </Container>
+      {message && <Toast text={message} type={messageType} />}
+    </>
   );
 }
 

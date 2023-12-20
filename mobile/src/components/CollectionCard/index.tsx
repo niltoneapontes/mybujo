@@ -1,35 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ContentInput, TitleInput } from './styles';
+import {
+  Card,
+  CloseButton,
+  ContentInput,
+  DeleteButton,
+  TitleInput,
+} from './styles';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 import { ActivityIndicator, useColorScheme } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../Button';
 import { Collection } from '../../models/Collection';
 import firestore from '@react-native-firebase/firestore';
-import Toast from '../Toast';
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import WrappingView from '../WrappingView';
+import Icon from 'react-native-vector-icons/Feather';
 
 interface CollectionCardProps {
   id?: string;
   title?: string;
   content?: string;
   isInput?: boolean;
+  collections: Collection[];
+  setCollections: React.Dispatch<React.SetStateAction<Collection[]>>;
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  setMessageType: React.Dispatch<React.SetStateAction<'success' | 'error'>>;
 }
 
-function CollectionCard({ id, title, content, isInput }: CollectionCardProps) {
+function CollectionCard({
+  id,
+  title,
+  content,
+  isInput,
+  collections,
+  setCollections,
+  setMessage,
+  setMessageType,
+}: CollectionCardProps) {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
   const internalId = id ? id : uuid.v4().toString();
   const [titleInput, setTitleInput] = useState(title || '');
   const [contentInput, setContentInput] = useState(content || '');
-  const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<'error' | 'success'>('error');
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     getUserData()
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error))
@@ -61,6 +77,7 @@ function CollectionCard({ id, title, content, isInput }: CollectionCardProps) {
             .collection('Collections')
             .add(createdCollection)
             .then(() => {
+              setCollections([...collections, createdCollection]);
               setMessageType('success');
               setMessage('Collection salva');
               clearMessage();
@@ -83,6 +100,13 @@ function CollectionCard({ id, title, content, isInput }: CollectionCardProps) {
               ...createdCollection,
             })
             .then(() => {
+              const newCollections = collections.map(item => {
+                if (item.id === createdCollection.id) {
+                  return createdCollection;
+                }
+                return item;
+              });
+              setCollections([...newCollections]);
               setMessageType('success');
               setMessage('Collection atualizada');
               clearMessage();
@@ -102,8 +126,35 @@ function CollectionCard({ id, title, content, isInput }: CollectionCardProps) {
           clearMessage();
           console.error('Firestore Error: ', error);
         };
+      } finally {
+        setTitleInput('');
+        setContentInput('');
       }
     }
+  };
+
+  const handleRemove = async () => {
+    const foundCollection = await firestore()
+      .collection('Collections')
+      .where('id', '==', id)
+      .get();
+
+    foundCollection.docs[0].ref
+      .delete()
+      .then(() => {
+        const filteredCollections = collections.filter(item => item.id !== id);
+        setCollections([...filteredCollections]);
+        setMessageType('error');
+        setMessage('Collection removida');
+        clearMessage();
+        console.info('Collection deleted!');
+      })
+      .catch(error => {
+        setMessageType('error');
+        setMessage('Oops... Não foi possível remover a collection.');
+        clearMessage();
+        console.error('Firestore Error: ', error);
+      });
   };
 
   if (loading) {
@@ -143,9 +194,16 @@ function CollectionCard({ id, title, content, isInput }: CollectionCardProps) {
       {isInput ? (
         <Button type="action" text="Adicionar" onPress={() => handleSave()} />
       ) : (
-        <Button type="edit" text="Editar" onPress={() => handleSave()} />
+        <>
+          <CloseButton onPress={() => handleRemove()}>
+            <Icon name="trash" size={24} color={theme.TEXT_COLOR} />
+          </CloseButton>
+
+          <DeleteButton onPress={() => handleSave()}>
+            <Icon name="save" size={24} color={theme.TEXT_COLOR} />
+          </DeleteButton>
+        </>
       )}
-      {message && <Toast text={message} type={messageType} />}
     </Card>
   );
 }

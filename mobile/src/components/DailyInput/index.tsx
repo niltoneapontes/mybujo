@@ -42,6 +42,8 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
 
+  console.log(contentRef, initHTML);
+
   function createContentStyle() {
     const contentStyle = {
       backgroundColor: theme.BACKGROUND_COLOR,
@@ -207,32 +209,34 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
             colors={[lightTheme.PRIMARY_COLOR]}
           />
         }>
-        <RichEditor
-          initialFocus={false}
-          firstFocusEnd={false}
-          disabled={disabled}
-          editorStyle={contentStyle}
-          ref={richText}
-          style={styles.rich}
-          useContainer={true}
-          enterKeyHint={'done'}
-          placeholder={'Planeje o seu dia aqui ✏️'}
-          initialContentHTML={initHTML}
-          editorInitializedCallback={editorInitializedCallback}
-          onChange={handleChange}
-          onHeightChange={handleHeightChange}
-          onPaste={handlePaste}
-          onKeyUp={handleKeyUp}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          onMessage={handleMessage}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onCursorPosition={handleCursorPosition}
-          pasteAsPlainText={true}
-          autoCorrect
-          autoCapitalize="sentences"
-        />
+        {!refreshing && (
+          <RichEditor
+            initialFocus={false}
+            firstFocusEnd={false}
+            disabled={disabled}
+            editorStyle={contentStyle}
+            ref={richText}
+            style={styles.rich}
+            useContainer={true}
+            enterKeyHint={'done'}
+            placeholder={'Planeje o seu dia aqui ✏️'}
+            initialContentHTML={initHTML}
+            editorInitializedCallback={editorInitializedCallback}
+            onChange={handleChange}
+            onHeightChange={handleHeightChange}
+            onPaste={handlePaste}
+            onKeyUp={handleKeyUp}
+            onKeyDown={handleKeyDown}
+            onInput={handleInput}
+            onMessage={handleMessage}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onCursorPosition={handleCursorPosition}
+            pasteAsPlainText={true}
+            autoCorrect
+            autoCapitalize="sentences"
+          />
+        )}
       </ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

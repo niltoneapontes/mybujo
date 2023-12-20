@@ -27,3 +27,15 @@ export const ContentInput = styled.TextInput`
   color: ${(props: any) => props.theme.TEXT_COLOR};
   margin-bottom: 24px;
 `;
+
+export const CloseButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+`;
+
+export const DeleteButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 56px;
+  right: 16px;
+`;

@@ -33,7 +33,7 @@ export const GoogleButtonText = styled.Text`
   font-size: 14px;
   font-family: 'Inter-Bold';
   margin-left: 16px;
-  color: ${(props: any) => props.theme.DARK_TEXT_COLOR};
+  color: ${(props: any) => props.theme.GOOGLE_COLOR};
 `;
 
 export const Disclaimer = styled.Text`
