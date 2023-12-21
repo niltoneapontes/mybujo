@@ -20,16 +20,19 @@ export function BottomTabNavigator() {
         headerShown: false,
         tabBarStyle: {
           elevation: 4,
-          height: 60,
+          height: 56,
           backgroundColor: theme.TAB_BAR,
         },
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarActiveTintColor: theme.PRIMARY_COLOR,
         tabBarInactiveTintColor: theme.GRAY500,
       }}
       initialRouteName="Home">
       <Tab.Screen
         options={{
+          tabBarLabel: 'Daily Log',
+          tabBarLabelStyle: { marginBottom: 4 },
+          tabBarIconStyle: { maxHeight: 32 },
           tabBarIcon: ({ color }) => {
             return <Icons name="home" color={color} size={32} />;
           },
@@ -39,6 +42,9 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
+          tabBarLabel: 'Monthly Log',
+          tabBarLabelStyle: { marginBottom: 4 },
+          tabBarIconStyle: { maxHeight: 32 },
           tabBarIcon: ({ color }) => {
             return <Icons name="calendar" color={color} size={32} />;
           },
@@ -48,6 +54,9 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
+          tabBarLabel: 'Listas',
+          tabBarLabelStyle: { marginBottom: 4 },
+          tabBarIconStyle: { maxHeight: 32 },
           tabBarIcon: ({ color }) => {
             return <Icons name="plus" color={color} size={32} />;
           },
@@ -57,6 +66,9 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
+          tabBarLabel: 'Future Log',
+          tabBarLabelStyle: { marginBottom: 4 },
+          tabBarIconStyle: { maxHeight: 32 },
           tabBarIcon: ({ color }) => {
             return <Icons name="compass" color={color} size={32} />;
           },
@@ -66,6 +78,9 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
+          tabBarLabel: 'Configurações',
+          tabBarLabelStyle: { marginBottom: 4 },
+          tabBarIconStyle: { maxHeight: 32 },
           tabBarIcon: ({ color }) => {
             return <Icons name="menu" color={color} size={32} />;
           },

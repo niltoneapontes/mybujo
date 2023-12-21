@@ -79,7 +79,7 @@ function CollectionCard({
             .then(() => {
               setCollections([...collections, createdCollection]);
               setMessageType('success');
-              setMessage('Collection salva');
+              setMessage('Lista salva');
               clearMessage();
               console.info('Collection added!');
             })
@@ -112,7 +112,7 @@ function CollectionCard({
               });
               setCollections([...newCollections]);
               setMessageType('success');
-              setMessage('Collection atualizada');
+              setMessage('Lista atualizada');
               clearMessage();
               console.info('Collection updated!');
             })
@@ -146,7 +146,7 @@ function CollectionCard({
         const filteredCollections = collections.filter(item => item.id !== id);
         setCollections([...filteredCollections]);
         setMessageType('error');
-        setMessage('Collection removida');
+        setMessage('Lista removida');
         clearMessage();
         console.info('Collection deleted!');
       })

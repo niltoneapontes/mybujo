@@ -57,7 +57,7 @@ function Settings() {
             onPress={() => {
               navigation.navigate('Collections');
             }}
-            text="Collections"
+            text="Suas listas"
             type="action"
           />
         </ProfileContentContainer>

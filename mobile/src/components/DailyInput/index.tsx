@@ -11,7 +11,7 @@ import {
   RichEditor,
   RichToolbar,
   actions,
-} from 'react-native-pell-rich-editor';
+} from '../../../libs/react-native-pell-rich-editor';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -38,7 +38,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const disabled = false;
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
   const [user, setUser] = useState<User | null>(null);
-  const [typingTimer, setTypingTimer] = useState<number>();
+  const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout>();
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
 
@@ -51,7 +51,12 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
       caretColor: theme.PRIMARY_COLOR,
       placeholderColor: theme.PLACEHOLDER,
       initialCSSText: `${FontFamilyStylesheet}`,
-      contentCSSText: `font-size: 16px; min-height: 200px; font-family: ${fontFamily};`,
+      codeBoxColor: theme.CODE_BLOCK,
+      contentCSSText: `
+      font-size: 16px; 
+      min-height: 200px; 
+      font-family: ${fontFamily};
+      `,
     };
     return contentStyle;
   }
@@ -248,6 +253,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           ]}
           flatContainerStyle={styles.flatStyle}
           editor={richText}
+          getEditor={() => richText.current}
           disabled={disabled}
           iconTint={theme.DARK_TEXT_COLOR}
           selectedIconTint={theme.PRIMARY_COLOR}
@@ -256,9 +262,10 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           actions={[
             actions.undo,
             actions.redo,
-            actions.setStrikethrough,
+            actions.checkboxList,
             actions.insertBulletsList,
             actions.insertOrderedList,
+            actions.setStrikethrough,
             actions.blockquote,
             actions.alignLeft,
             actions.alignCenter,

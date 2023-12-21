@@ -11,7 +11,7 @@ import {
   RichEditor,
   RichToolbar,
   actions,
-} from 'react-native-pell-rich-editor';
+} from '../../../libs/react-native-pell-rich-editor';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -52,6 +52,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
       color: theme.TEXT_COLOR,
       caretColor: theme.PRIMARY_COLOR,
       placeholderColor: theme.PLACEHOLDER,
+      codeBoxColor: theme.CODE_BLOCK,
       initialCSSText: `${FontFamilyStylesheet}`,
       contentCSSText: `font-size: 16px; min-height: 200px; font-family: ${fontFamily};`,
     };
@@ -281,9 +282,10 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           actions={[
             actions.undo,
             actions.redo,
-            actions.setStrikethrough,
+            actions.checkboxList,
             actions.insertBulletsList,
             actions.insertOrderedList,
+            actions.setStrikethrough,
             actions.blockquote,
             actions.alignLeft,
             actions.alignCenter,

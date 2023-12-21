@@ -87,7 +87,7 @@ function Collections() {
   return (
     <>
       <Container>
-        <CollectionText>Collections</CollectionText>
+        <CollectionText>Suas listas</CollectionText>
         {loading ? (
           <WrappingView>
             <ActivityIndicator
@@ -135,14 +135,16 @@ function Collections() {
             }
             ListEmptyComponent={
               <FooterComponent>
-                <CollectionText>Você ainda não tem collections</CollectionText>
+                <CollectionText>
+                  Você ainda não criou nenhuma lista :(
+                </CollectionText>
               </FooterComponent>
             }
             ListFooterComponent={
               <>
                 {collections.length > 0 && (
                   <FooterComponent>
-                    <CollectionText>Não há mais itens</CollectionText>
+                    <CollectionText>Não há mais listas</CollectionText>
                   </FooterComponent>
                 )}
               </>
