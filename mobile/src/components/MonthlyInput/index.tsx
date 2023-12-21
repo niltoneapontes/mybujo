@@ -140,6 +140,7 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
   }, []);
 
   const saveText = useCallback(async () => {
+    setDisclaimerMessage('Salvando...');
     console.info('Saving Text to Firestore...');
     const monthlyData: Monthly = {
       userId: user?.id!!,

@@ -39,9 +39,9 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
   const [user, setUser] = useState<User | null>(null);
   const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout>();
-  const [stopedTypingTimer, setStopedTypingTimer] = useState<NodeJS.Timeout>();
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
+  const [stopedTypingTimer, setStopedTypingTimer] = useState<NodeJS.Timeout>();
   const [disclaimerMessage, setDisclaimerMessage] = useState<string>('');
 
   function createContentStyle() {

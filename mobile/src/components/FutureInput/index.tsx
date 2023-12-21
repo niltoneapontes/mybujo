@@ -139,6 +139,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
   }, []);
 
   const saveText = useCallback(async () => {
+    setDisclaimerMessage('Salvando...');
     console.info('Saving Text to Firestore...');
     const monthlyData: Future = {
       userId: user?.id!!,
