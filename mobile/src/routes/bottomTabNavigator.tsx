@@ -32,7 +32,7 @@ export function BottomTabNavigator() {
         options={{
           tabBarLabel: 'Daily Log',
           tabBarLabelStyle: { marginBottom: 8 },
-          tabBarIconStyle: { maxHeight: 32 },
+          tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="home" color={color} size={32} />;
           },
@@ -44,7 +44,7 @@ export function BottomTabNavigator() {
         options={{
           tabBarLabel: 'Monthly Log',
           tabBarLabelStyle: { marginBottom: 8 },
-          tabBarIconStyle: { maxHeight: 32 },
+          tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="calendar" color={color} size={32} />;
           },
@@ -56,7 +56,7 @@ export function BottomTabNavigator() {
         options={{
           tabBarLabel: 'Listas',
           tabBarLabelStyle: { marginBottom: 8 },
-          tabBarIconStyle: { maxHeight: 32 },
+          tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="plus" color={color} size={32} />;
           },
@@ -68,7 +68,7 @@ export function BottomTabNavigator() {
         options={{
           tabBarLabel: 'Future Log',
           tabBarLabelStyle: { marginBottom: 8 },
-          tabBarIconStyle: { maxHeight: 32 },
+          tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="compass" color={color} size={32} />;
           },
@@ -80,7 +80,7 @@ export function BottomTabNavigator() {
         options={{
           tabBarLabel: 'Configurações',
           tabBarLabelStyle: { marginBottom: 8 },
-          tabBarIconStyle: { maxHeight: 32 },
+          tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="menu" color={color} size={32} />;
           },
