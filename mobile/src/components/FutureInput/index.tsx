@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container } from './styles';
+import { Container, Disclaimer } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -41,7 +41,9 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [typingTimer, setTypingTimer] = useState<number>();
+  const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout>();
+  const [stopedTypingTimer, setStopedTypingTimer] = useState<NodeJS.Timeout>();
+  const [disclaimerMessage, setDisclaimerMessage] = useState<string>('');
 
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
@@ -94,8 +96,13 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
   }, []);
 
   const handleInput = useCallback(() => {
-    // Do nothing
-  }, []);
+    clearTimeout(stopedTypingTimer);
+    const timeout = setTimeout(
+      () => setDisclaimerMessage('Atualizações salvas'),
+      3000,
+    );
+    setStopedTypingTimer(timeout);
+  }, [stopedTypingTimer]);
 
   const handleMessage = useCallback(
     ({ type, id, data }: { type: string; id: string; data?: any }) => {
@@ -267,6 +274,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}>
+        <Disclaimer>{disclaimerMessage}</Disclaimer>
         <RichToolbar
           style={[
             styles.richBar,

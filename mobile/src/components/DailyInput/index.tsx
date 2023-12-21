@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container } from './styles';
+import { Container, Disclaimer } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -39,10 +39,10 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
   const [user, setUser] = useState<User | null>(null);
   const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout>();
+  const [stopedTypingTimer, setStopedTypingTimer] = useState<NodeJS.Timeout>();
   const contentRef = useRef(initHTML);
   const fontFamily = 'Inter';
-
-  console.log(contentRef, initHTML);
+  const [disclaimerMessage, setDisclaimerMessage] = useState<string>('');
 
   function createContentStyle() {
     const contentStyle = {
@@ -96,8 +96,13 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   }, []);
 
   const handleInput = useCallback(() => {
-    // Do nothing
-  }, []);
+    clearTimeout(stopedTypingTimer);
+    const timeout = setTimeout(
+      () => setDisclaimerMessage('Atualizações salvas'),
+      3000,
+    );
+    setStopedTypingTimer(timeout);
+  }, [stopedTypingTimer]);
 
   const handleMessage = useCallback(
     ({ type, id, data }: { type: string; id: string; data?: any }) => {
@@ -134,6 +139,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   }, []);
 
   const saveText = useCallback(async () => {
+    setDisclaimerMessage('Salvando...');
     console.info('Saving Text to Firestore...');
     const dailyData: Daily = {
       userId: user?.id!!,
@@ -168,12 +174,16 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
     (html: string) => {
       contentRef.current = html;
       clearTimeout(typingTimer);
-      const timeout = setTimeout(() => saveText(), 1000);
+      const timeout = setTimeout(() => saveText(), 2000);
       setTypingTimer(timeout);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [saveText],
   );
+
+  useEffect(() => {
+    console.log(typingTimer);
+  }, [typingTimer]);
 
   const editorInitializedCallback = useCallback(() => {
     // Do nothing
@@ -246,6 +256,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
+        <Disclaimer>{disclaimerMessage}</Disclaimer>
         <RichToolbar
           style={[
             styles.richBar,
