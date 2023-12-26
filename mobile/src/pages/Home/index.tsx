@@ -12,6 +12,7 @@ import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
 
   const [selectedDate, setSelectedDate] = useState(
@@ -56,24 +57,30 @@ function Home() {
   }, [selectedDate, user]);
 
   useEffect(() => {
-    async function getNewMonth() {
+    async function getNewInfo() {
       const month = await AsyncStorage.getItem('@mybujo/selectedMonth');
       const monthNumber = Number(month) - 1;
-      setSelectedDate(
-        new Date(today.getFullYear(), monthNumber, today.getDate())
-          .toISOString()
-          .split('T')[0],
-      );
+
+      const year = await AsyncStorage.getItem('@mybujo/selectedYear');
+      const yearNumber = Number(year);
+
+      if (monthNumber && yearNumber) {
+        setSelectedDate(
+          new Date(yearNumber, monthNumber, today.getDate())
+            .toISOString()
+            .split('T')[0],
+        );
+      }
     }
 
     if (isFocused) {
-      getNewMonth();
+      getNewInfo();
     }
   }, [isFocused, today]);
 
   return (
     <Container>
-      <Header onSelect={setSelectedDate} />
+      <Header onSelect={setSelectedDate} selected={selectedDate} />
       {loading ? (
         <WrappingView>
           <ActivityIndicator

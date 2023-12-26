@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  height: 108px;
+  height: 124px;
   width: 100%;
+  background-color: ${(props: any) => props.theme.TAB_BAR};
+  elevation: 4;
 `;
 
 export const HeaderContainer = styled.ScrollView`
   width: 100%;
-  background-color: ${(props: any) => props.theme.TAB_BAR};
-  padding: 12px 6px;
-  elevation: 4;
+  padding: 8px 6px;
 `;
 
 export const DateComponent = styled.TouchableOpacity`
@@ -28,4 +28,13 @@ export const DateText = styled.Text`
   font-family: 'Inter-Regular';
   color: ${(props: any) =>
     props.isSelected ? props.theme.TEXT_COLOR : props.theme.DARK_TEXT_COLOR};
+`;
+
+export const Subtitle = styled.Text`
+  font-size: 16px;
+  font-family: 'Inter-SemiBold';
+  align-self: flex-end;
+  margin-right: 16px;
+  margin-top: 8px;
+  color: ${(props: any) => props.theme.GRAY500};
 `;

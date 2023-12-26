@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import { BottomTabNavigator } from './bottomTabNavigator';
 import Tutorial from '../pages/Tutorial';
+import Performance from '../pages/Performance';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export function Routes({ initialRoute }: RoutesProps) {
       }}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
+      <Stack.Screen name="Performance" component={Performance} />
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
     </Stack.Navigator>
   );

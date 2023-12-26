@@ -13,6 +13,7 @@ import Button from '../../components/Button';
 import { getUserData } from '../../utils/getUserData';
 import { clearUserData } from '../../utils/clearUserData';
 import { useNavigation } from '@react-navigation/native';
+import { Linking, View } from 'react-native';
 
 interface IGoogleUser {
   id: string;
@@ -58,6 +59,22 @@ function Settings() {
               navigation.navigate('Collections');
             }}
             text="Suas listas"
+            type="action"
+          />
+          <View style={{ marginBottom: 12 }} />
+          <Button
+            onPress={() => {
+              navigation.navigate('Performance');
+            }}
+            text="Performance"
+            type="action"
+          />
+          <View style={{ marginBottom: 12 }} />
+          <Button
+            onPress={() => {
+              Linking.openURL('http://privacy.bubblesolutions.com.br/');
+            }}
+            text="Saiba mais sobre seus dados"
             type="action"
           />
         </ProfileContentContainer>

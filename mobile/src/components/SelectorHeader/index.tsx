@@ -1,17 +1,25 @@
 import React from 'react';
-import { Container, IconButton, Title } from './styles';
+import {
+  Container,
+  IconButton,
+  Subtitle,
+  TextContainer,
+  Title,
+} from './styles';
 import Icons from 'react-native-vector-icons/Feather';
 import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 
 interface SelectorHeaderProps {
   current: any;
+  suffix?: string;
   goOneBack: () => void;
   goOneForward: () => void;
 }
 
 function SelectorHeader({
   current: currentMonth,
+  suffix,
   goOneBack: goOneMonthBack,
   goOneForward: goOneMonthForward,
 }: SelectorHeaderProps) {
@@ -22,7 +30,10 @@ function SelectorHeader({
       <IconButton onPress={() => goOneMonthBack()}>
         <Icons name="chevron-left" size={24} color={theme.TEXT_COLOR} />
       </IconButton>
-      <Title>{currentMonth}</Title>
+      <TextContainer>
+        <Title>{currentMonth}</Title>
+        {suffix && <Subtitle>/{suffix}</Subtitle>}
+      </TextContainer>
       <IconButton onPress={() => goOneMonthForward()}>
         <Icons name="chevron-right" size={24} color={theme.TEXT_COLOR} />
       </IconButton>

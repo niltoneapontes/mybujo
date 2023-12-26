@@ -29,7 +29,8 @@ function Tutorial() {
           - Suas alterações são salvas automaticamente
         </TutorialText>
         <TutorialText>
-          - Marque tarefas com "•" e as risque quando finalizar
+          - Marque tarefas com "•" e as risque quando finalizar (você também
+          pode utilizar as checkboxes)
         </TutorialText>
         <TutorialText>
           - Marque eventos com listas numeradas por ordem
@@ -39,12 +40,17 @@ function Tutorial() {
           - Use a criatividade e aplique emojis como quiser! Um exemplo é
           utilizar 🎁 para lembrar de aniversários
         </TutorialText>
+        <TutorialText>
+          - Quando você muda o mês ou ano no Monthly e Future logs, essas
+          alterações também valem para os outros logs, assim você pode planejar
+          a data que quiser
+        </TutorialText>
         <ButtonContainer>
           <Button
             type="cancel"
             text="Continuar"
             onPress={async () => {
-              await AsyncStorage.setItem('@mybujo/hasSeenTutorial', 'true');
+              await AsyncStorage.setItem('@mybujo/hasSeenTutorial2', 'true');
               navigation.navigate('BottomTabNavigator');
             }}
           />

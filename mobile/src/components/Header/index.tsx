@@ -1,15 +1,23 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Container, DateComponent, DateText, HeaderContainer } from './styles';
+import {
+  Container,
+  DateComponent,
+  DateText,
+  HeaderContainer,
+  Subtitle,
+} from './styles';
 import { useTheme } from 'styled-components';
 import { Platform, ScrollView } from 'react-native';
 import { numDays } from '../../utils/getDaysInMonth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 interface HeaderProps {
   onSelect: React.Dispatch<React.SetStateAction<string>>;
+  selected?: string;
 }
 
-function Header({ onSelect }: HeaderProps) {
+function Header({ onSelect, selected }: HeaderProps) {
   const theme = useTheme() as any;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
@@ -22,6 +30,8 @@ function Header({ onSelect }: HeaderProps) {
   }, [month, today]);
   const [selectedDay, setSelectedDay] = useState(today.getDate());
   const scrollViewRef = useRef<ScrollView>(null);
+
+  console.log(selected);
 
   useEffect(() => {
     async function getSelectedMonth() {
@@ -37,7 +47,7 @@ function Header({ onSelect }: HeaderProps) {
     }
 
     getSelectedMonth();
-  }, []);
+  }, [today]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -50,6 +60,7 @@ function Header({ onSelect }: HeaderProps) {
 
   return (
     <Container>
+      <Subtitle>{moment(selected).format('MM/yyyy')}</Subtitle>
       <HeaderContainer
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{

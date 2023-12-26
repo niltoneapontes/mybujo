@@ -8,6 +8,7 @@ import firestore from '@react-native-firebase/firestore';
 import { User } from '../../models/User';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Future() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -19,6 +20,15 @@ function Future() {
     getUserData()
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
+
+    async function getYear() {
+      const result = await AsyncStorage.getItem('@mybujo/selectedYear');
+      if (result) {
+        setSelectedYear(Number(result));
+      }
+    }
+
+    getYear();
   }, []);
 
   useEffect(() => {
@@ -47,6 +57,17 @@ function Future() {
       getInitHtml();
     }
   }, [selectedYear, user]);
+
+  useEffect(() => {
+    async function setYear(selectedYearValue: number) {
+      await AsyncStorage.setItem(
+        '@mybujo/selectedYear',
+        selectedYearValue.toString(),
+      );
+    }
+
+    setYear(selectedYear);
+  }, [selectedYear]);
 
   return (
     <Container>

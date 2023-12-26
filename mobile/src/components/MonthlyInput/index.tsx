@@ -29,11 +29,16 @@ import { Monthly } from '../../models/Monthly';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 
 interface MonthlyInputProps {
+  selectedYear: number;
   selectedMonth: string;
   initHTML: string;
 }
 
-function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
+function MonthlyInput({
+  selectedYear,
+  selectedMonth,
+  initHTML,
+}: MonthlyInputProps) {
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
@@ -146,13 +151,14 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
       userId: user?.id!!,
       content: contentRef.current,
       month: selectedMonth,
-      year: new Date().getFullYear().toString(),
+      year: selectedYear.toString(),
       updatedAt: new Date().toISOString(),
     };
 
     const snapshot = await firestore()
       .collection('Monthly')
       .where('month', '==', selectedMonth)
+      .where('year', '==', selectedYear.toString())
       .where('userId', '==', user?.id)
       .get();
 
@@ -170,7 +176,7 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
           console.info('Monthly updated!');
         });
     }
-  }, [selectedMonth, user]);
+  }, [selectedMonth, selectedYear, user?.id]);
 
   const handleChange = useCallback(
     (html: string) => {

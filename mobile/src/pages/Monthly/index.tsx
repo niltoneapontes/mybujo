@@ -10,6 +10,7 @@ import firestore from '@react-native-firebase/firestore';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 export enum Months {
   JANUARY = 'Janeiro',
@@ -53,13 +54,16 @@ function getEnumIndex(enumObj, value) {
 }
 
 function Monthly() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
   const currentMonth = Months[moment(today).format('MMMM').toUpperCase()];
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [selectedYear, setSelectedYear] = useState(today.getFullYear());
   const [loading, setLoading] = useState(false);
 
   const [initHTML, setInitHTML] = useState('');
   const [user, setUser] = useState<User>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getUserData()
@@ -87,6 +91,7 @@ function Monthly() {
           .collection('Monthly')
           .where('userId', '==', user?.id)
           .where('month', '==', selectedMonth)
+          .where('year', '==', selectedYear.toString())
           .get();
 
         if (registries.docs.length > 0) {
@@ -104,12 +109,29 @@ function Monthly() {
     if (user && user?.id) {
       getInitHtml();
     }
-  }, [selectedMonth, user]);
+  }, [selectedMonth, selectedYear, user]);
+
+  useEffect(() => {
+    async function getNewInfo() {
+      const year = await AsyncStorage.getItem('@mybujo/selectedYear');
+      const yearNumber = Number(year);
+
+      console.log(yearNumber);
+      if (yearNumber) {
+        setSelectedYear(yearNumber);
+      }
+    }
+
+    if (isFocused) {
+      getNewInfo();
+    }
+  }, [isFocused, today]);
 
   return (
     <Container>
       <SelectorHeader
         current={selectedMonth}
+        suffix={selectedYear.toString()}
         goOneBack={() => {
           setLoading(true);
           setSelectedMonth(previousEnumValue(Months, selectedMonth));
@@ -130,7 +152,11 @@ function Monthly() {
           />
         </WrappingView>
       ) : (
-        <MonthlyInput selectedMonth={selectedMonth} initHTML={initHTML} />
+        <MonthlyInput
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+          initHTML={initHTML}
+        />
       )}
     </Container>
   );
