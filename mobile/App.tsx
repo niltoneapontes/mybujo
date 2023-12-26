@@ -14,7 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useColorScheme, SafeAreaView, View } from 'react-native';
+import { useColorScheme, SafeAreaView, View, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './src/pages/SplashScreen';
@@ -25,12 +25,42 @@ import { Settings } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getUserData } from './src/utils/getUserData';
 import 'react-native-reanimated';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
   const [initialRoute, setInitialRoute] = useState('Login');
+
+  async function requestNotificationPermission() {
+    if (Platform.OS === 'ios') {
+      async function requestUserPermission() {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled) {
+          console.info('Authorization status:', authStatus);
+        }
+      }
+      requestUserPermission();
+    } else if (Platform.OS === 'android') {
+      request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS).then(result => {
+        if (result === RESULTS.GRANTED) {
+          console.info('Notifications Enabled');
+        } else {
+          console.info('Notifications Denied');
+        }
+      });
+    }
+  }
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
 
   getUserData().then(async response => {
     const hasSeenTutorial = await AsyncStorage.getItem(

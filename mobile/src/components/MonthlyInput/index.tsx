@@ -235,7 +235,7 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
           styles.scroll,
           useColorScheme() === 'dark' && styles.scrollDark,
         ]}
-        keyboardDismissMode={'on-drag'}
+        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
         ref={scrollRef}
         nestedScrollEnabled={true}
         scrollEventThrottle={20}
@@ -255,7 +255,7 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
           ref={richText}
           style={styles.rich}
           useContainer={true}
-          enterKeyHint={'done'}
+          enterKeyHint={'go'}
           placeholder={'Planeje o seu mês aqui 📅'}
           initialContentHTML={initHTML}
           editorInitializedCallback={editorInitializedCallback}
@@ -285,6 +285,7 @@ function MonthlyInput({ selectedMonth, initHTML }: MonthlyInputProps) {
           ]}
           flatContainerStyle={styles.flatStyle}
           editor={richText}
+          getEditor={richText}
           disabled={disabled}
           iconTint={theme.DARK_TEXT_COLOR}
           selectedIconTint={theme.PRIMARY_COLOR}

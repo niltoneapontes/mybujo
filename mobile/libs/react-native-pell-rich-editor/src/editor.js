@@ -7,6 +7,7 @@ function getContentCSS(codeBoxColor) {
         table {width: 100% !important;}
         table td {width: inherit;}
         table span { font-size: 12px !important; }
+        .x-todo { margin-right: 8px;}
         .x-todo li {list-style:none;}
         .x-todo-box {position: relative; left: -32px;}
         .x-todo-box input {position: absolute;}
@@ -157,7 +158,7 @@ function createHTML(options = {}) {
 
         function execCheckboxList (node, html){
             var html = createCheckbox(node ? node.innerHTML: '');
-            var HTML = "<ol class='x-todo'><li>"+ html +"</li></ol>"
+            var HTML = "<label><input type='checkbox' class='x-todo'/></label>"
             var foNode;
             if (node){
                 node.innerHTML = HTML;
@@ -429,16 +430,7 @@ function createHTML(options = {}) {
                         pNode = anchorNode.parentNode;
                         if (anchorNode === editor.content) pNode = null;
                     }
-
-                    if (anchorNode === editor.content || queryCommandValue(formatBlock) === ''){
-                        formatParagraph();
-                    }
-                    var box = checkboxNode(anchorNode);
-                    if (!!box){
-                        cancelCheckboxList(box.parentNode);
-                    } else {
-                        !queryCommandState('insertOrderedList') && execCheckboxList(pNode);
-                    }
+                    !queryCommandState('insertOrderedList') && execCheckboxList(pNode);
                 }
             },
             content: {

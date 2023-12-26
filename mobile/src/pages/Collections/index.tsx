@@ -38,8 +38,6 @@ function Collections() {
           .where('userId', '==', user?.id)
           .get();
 
-        console.log(registries.docs);
-
         if (registries.docs.length > 0) {
           setCollections(
             registries.docs.map(doc => {

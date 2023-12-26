@@ -181,10 +181,6 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
     [saveText],
   );
 
-  useEffect(() => {
-    console.log(typingTimer);
-  }, [typingTimer]);
-
   const editorInitializedCallback = useCallback(() => {
     // Do nothing
   }, []);
@@ -212,7 +208,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           styles.scroll,
           useColorScheme() === 'dark' && styles.scrollDark,
         ]}
-        keyboardDismissMode={'on-drag'}
+        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
         ref={scrollRef}
         showsVerticalScrollIndicator
         nestedScrollEnabled={true}
@@ -233,7 +229,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
             ref={richText}
             style={styles.rich}
             useContainer={true}
-            enterKeyHint={'done'}
+            enterKeyHint={'go'}
             placeholder={'Planeje o seu dia aqui ✏️'}
             initialContentHTML={initHTML}
             editorInitializedCallback={editorInitializedCallback}
@@ -264,7 +260,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           ]}
           flatContainerStyle={styles.flatStyle}
           editor={richText}
-          getEditor={() => richText.current}
+          getEditor={richText}
           disabled={disabled}
           iconTint={theme.DARK_TEXT_COLOR}
           selectedIconTint={theme.PRIMARY_COLOR}

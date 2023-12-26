@@ -9,6 +9,7 @@ import { getUserData } from '../../utils/getUserData';
 import firestore from '@react-native-firebase/firestore';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export enum Months {
   JANUARY = 'Janeiro',
@@ -45,6 +46,12 @@ function previousEnumValue(enumObj, valorAtual) {
   return valores[indiceAnterior];
 }
 
+function getEnumIndex(enumObj, value) {
+  const valores = Object.values(enumObj);
+  const index = valores.indexOf(value) + 1;
+  return index;
+}
+
 function Monthly() {
   const today = new Date();
   const currentMonth = Months[moment(today).format('MMMM').toUpperCase()];
@@ -59,6 +66,18 @@ function Monthly() {
       .then(response => setUser(response))
       .catch(error => console.error('Error reading user data: ', error));
   }, []);
+
+  useEffect(() => {
+    const index = getEnumIndex(Months, selectedMonth);
+    async function setMonth(monthIndex: number) {
+      await AsyncStorage.setItem(
+        '@mybujo/selectedMonth',
+        monthIndex.toString(),
+      );
+    }
+
+    setMonth(index);
+  }, [selectedMonth]);
 
   useEffect(() => {
     setLoading(true);

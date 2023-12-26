@@ -8,6 +8,8 @@ import { User } from '../../models/User';
 import { ActivityIndicator } from 'react-native';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home() {
   const today = new Date();
@@ -20,6 +22,7 @@ function Home() {
   const [initHTML, setInitHTML] = useState('');
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getUserData()
@@ -51,6 +54,22 @@ function Home() {
       getInitHtml().finally(() => setLoading(false));
     }
   }, [selectedDate, user]);
+
+  useEffect(() => {
+    async function getNewMonth() {
+      const month = await AsyncStorage.getItem('@mybujo/selectedMonth');
+      const monthNumber = Number(month) - 1;
+      setSelectedDate(
+        new Date(today.getFullYear(), monthNumber, today.getDate())
+          .toISOString()
+          .split('T')[0],
+      );
+    }
+
+    if (isFocused) {
+      getNewMonth();
+    }
+  }, [isFocused, today]);
 
   return (
     <Container>

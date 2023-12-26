@@ -233,7 +233,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           styles.scroll,
           useColorScheme() === 'dark' && styles.scrollDark,
         ]}
-        keyboardDismissMode={'on-drag'}
+        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
         ref={scrollRef}
         nestedScrollEnabled={true}
         showsVerticalScrollIndicator
@@ -253,7 +253,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           ref={richText}
           style={styles.rich}
           useContainer={true}
-          enterKeyHint={'done'}
+          enterKeyHint={'go'}
           placeholder={'Planeje o seu ano aqui 📅'}
           initialContentHTML={initHTML}
           editorInitializedCallback={editorInitializedCallback}
@@ -283,6 +283,7 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
           ]}
           flatContainerStyle={styles.flatStyle}
           editor={richText}
+          getEditor={richText}
           disabled={disabled}
           iconTint={theme.DARK_TEXT_COLOR}
           selectedIconTint={theme.PRIMARY_COLOR}
