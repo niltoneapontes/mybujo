@@ -10,18 +10,19 @@ import { useTheme } from 'styled-components';
 import { Platform, ScrollView } from 'react-native';
 import { numDays } from '../../utils/getDaysInMonth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 
 interface HeaderProps {
-  onSelect: React.Dispatch<React.SetStateAction<string>>;
-  selected?: string;
+  onSelect: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Header({ onSelect, selected }: HeaderProps) {
+function Header({ onSelect }: HeaderProps) {
   const theme = useTheme() as any;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
   const [month, setMonth] = useState(today.getMonth() + 1);
+  const [year, setYear] = useState(today.getFullYear());
+
   const days = useMemo(() => {
     return Array.from(
       { length: numDays(today.getFullYear(), month) },
@@ -30,8 +31,7 @@ function Header({ onSelect, selected }: HeaderProps) {
   }, [month, today]);
   const [selectedDay, setSelectedDay] = useState(today.getDate());
   const scrollViewRef = useRef<ScrollView>(null);
-
-  console.log(selected);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     async function getSelectedMonth() {
@@ -46,8 +46,22 @@ function Header({ onSelect, selected }: HeaderProps) {
       }
     }
 
+    async function getSelectedYear() {
+      const selectedYear = await AsyncStorage.getItem('@mybujo/selectedYear');
+      if (selectedYear) {
+        setYear(Number(selectedYear));
+      } else {
+        await AsyncStorage.setItem(
+          '@mybujo/selectedYear',
+          (today.getFullYear() + 1).toString(),
+        );
+      }
+    }
+
+    getSelectedYear();
     getSelectedMonth();
-  }, [today]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocused]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -60,7 +74,9 @@ function Header({ onSelect, selected }: HeaderProps) {
 
   return (
     <Container>
-      <Subtitle>{moment(selected).format('MM/yyyy')}</Subtitle>
+      <Subtitle>
+        {month}/{year}
+      </Subtitle>
       <HeaderContainer
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{
@@ -79,14 +95,7 @@ function Header({ onSelect, selected }: HeaderProps) {
                   isSelected={day === selectedDay}
                   key={Math.random().toString()}
                   onPress={() => {
-                    const selectedDate = new Date(
-                      today.getFullYear(),
-                      month,
-                      day,
-                    )
-                      .toISOString()
-                      .split('T')[0];
-                    onSelect(selectedDate);
+                    onSelect(day);
                     setSelectedDay(day);
                   }}>
                   <DateText isSelected={day === selectedDay}>{day}</DateText>

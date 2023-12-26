@@ -21,14 +21,12 @@ export const TextContainer = styled.View`
 
 export const Title = styled.Text`
   font-size: 24px;
-  font-weight: 700;
   font-family: 'Inter-Bold';
   color: ${(props: any) => props.theme.TEXT_COLOR};
 `;
 
 export const Subtitle = styled.Text`
-  font-size: 12px;
-  font-family: 'Inter-Regular';
-  font-style: italic;
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  font-size: 20px;
+  font-family: 'Inter-Bold';
+  color: ${(props: any) => props.theme.GRAY500};
 `;

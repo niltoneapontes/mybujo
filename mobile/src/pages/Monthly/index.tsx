@@ -116,8 +116,10 @@ function Monthly() {
       const year = await AsyncStorage.getItem('@mybujo/selectedYear');
       const yearNumber = Number(year);
 
-      console.log(yearNumber);
-      if (yearNumber) {
+      const month = await AsyncStorage.getItem('@mybujo/selectedMonth');
+      const monthNumber = Number(month);
+
+      if (yearNumber || monthNumber) {
         setSelectedYear(yearNumber);
       }
     }

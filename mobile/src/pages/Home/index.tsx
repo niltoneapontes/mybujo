@@ -20,6 +20,7 @@ function Home() {
       .toISOString()
       .split('T')[0],
   );
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
   const [initHTML, setInitHTML] = useState('');
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User>();
@@ -64,23 +65,21 @@ function Home() {
       const year = await AsyncStorage.getItem('@mybujo/selectedYear');
       const yearNumber = Number(year);
 
-      if (monthNumber && yearNumber) {
+      if (monthNumber || yearNumber) {
         setSelectedDate(
-          new Date(yearNumber, monthNumber, today.getDate())
+          new Date(yearNumber, monthNumber, selectedDay)
             .toISOString()
             .split('T')[0],
         );
       }
     }
 
-    if (isFocused) {
-      getNewInfo();
-    }
-  }, [isFocused, today]);
+    getNewInfo();
+  }, [isFocused, today, selectedDay]);
 
   return (
     <Container>
-      <Header onSelect={setSelectedDate} selected={selectedDate} />
+      <Header onSelect={setSelectedDay} />
       {loading ? (
         <WrappingView>
           <ActivityIndicator

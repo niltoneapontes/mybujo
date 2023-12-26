@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const HeaderContainer = styled.ScrollView`
   width: 100%;
-  padding: 8px 6px;
+  padding: 4px 6px;
 `;
 
 export const DateComponent = styled.TouchableOpacity`
@@ -27,14 +27,17 @@ export const DateText = styled.Text`
   font-size: 24px;
   font-family: 'Inter-Regular';
   color: ${(props: any) =>
-    props.isSelected ? props.theme.TEXT_COLOR : props.theme.DARK_TEXT_COLOR};
+    props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
 `;
 
 export const Subtitle = styled.Text`
   font-size: 16px;
+  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  padding: 4px 8px;
+  border-radius: 16px;
   font-family: 'Inter-SemiBold';
-  align-self: flex-end;
+  align-self: center;
   margin-right: 16px;
   margin-top: 8px;
-  color: ${(props: any) => props.theme.GRAY500};
+  color: ${(props: any) => props.theme.WHITE};
 `;
