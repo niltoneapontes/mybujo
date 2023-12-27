@@ -9,12 +9,14 @@ import { User } from '../../models/User';
 import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 function Future() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(true);
   const [initHTML, setInitHTML] = useState('');
   const [user, setUser] = useState<User>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getUserData()
@@ -29,7 +31,7 @@ function Future() {
     }
 
     getYear();
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     setLoading(true);

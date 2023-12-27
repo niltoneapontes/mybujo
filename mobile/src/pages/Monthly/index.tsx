@@ -53,6 +53,13 @@ function getEnumIndex(enumObj, value) {
   return index;
 }
 
+function getValueByIndex(enumObj, index) {
+  const valores = Object.values(enumObj);
+  const result = valores[index];
+  console.log(result);
+  return result;
+}
+
 function Monthly() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
@@ -74,10 +81,14 @@ function Monthly() {
   useEffect(() => {
     const index = getEnumIndex(Months, selectedMonth);
     async function setMonth(monthIndex: number) {
-      await AsyncStorage.setItem(
-        '@mybujo/selectedMonth',
-        monthIndex.toString(),
-      );
+      try {
+        await AsyncStorage.setItem(
+          '@mybujo/selectedMonth',
+          monthIndex.toString(),
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     setMonth(index);
@@ -106,7 +117,7 @@ function Monthly() {
       }
     }
 
-    if (user && user?.id) {
+    if (user && user?.id && selectedMonth) {
       getInitHtml();
     }
   }, [selectedMonth, selectedYear, user]);
@@ -119,8 +130,12 @@ function Monthly() {
       const month = await AsyncStorage.getItem('@mybujo/selectedMonth');
       const monthNumber = Number(month);
 
-      if (yearNumber || monthNumber) {
+      if (yearNumber) {
         setSelectedYear(yearNumber);
+      }
+      if (monthNumber) {
+        const monthName = getValueByIndex(Months, monthNumber);
+        setSelectedMonth(monthName);
       }
     }
 
