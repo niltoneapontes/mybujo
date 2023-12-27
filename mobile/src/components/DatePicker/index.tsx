@@ -68,7 +68,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
     <>
       {!showSecondModal ? (
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible
           onRequestClose={() => setShow(false)}>
@@ -110,7 +110,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
         </Modal>
       ) : (
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible
           onRequestClose={() => setShow(false)}>
