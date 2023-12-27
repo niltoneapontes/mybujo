@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SelectorHeader from '../../components/SelectorHeader';
 import { Container } from './styles';
-import moment from 'moment';
+import moment, { months } from 'moment';
 import { ActivityIndicator } from 'react-native';
 import MonthlyInput from '../../components/MonthlyInput';
 import { User } from '../../models/User';
@@ -74,10 +74,14 @@ function Monthly() {
   useEffect(() => {
     const index = getEnumIndex(Months, selectedMonth);
     async function setMonth(monthIndex: number) {
-      await AsyncStorage.setItem(
-        '@mybujo/selectedMonth',
-        monthIndex.toString(),
-      );
+      try {
+        await AsyncStorage.setItem(
+          '@mybujo/selectedMonth',
+          monthIndex.toString(),
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     setMonth(index);
@@ -119,14 +123,21 @@ function Monthly() {
       const month = await AsyncStorage.getItem('@mybujo/selectedMonth');
       const monthNumber = Number(month);
 
-      if (yearNumber || monthNumber) {
+      if (yearNumber) {
         setSelectedYear(yearNumber);
+      }
+      if (monthNumber) {
+        setSelectedMonth(
+          Months[
+            moment(new Date(yearNumber, Number(monthNumber) - 1))
+              .format('MMMM')
+              .toUpperCase()
+          ],
+        );
       }
     }
 
-    if (isFocused) {
-      getNewInfo();
-    }
+    getNewInfo();
   }, [isFocused, today]);
 
   return (

@@ -30,14 +30,19 @@ export const DateText = styled.Text`
     props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
 `;
 
-export const Subtitle = styled.Text`
-  font-size: 16px;
+export const SubtitleButton = styled.TouchableOpacity`
+  flex-direction: row;
   background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  align-self: center;
+  justify-content: center;
   padding: 4px 8px;
   border-radius: 16px;
-  font-family: 'Inter-SemiBold';
-  align-self: center;
-  margin-right: 16px;
   margin-top: 8px;
+`;
+
+export const Subtitle = styled.Text`
+  font-size: 16px;
+  font-family: 'Inter-SemiBold';
   color: ${(props: any) => props.theme.WHITE};
+  margin-right: 4px;
 `;

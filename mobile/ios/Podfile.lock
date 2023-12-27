@@ -1208,6 +1208,8 @@ PODS:
   - RNGoogleSignin (10.1.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - RNPermissions (4.0.1):
+    - React-Core
   - RNReanimated (2.17.0):
     - DoubleConversion
     - FBLazyVector
@@ -1292,6 +1294,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1423,6 +1426,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1514,12 +1519,13 @@ SPEC CHECKSUMS:
   RNFBFirestore: d469f8331952970100a1015baebc2bb831a667a7
   RNFBMessaging: c839473d12cbe1b042b29898177033de4214e932
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
+  RNPermissions: 59c96206917535f6373e137a379cd1a0637f4147
   RNReanimated: c6f8f70e96dd6ca21b65aef9b3e4efe4965db905
   RNScreens: fa9b582d85ae5d62c91c66003b5278458fed7aaa
   RNSVG: d7d7bc8229af3842c9cfc3a723c815a52cdd1105
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
 
-PODFILE CHECKSUM: ec1da0b47acc406d0ddbd3aa7df251aafaaa1ecd
+PODFILE CHECKSUM: c38ba16c1822b4028722e6791c46bec37c23e7d2
 
 COCOAPODS: 1.11.3
