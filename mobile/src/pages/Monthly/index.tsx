@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SelectorHeader from '../../components/SelectorHeader';
 import { Container } from './styles';
-import moment from 'moment';
+import moment, { months } from 'moment';
 import { ActivityIndicator } from 'react-native';
 import MonthlyInput from '../../components/MonthlyInput';
 import { User } from '../../models/User';
@@ -51,13 +51,6 @@ function getEnumIndex(enumObj, value) {
   const valores = Object.values(enumObj);
   const index = valores.indexOf(value) + 1;
   return index;
-}
-
-function getValueByIndex(enumObj, index) {
-  const valores = Object.values(enumObj);
-  const result = valores[index];
-  console.log(result);
-  return result;
 }
 
 function Monthly() {
@@ -117,7 +110,7 @@ function Monthly() {
       }
     }
 
-    if (user && user?.id && selectedMonth) {
+    if (user && user?.id) {
       getInitHtml();
     }
   }, [selectedMonth, selectedYear, user]);
@@ -134,14 +127,17 @@ function Monthly() {
         setSelectedYear(yearNumber);
       }
       if (monthNumber) {
-        const monthName = getValueByIndex(Months, monthNumber);
-        setSelectedMonth(monthName);
+        setSelectedMonth(
+          Months[
+            moment(new Date(yearNumber, Number(monthNumber) - 1))
+              .format('MMMM')
+              .toUpperCase()
+          ],
+        );
       }
     }
 
-    if (isFocused) {
-      getNewInfo();
-    }
+    getNewInfo();
   }, [isFocused, today]);
 
   return (

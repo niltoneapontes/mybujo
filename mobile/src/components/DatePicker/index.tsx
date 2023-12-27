@@ -1,14 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Button,
-  Modal,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-} from 'react-native';
+import { Modal, FlatList, useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 import { DatePickerItem, DatePickerItemText, ModalContainer } from './styles';
 
@@ -17,8 +9,8 @@ interface DatePickerProps {
 }
 
 const DatePicker = ({ setShow }: DatePickerProps) => {
-  const [selectedMonth, setSelectedMonth] = useState<number | undefined>();
-  const [selectedYear, setSelectedYear] = useState<number | undefined>();
+  const [selectedMonth, setSelectedMonth] = useState<number | null>();
+  const [selectedYear, setSelectedYear] = useState<number | null>();
   const [showSecondModal, setShowSecondModal] = useState(false);
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
 
