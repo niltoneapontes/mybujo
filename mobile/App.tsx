@@ -27,6 +27,7 @@ import { getUserData } from './src/utils/getUserData';
 import 'react-native-reanimated';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
+import { firebase } from '@react-native-firebase/auth';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -63,20 +64,32 @@ const App = () => {
   }, []);
 
   getUserData().then(async response => {
-    const hasSeenTutorial = await AsyncStorage.getItem(
-      '@mybujo/hasSeenTutorial2',
-    );
+    try {
+      const hasSeenTutorial = await AsyncStorage.getItem(
+        '@mybujo/hasSeenTutorial2',
+      );
 
-    if (response) {
-      if (!hasSeenTutorial || hasSeenTutorial !== 'true') {
-        setInitialRoute('Tutorial');
-      } else {
-        setInitialRoute('BottomTabNavigator');
+      if (response.origin === 'GOOGLE') {
+        const userFromGoogleApi = await GoogleSignin.signIn();
+        const token = userFromGoogleApi.idToken;
+        await firebase.auth().signInWithCustomToken(token ?? '');
       }
+
+      if (response) {
+        if (!hasSeenTutorial || hasSeenTutorial !== 'true') {
+          setInitialRoute('Tutorial');
+        } else {
+          setInitialRoute('BottomTabNavigator');
+        }
+      }
+    } catch (error) {
+      console.error('Generic Error: ', error);
     }
   });
 
   useEffect(() => {
+    configFirebase();
+
     configGoogleLogin();
 
     configFacebookLogin();
@@ -100,6 +113,13 @@ const App = () => {
     Settings.setAppID('3394570814187836');
     Settings.setClientToken('4fb0fc07b647cce37fa305513c0b4d2f');
     Settings.initializeSDK();
+  }
+
+  async function configFirebase() {
+    await firebase.initializeApp({
+      appId: '1:383023240379:android:071afd18ab83c93c25c59e',
+      projectId: '383023240379',
+    });
   }
 
   if (showSplashScreen) {

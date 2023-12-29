@@ -154,6 +154,8 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
       .where('userId', '==', user?.id)
       .get();
 
+    console.log(snapshot);
+
     if (snapshot.docs.length === 0) {
       firestore().collection('Daily').add(dailyData);
     } else {
