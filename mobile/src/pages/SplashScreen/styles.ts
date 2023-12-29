@@ -19,3 +19,11 @@ export const Container = styled(LinearGradient).attrs({
 
 // @ts-ignore
 export const LogoWrapper = styled(MotiView)``;
+
+export const VersionText = styled.Text`
+  font-size: 10px;
+  color: ${darkTheme.WHITE};
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+`;

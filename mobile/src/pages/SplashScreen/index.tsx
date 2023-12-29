@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, LogoWrapper } from './styles';
+import { Container, LogoWrapper, VersionText } from './styles';
 import Logo from '../../../assets/splashlogo.svg';
 
 function SplashScreen() {
@@ -18,6 +18,7 @@ function SplashScreen() {
         }}>
         <Logo />
       </LogoWrapper>
+      <VersionText>2.4.2</VersionText>
     </Container>
   );
 }
