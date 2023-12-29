@@ -11,6 +11,7 @@ import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import Toast from '../../components/Toast';
 
 export enum Months {
   JANUARY = 'Janeiro',
@@ -64,6 +65,11 @@ function Monthly() {
   const [initHTML, setInitHTML] = useState('');
   const [user, setUser] = useState<User>();
   const isFocused = useIsFocused();
+  const [message, setMessage] = useState<string | null>(null);
+
+  const clearMessage = () => {
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   useEffect(() => {
     getUserData()
@@ -104,6 +110,8 @@ function Monthly() {
           setInitHTML('');
         }
       } catch (error) {
+        setMessage('Oops... Não conseguimos nos conectar com o servidor.');
+        clearMessage();
         console.error('Error getting monthly: ', error);
       } finally {
         setLoading(false);
@@ -141,37 +149,40 @@ function Monthly() {
   }, [isFocused, today]);
 
   return (
-    <Container>
-      <SelectorHeader
-        current={selectedMonth}
-        suffix={selectedYear.toString()}
-        goOneBack={() => {
-          setLoading(true);
-          setSelectedMonth(previousEnumValue(Months, selectedMonth));
-          setLoading(false);
-        }}
-        goOneForward={() => {
-          setLoading(true);
-          setSelectedMonth(nextEnumValue(Months, selectedMonth));
-          setLoading(false);
-        }}
-      />
-      {loading ? (
-        <WrappingView>
-          <ActivityIndicator
-            size={'large'}
-            animating
-            color={lightTheme.PRIMARY_COLOR}
-          />
-        </WrappingView>
-      ) : (
-        <MonthlyInput
-          selectedYear={selectedYear}
-          selectedMonth={selectedMonth}
-          initHTML={initHTML}
+    <>
+      <Container>
+        <SelectorHeader
+          current={selectedMonth}
+          suffix={selectedYear.toString()}
+          goOneBack={() => {
+            setLoading(true);
+            setSelectedMonth(previousEnumValue(Months, selectedMonth));
+            setLoading(false);
+          }}
+          goOneForward={() => {
+            setLoading(true);
+            setSelectedMonth(nextEnumValue(Months, selectedMonth));
+            setLoading(false);
+          }}
         />
-      )}
-    </Container>
+        {loading ? (
+          <WrappingView>
+            <ActivityIndicator
+              size={'large'}
+              animating
+              color={lightTheme.PRIMARY_COLOR}
+            />
+          </WrappingView>
+        ) : (
+          <MonthlyInput
+            selectedYear={selectedYear}
+            selectedMonth={selectedMonth}
+            initHTML={initHTML}
+          />
+        )}
+      </Container>
+      {message && <Toast text={message} type="error" />}
+    </>
   );
 }
 

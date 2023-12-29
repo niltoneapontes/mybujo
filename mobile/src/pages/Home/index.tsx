@@ -11,6 +11,7 @@ import WrappingView from '../../components/WrappingView';
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyDatePicker from '../../components/DatePicker';
+import Toast from '../../components/Toast';
 
 function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,6 +28,11 @@ function Home() {
   const [user, setUser] = useState<User>();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const isFocused = useIsFocused();
+  const [message, setMessage] = useState<string | null>(null);
+
+  const clearMessage = () => {
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   useEffect(() => {
     getUserData()
@@ -50,6 +56,8 @@ function Home() {
           setInitHTML('');
         }
       } catch (error) {
+        setMessage('Oops... Não conseguimos nos conectar com o servidor.');
+        clearMessage();
         console.error('Error getting daily: ', error);
       }
     }
@@ -86,25 +94,28 @@ function Home() {
   }, [isFocused, today, showDatePicker, selectedDay]);
 
   return (
-    <Container>
-      <Header
-        onSelect={setSelectedDay}
-        onShowDatePicker={setShowDatePicker}
-        selectedDate={selectedDate}
-      />
-      {loading ? (
-        <WrappingView>
-          <ActivityIndicator
-            size={'large'}
-            animating
-            color={lightTheme.PRIMARY_COLOR}
-          />
-        </WrappingView>
-      ) : (
-        <DailyInput selectedDate={selectedDate} initHTML={initHTML} />
-      )}
-      {showDatePicker && <MyDatePicker setShow={setShowDatePicker} />}
-    </Container>
+    <>
+      <Container>
+        <Header
+          onSelect={setSelectedDay}
+          onShowDatePicker={setShowDatePicker}
+          selectedDate={selectedDate}
+        />
+        {loading ? (
+          <WrappingView>
+            <ActivityIndicator
+              size={'large'}
+              animating
+              color={lightTheme.PRIMARY_COLOR}
+            />
+          </WrappingView>
+        ) : (
+          <DailyInput selectedDate={selectedDate} initHTML={initHTML} />
+        )}
+        {showDatePicker && <MyDatePicker setShow={setShowDatePicker} />}
+      </Container>
+      {message && <Toast text={message} type="error" />}
+    </>
   );
 }
 

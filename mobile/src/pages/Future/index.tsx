@@ -10,6 +10,7 @@ import { lightTheme } from '../../tokens/colors';
 import WrappingView from '../../components/WrappingView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import Toast from '../../components/Toast';
 
 function Future() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -17,6 +18,11 @@ function Future() {
   const [initHTML, setInitHTML] = useState('');
   const [user, setUser] = useState<User>();
   const isFocused = useIsFocused();
+  const [message, setMessage] = useState<string | null>(null);
+
+  const clearMessage = () => {
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   useEffect(() => {
     getUserData()
@@ -49,6 +55,8 @@ function Future() {
           setInitHTML('');
         }
       } catch (error) {
+        setMessage('Oops... Não conseguimos nos conectar com o servidor.');
+        clearMessage();
         console.error('Error getting future: ', error);
       } finally {
         setLoading(false);
@@ -72,32 +80,35 @@ function Future() {
   }, [selectedYear]);
 
   return (
-    <Container>
-      <SelectorHeader
-        current={selectedYear}
-        goOneBack={() => {
-          setLoading(true);
-          setSelectedYear(selectedYear - 1);
-          setLoading(false);
-        }}
-        goOneForward={() => {
-          setLoading(true);
-          setSelectedYear(selectedYear + 1);
-          setLoading(false);
-        }}
-      />
-      {loading ? (
-        <WrappingView>
-          <ActivityIndicator
-            size={'large'}
-            animating
-            color={lightTheme.PRIMARY_COLOR}
-          />
-        </WrappingView>
-      ) : (
-        <FutureInput selectedYear={selectedYear} initHTML={initHTML} />
-      )}
-    </Container>
+    <>
+      <Container>
+        <SelectorHeader
+          current={selectedYear}
+          goOneBack={() => {
+            setLoading(true);
+            setSelectedYear(selectedYear - 1);
+            setLoading(false);
+          }}
+          goOneForward={() => {
+            setLoading(true);
+            setSelectedYear(selectedYear + 1);
+            setLoading(false);
+          }}
+        />
+        {loading ? (
+          <WrappingView>
+            <ActivityIndicator
+              size={'large'}
+              animating
+              color={lightTheme.PRIMARY_COLOR}
+            />
+          </WrappingView>
+        ) : (
+          <FutureInput selectedYear={selectedYear} initHTML={initHTML} />
+        )}
+      </Container>
+      {message && <Toast text={message} type="error" />}
+    </>
   );
 }
 

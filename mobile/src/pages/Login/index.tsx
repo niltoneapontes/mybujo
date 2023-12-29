@@ -26,6 +26,7 @@ import { lightTheme } from '../../tokens/colors';
 import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from '../../components/Toast';
+import firebase from '@react-native-firebase/app';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
@@ -40,7 +41,7 @@ function Login() {
 
   const storeData = async (userValue: User) => {
     try {
-      await AsyncStorage.setItem('mybujo-user', JSON.stringify(userValue));
+      await AsyncStorage.setItem('@mybujo/user', JSON.stringify(userValue));
     } catch (e) {
       setMessage('Oops... Não foi possível se conectar ao servidor.');
       clearMessage();
@@ -73,6 +74,8 @@ function Login() {
       };
 
       storeData(userInfo);
+
+      await auth().signInWithCustomToken(userFromGoogleApi.idToken!!);
 
       const snapshot = await firestore()
         .collection('Users')
