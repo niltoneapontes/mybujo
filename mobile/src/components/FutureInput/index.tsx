@@ -5,7 +5,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container, Disclaimer } from './styles';
+import {
+  Container,
+  CopyPasteContainer,
+  CopyPasteContainerText,
+  Disclaimer,
+} from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -17,7 +22,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   RefreshControl,
-  Text,
+  TouchableOpacity,
   useColorScheme,
 } from 'react-native';
 import { StyleSheet, ScrollView } from 'react-native';
@@ -27,6 +32,8 @@ import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import { Future } from '../../models/Future';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface FutureInputProps {
   selectedYear: number;
@@ -295,6 +302,30 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}>
+        <CopyPasteContainer>
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(contentRef.current);
+            }}
+            style={{ alignItems: 'center' }}>
+            <Icon name="content-copy" size={24} color={theme.WHITE} />
+            <CopyPasteContainerText>Copiar</CopyPasteContainerText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              setRefreshing(true);
+              try {
+                const text = await Clipboard.getString();
+                contentRef.current = text;
+              } finally {
+                setRefreshing(false);
+              }
+            }}
+            style={{ marginLeft: 8, alignItems: 'center' }}>
+            <Icon name="content-paste" size={24} color={theme.WHITE} />
+            <CopyPasteContainerText>Colar</CopyPasteContainerText>
+          </TouchableOpacity>
+        </CopyPasteContainer>
         <Disclaimer>{disclaimerMessage}</Disclaimer>
         <RichToolbar
           style={[
@@ -315,6 +346,8 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
             actions.checkboxList,
             actions.insertBulletsList,
             actions.insertOrderedList,
+            actions.heading4,
+            actions.setParagraph,
             actions.setStrikethrough,
             actions.blockquote,
             actions.alignLeft,
@@ -322,27 +355,13 @@ function FutureInput({ selectedYear, initHTML }: FutureInputProps) {
             actions.alignRight,
             actions.code,
             actions.line,
-            actions.heading4,
-            actions.setParagraph,
           ]} // default defaultActions
           iconMap={{
-            [actions.foreColor]: () => (
-              <Text style={[styles.tib, { color: 'blue' }]}>FC</Text>
-            ),
-            [actions.hiliteColor]: ({ tintColor }: IconRecord) => (
-              <Text
-                style={[
-                  styles.tib,
-                  { color: tintColor, backgroundColor: 'red' },
-                ]}>
-                BC
-              </Text>
+            [actions.setParagraph]: ({ tintColor }: IconRecord) => (
+              <Icon name="format-paragraph" size={24} color={tintColor} />
             ),
             [actions.heading4]: ({ tintColor }: IconRecord) => (
-              <Text style={[styles.tib, { color: tintColor }]}>h4</Text>
-            ),
-            [actions.setParagraph]: ({ tintColor }: IconRecord) => (
-              <Text style={[styles.tib, { color: tintColor }]}>p</Text>
+              <Icon name="format-title" size={24} color={tintColor} />
             ),
           }}
           foreColor={handleForeColor}

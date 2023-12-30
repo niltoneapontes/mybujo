@@ -164,7 +164,9 @@ export default class RichToolbar extends Component {
 
     switch (action) {
       case actions.insertLink:
-        if (onInsertLink) return onInsertLink();
+        if (onInsertLink) {
+          return onInsertLink();
+        }
       case actions.setBold:
       case actions.setItalic:
       case actions.undo:
