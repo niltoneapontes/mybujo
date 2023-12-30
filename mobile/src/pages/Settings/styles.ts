@@ -24,6 +24,7 @@ export const ContentContainer = styled.View`
   width: 100%;
   flex: 1;
   padding: 16px;
+  padding-bottom: 40px;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -47,6 +48,14 @@ export const ProfileDescription = styled.Text`
   font-size: 20px;
   font-weight: 400;
   margin-bottom: 24px;
+  font-family: 'Inter-Regular';
+  color: ${(props: any) => props.theme.TEXT_COLOR};
+`;
+
+export const Version = styled.Text`
+  font-size: 12px;
+  position: absolute;
+  bottom: 8px;
   font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.TEXT_COLOR};
 `;

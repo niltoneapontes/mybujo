@@ -7,6 +7,7 @@ import {
   ProfileName,
   ProfilePicture,
   SettingsHeader,
+  Version,
 } from './styles';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Button from '../../components/Button';
@@ -84,6 +85,7 @@ function Settings() {
           text="Sair do aplicativo"
           type="cancel"
         />
+        <Version>Versão: 2.4.4</Version>
       </ContentContainer>
     </Container>
   );

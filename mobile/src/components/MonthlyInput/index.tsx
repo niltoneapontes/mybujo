@@ -39,12 +39,16 @@ interface MonthlyInputProps {
   selectedYear: number;
   selectedMonth: string;
   initHTML: string;
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  clearMessage: () => void;
 }
 
 function MonthlyInput({
   selectedYear,
   selectedMonth,
   initHTML,
+  setMessage,
+  clearMessage,
 }: MonthlyInputProps) {
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
@@ -311,33 +315,37 @@ function MonthlyInput({
           />
         )}
       </ScrollView>
+      <CopyPasteContainer>
+        <TouchableOpacity
+          onPress={() => {
+            Clipboard.setString(contentRef.current);
+            setMessage('Você copiou todo o conteúdo');
+            clearMessage();
+          }}
+          style={{ alignItems: 'center' }}>
+          <Icon name="content-copy" size={24} color={theme.WHITE} />
+          <CopyPasteContainerText>Copiar</CopyPasteContainerText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={async () => {
+            setRefreshing(true);
+            try {
+              const text = await Clipboard.getString();
+              contentRef.current = text;
+              setMessage('Você inseriu todo o conteúdo');
+              clearMessage();
+            } finally {
+              setRefreshing(false);
+            }
+          }}
+          style={{ marginLeft: 8, alignItems: 'center' }}>
+          <Icon name="content-paste" size={24} color={theme.WHITE} />
+          <CopyPasteContainerText>Colar</CopyPasteContainerText>
+        </TouchableOpacity>
+      </CopyPasteContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}>
-        <CopyPasteContainer>
-          <TouchableOpacity
-            onPress={() => {
-              Clipboard.setString(contentRef.current);
-            }}
-            style={{ alignItems: 'center' }}>
-            <Icon name="content-copy" size={24} color={theme.WHITE} />
-            <CopyPasteContainerText>Copiar</CopyPasteContainerText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={async () => {
-              setRefreshing(true);
-              try {
-                const text = await Clipboard.getString();
-                contentRef.current = text;
-              } finally {
-                setRefreshing(false);
-              }
-            }}
-            style={{ marginLeft: 8, alignItems: 'center' }}>
-            <Icon name="content-paste" size={24} color={theme.WHITE} />
-            <CopyPasteContainerText>Colar</CopyPasteContainerText>
-          </TouchableOpacity>
-        </CopyPasteContainer>
         <Disclaimer>{disclaimerMessage}</Disclaimer>
         <RichToolbar
           style={[

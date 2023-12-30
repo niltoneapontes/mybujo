@@ -75,7 +75,7 @@ function Login() {
 
       storeData(userInfo);
 
-      await auth().signInWithCustomToken(userFromGoogleApi.idToken!!);
+      auth.GoogleAuthProvider.credential(tokens.idToken);
 
       const snapshot = await firestore()
         .collection('Users')

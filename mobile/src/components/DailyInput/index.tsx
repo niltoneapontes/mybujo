@@ -37,9 +37,16 @@ import Clipboard from '@react-native-clipboard/clipboard';
 interface DailyInputProps {
   selectedDate: string;
   initHTML: string;
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  clearMessage: () => void;
 }
 
-function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
+function DailyInput({
+  selectedDate,
+  initHTML,
+  setMessage,
+  clearMessage,
+}: DailyInputProps) {
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
@@ -209,8 +216,6 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           .where('date', '==', selectedDate)
           .get();
 
-        console.log(registries.docs[0].get('content')?.toString()!!);
-
         if (registries.docs.length > 0) {
           contentRef.current = registries.docs[0].get('content')?.toString()!!;
         }
@@ -277,33 +282,37 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
           />
         )}
       </ScrollView>
+      <CopyPasteContainer>
+        <TouchableOpacity
+          onPress={() => {
+            Clipboard.setString(contentRef.current);
+            setMessage('Você copiou todo o conteúdo');
+            clearMessage();
+          }}
+          style={{ alignItems: 'center' }}>
+          <Icon name="content-copy" size={24} color={theme.WHITE} />
+          <CopyPasteContainerText>Copiar</CopyPasteContainerText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={async () => {
+            setRefreshing(true);
+            try {
+              const text = await Clipboard.getString();
+              contentRef.current = text;
+              setMessage('Você inseriu todo o conteúdo');
+              clearMessage();
+            } finally {
+              setRefreshing(false);
+            }
+          }}
+          style={{ marginLeft: 8, alignItems: 'center' }}>
+          <Icon name="content-paste" size={24} color={theme.WHITE} />
+          <CopyPasteContainerText>Colar</CopyPasteContainerText>
+        </TouchableOpacity>
+      </CopyPasteContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
-        <CopyPasteContainer>
-          <TouchableOpacity
-            onPress={() => {
-              Clipboard.setString(contentRef.current);
-            }}
-            style={{ alignItems: 'center' }}>
-            <Icon name="content-copy" size={24} color={theme.WHITE} />
-            <CopyPasteContainerText>Copiar</CopyPasteContainerText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={async () => {
-              setRefreshing(true);
-              try {
-                const text = await Clipboard.getString();
-                contentRef.current = text;
-              } finally {
-                setRefreshing(false);
-              }
-            }}
-            style={{ marginLeft: 8, alignItems: 'center' }}>
-            <Icon name="content-paste" size={24} color={theme.WHITE} />
-            <CopyPasteContainerText>Colar</CopyPasteContainerText>
-          </TouchableOpacity>
-        </CopyPasteContainer>
         <Disclaimer>{disclaimerMessage}</Disclaimer>
         <RichToolbar
           style={[

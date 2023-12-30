@@ -24,14 +24,18 @@ function Home() {
   );
   const [selectedDay, setSelectedDay] = useState(today.getDate());
   const [initHTML, setInitHTML] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const isFocused = useIsFocused();
   const [message, setMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const clearMessage = () => {
-    setTimeout(() => setMessage(null), 5000);
+    setTimeout(() => {
+      setMessage(null);
+      setSuccessMessage(null);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -110,11 +114,17 @@ function Home() {
             />
           </WrappingView>
         ) : (
-          <DailyInput selectedDate={selectedDate} initHTML={initHTML} />
+          <DailyInput
+            selectedDate={selectedDate}
+            initHTML={initHTML}
+            setMessage={setSuccessMessage}
+            clearMessage={clearMessage}
+          />
         )}
         {showDatePicker && <MyDatePicker setShow={setShowDatePicker} />}
       </Container>
       {message && <Toast text={message} type="error" />}
+      {successMessage && <Toast text={successMessage} type="success" />}
     </>
   );
 }
