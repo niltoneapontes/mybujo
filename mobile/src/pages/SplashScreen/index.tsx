@@ -18,7 +18,7 @@ function SplashScreen() {
         }}>
         <Logo />
       </LogoWrapper>
-      <VersionText>2.4.2</VersionText>
+      <VersionText>2.4.3</VersionText>
     </Container>
   );
 }

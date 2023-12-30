@@ -30,7 +30,7 @@ export const LabelText = styled.Text`
   font-size: 16px;
   font-family: 'Inter-SemiBold';
   text-align: left;
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${(props: any) => props.theme.TEXT_COLOR};
 `;
 
 export const ExplainingText = styled.Text`
@@ -39,5 +39,5 @@ export const ExplainingText = styled.Text`
   font-size: 24px;
   font-family: 'Inter-Black';
   text-align: left;
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${(props: any) => props.theme.TEXT_COLOR};
 `;

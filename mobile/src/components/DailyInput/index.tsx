@@ -194,12 +194,33 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
+    async function getInitHtml() {
+      try {
+        const registries = await firestore()
+          .collection('Daily')
+          .where('userId', '==', user?.id)
+          .where('date', '==', selectedDate)
+          .get();
+
+        console.log(registries.docs[0].get('content')?.toString()!!);
+
+        if (registries.docs.length > 0) {
+          contentRef.current = registries.docs[0].get('content')?.toString()!!;
+        }
+      } catch (error) {
+        console.error('Error getting daily: ', error);
+      }
+    }
+
     setRefreshing(true);
+    if (user) {
+      getInitHtml();
+    }
     richText.current?.forceUpdate();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, []);
+  }, [selectedDate, user]);
 
   return (
     <Container>
@@ -231,7 +252,7 @@ function DailyInput({ selectedDate, initHTML }: DailyInputProps) {
             useContainer={true}
             enterKeyHint={'go'}
             placeholder={'Planeje o seu dia aqui ✏️'}
-            initialContentHTML={initHTML}
+            initialContentHTML={contentRef.current}
             editorInitializedCallback={editorInitializedCallback}
             onChange={handleChange}
             onHeightChange={handleHeightChange}

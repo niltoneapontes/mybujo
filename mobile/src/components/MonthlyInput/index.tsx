@@ -227,12 +227,34 @@ function MonthlyInput({
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
+    async function getInitHtml() {
+      try {
+        const registries = await firestore()
+          .collection('Monthly')
+          .where('userId', '==', user?.id)
+          .where('month', '==', selectedMonth)
+          .where('year', '==', selectedYear.toString())
+          .get();
+
+        console.log(registries.docs[0].get('content')?.toString()!!);
+
+        if (registries.docs.length > 0) {
+          contentRef.current = registries.docs[0].get('content')?.toString()!!;
+        }
+      } catch (error) {
+        console.error('Error getting daily: ', error);
+      }
+    }
+
     setRefreshing(true);
+    if (user) {
+      getInitHtml();
+    }
     richText.current?.forceUpdate();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, []);
+  }, [selectedMonth, selectedYear, user]);
 
   return (
     <Container>
@@ -253,32 +275,34 @@ function MonthlyInput({
             colors={[lightTheme.PRIMARY_COLOR]}
           />
         }>
-        <RichEditor
-          initialFocus={false}
-          firstFocusEnd={false}
-          disabled={disabled}
-          editorStyle={contentStyle}
-          ref={richText}
-          style={styles.rich}
-          useContainer={true}
-          enterKeyHint={'go'}
-          placeholder={'Planeje o seu mês aqui 📅'}
-          initialContentHTML={initHTML}
-          editorInitializedCallback={editorInitializedCallback}
-          onChange={handleChange}
-          onHeightChange={handleHeightChange}
-          onPaste={handlePaste}
-          onKeyUp={handleKeyUp}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          onMessage={handleMessage}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onCursorPosition={handleCursorPosition}
-          pasteAsPlainText={true}
-          autoCorrect
-          autoCapitalize="sentences"
-        />
+        {!refreshing && (
+          <RichEditor
+            initialFocus={false}
+            firstFocusEnd={false}
+            disabled={disabled}
+            editorStyle={contentStyle}
+            ref={richText}
+            style={styles.rich}
+            useContainer={true}
+            enterKeyHint={'go'}
+            placeholder={'Planeje o seu mês aqui 📅'}
+            initialContentHTML={contentRef.current}
+            editorInitializedCallback={editorInitializedCallback}
+            onChange={handleChange}
+            onHeightChange={handleHeightChange}
+            onPaste={handlePaste}
+            onKeyUp={handleKeyUp}
+            onKeyDown={handleKeyDown}
+            onInput={handleInput}
+            onMessage={handleMessage}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onCursorPosition={handleCursorPosition}
+            pasteAsPlainText={true}
+            autoCorrect
+            autoCapitalize="sentences"
+          />
+        )}
       </ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
