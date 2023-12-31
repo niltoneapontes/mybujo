@@ -82,7 +82,7 @@ const App = () => {
 
   useEffect(() => {
     configGoogleLogin();
-
+    cleanAsyncStorage();
     configFacebookLogin();
 
     const timeout = setTimeout(() => {
@@ -90,6 +90,11 @@ const App = () => {
     }, 5000);
     return () => clearTimeout(timeout);
   }, []);
+
+  async function cleanAsyncStorage() {
+    await AsyncStorage.removeItem('@mybujo/selectedMonth');
+    await AsyncStorage.removeItem('@mybujo/selectedYear');
+  }
 
   function configGoogleLogin() {
     GoogleSignin.configure({
