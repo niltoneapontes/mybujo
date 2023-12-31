@@ -36,7 +36,7 @@ export const SubtitleButton = styled.TouchableOpacity`
   align-self: center;
   justify-content: center;
   padding: 4px 8px;
-  border-radius: 16px;
+  border-radius: 8px;
   margin-top: 8px;
 `;
 

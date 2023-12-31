@@ -52,11 +52,11 @@ function Performance() {
           .where('userId', '==', user?.id)
           .get();
 
-        const numberOfPlannedDays = snapshot.docs.map(doc => {
-          if (doc.data().date.includes('2023-12')) {
-            return doc;
-          }
-        }).length;
+        const numberOfPlannedDays = snapshot.docs.filter(
+          doc =>
+            doc.data().date.includes(`${year}-${month}`) &&
+            doc.data().content.length > 0,
+        ).length;
 
         setPlannedDays(numberOfPlannedDays);
 
@@ -72,7 +72,7 @@ function Performance() {
     if (user && user?.id) {
       getData();
     }
-  }, [today, user]);
+  }, [days.length, month, today, user, year]);
 
   return (
     <Container>

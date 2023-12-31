@@ -24,7 +24,7 @@ export const GoogleButton = styled.TouchableOpacity`
   height: 54px;
   width: 100%;
   background-color: ${(props: any) => props.theme.WHITE};
-  border-radius: 10px;
+  border-radius: 8px;
   elevation: 4;
   margin-bottom: 12px;
 `;

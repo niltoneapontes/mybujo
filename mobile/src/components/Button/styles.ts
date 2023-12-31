@@ -7,7 +7,8 @@ interface Props {
 export const ButtonContainer = styled.TouchableOpacity<Props>`
   width: 100%;
   height: 48px;
-  border-radius: 10px;
+  border-radius: 8px;
+  flex-direction: row;
   padding: 8px 12px;
   background-color: ${(props: any) => {
     switch (props.type) {
@@ -24,7 +25,7 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
     }
   }};
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 export const ButtonText = styled.Text<Props>`

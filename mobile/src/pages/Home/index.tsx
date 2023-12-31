@@ -18,7 +18,7 @@ function Home() {
   const today = new Date();
 
   const [selectedDate, setSelectedDate] = useState(
-    new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())
+    new Date(today.getFullYear(), today.getMonth(), today.getDate())
       .toISOString()
       .split('T')[0],
   );
@@ -119,6 +119,7 @@ function Home() {
             initHTML={initHTML}
             setMessage={setSuccessMessage}
             clearMessage={clearMessage}
+            setErrorMessage={setMessage}
           />
         )}
         {showDatePicker && <MyDatePicker setShow={setShowDatePicker} />}

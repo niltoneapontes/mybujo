@@ -61,6 +61,8 @@ function Settings() {
             }}
             text="Suas listas"
             type="action"
+            hasIcon
+            iconName="list"
           />
           <View style={{ marginBottom: 12 }} />
           <Button
@@ -69,6 +71,8 @@ function Settings() {
             }}
             text="Performance"
             type="action"
+            hasIcon
+            iconName="pie-chart"
           />
           <View style={{ marginBottom: 12 }} />
           <Button
@@ -77,6 +81,8 @@ function Settings() {
             }}
             text="Saiba mais sobre seus dados"
             type="action"
+            hasIcon
+            iconName="lock"
           />
         </ProfileContentContainer>
 
@@ -84,6 +90,8 @@ function Settings() {
           onPress={() => signOut()}
           text="Sair do aplicativo"
           type="cancel"
+          hasIcon
+          iconName="log-out"
         />
         <Version>Versão: 2.4.4</Version>
       </ContentContainer>

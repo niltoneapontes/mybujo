@@ -39,6 +39,7 @@ interface DailyInputProps {
   initHTML: string;
   setMessage: React.Dispatch<React.SetStateAction<string | null>>;
   clearMessage: () => void;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 function DailyInput({
@@ -46,6 +47,7 @@ function DailyInput({
   initHTML,
   setMessage,
   clearMessage,
+  setErrorMessage,
 }: DailyInputProps) {
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
@@ -202,7 +204,11 @@ function DailyInput({
   useEffect(() => {
     getUserData()
       .then(response => setUser(response))
-      .catch(error => console.error('Error reading user data: ', error));
+      .catch(error => {
+        setErrorMessage('Oops.. Não foi possível ler os dados do usuário');
+        clearMessage();
+        console.error('Error reading user data: ', error);
+      });
   }, []);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -220,6 +226,10 @@ function DailyInput({
           contentRef.current = registries.docs[0].get('content')?.toString()!!;
         }
       } catch (error) {
+        setErrorMessage(
+          'Oops.. Não foi possível buscar os dados para esse dia',
+        );
+        clearMessage();
         console.error('Error getting daily: ', error);
       }
     }
@@ -291,7 +301,7 @@ function DailyInput({
           }}
           style={{ alignItems: 'center' }}>
           <Icon name="content-copy" size={24} color={theme.WHITE} />
-          <CopyPasteContainerText>Copiar</CopyPasteContainerText>
+          <CopyPasteContainerText>Copiar tudo</CopyPasteContainerText>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
@@ -307,7 +317,7 @@ function DailyInput({
           }}
           style={{ marginLeft: 8, alignItems: 'center' }}>
           <Icon name="content-paste" size={24} color={theme.WHITE} />
-          <CopyPasteContainerText>Colar</CopyPasteContainerText>
+          <CopyPasteContainerText>Colar tudo</CopyPasteContainerText>
         </TouchableOpacity>
       </CopyPasteContainer>
       <KeyboardAvoidingView

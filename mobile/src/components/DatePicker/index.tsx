@@ -93,7 +93,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 </DatePickerItem>
               }
               ListHeaderComponentStyle={{
-                borderRadius: 16,
+                borderRadius: 8,
                 overflow: 'hidden',
                 borderBottomColor: theme.GRAY200,
                 borderBottomWidth: 0.5,
@@ -104,7 +104,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 backgroundColor: theme.PRIMARY_COLOR_DARKER,
                 width: 'auto',
                 maxHeight: months.length * 32,
-                borderRadius: 16,
+                borderRadius: 8,
               }}
               contentContainerStyle={{
                 alignItems: 'center',
@@ -129,7 +129,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 </DatePickerItem>
               }
               ListHeaderComponentStyle={{
-                borderRadius: 16,
+                borderRadius: 8,
                 overflow: 'hidden',
                 borderBottomColor: theme.GRAY200,
                 borderBottomWidth: 0.5,
@@ -146,7 +146,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 backgroundColor: theme.PRIMARY_COLOR_DARKER,
                 width: 'auto',
                 maxHeight: years.length * 32,
-                borderRadius: 16,
+                borderRadius: 8,
               }}
               contentContainerStyle={{
                 alignItems: 'center',

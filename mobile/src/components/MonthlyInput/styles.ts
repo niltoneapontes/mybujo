@@ -7,7 +7,7 @@ export const Container = styled.View`
 
 export const CopyPasteContainer = styled.View`
   background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
-  border-radius: 24px;
+  border-radius: 8px;
   padding: 12px;
   width: 100px;
   margin-left: 12px;
