@@ -32,10 +32,11 @@ function Home() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const clearMessage = () => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setMessage(null);
       setSuccessMessage(null);
-    }, 5000);
+    }, 4000);
+    clearTimeout(timeout);
   };
 
   useEffect(() => {

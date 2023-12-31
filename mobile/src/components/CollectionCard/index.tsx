@@ -53,7 +53,8 @@ function CollectionCard({
   }, []);
 
   const clearMessage = () => {
-    setTimeout(() => setMessage(null), 5000);
+    const timeout = setTimeout(() => setMessage(null), 6000);
+    clearTimeout(timeout);
   };
 
   const handleSave = async () => {

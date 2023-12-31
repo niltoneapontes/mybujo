@@ -26,7 +26,6 @@ import { lightTheme } from '../../tokens/colors';
 import { Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from '../../components/Toast';
-import firebase from '@react-native-firebase/app';
 
 function Login() {
   const [user, setUser] = useState<any>(null);
@@ -36,7 +35,8 @@ function Login() {
   const [message, setMessage] = useState<string | null>(null);
 
   const clearMessage = () => {
-    setTimeout(() => setMessage(null), 5000);
+    const timeout = setTimeout(() => setMessage(null), 6000);
+    clearTimeout(timeout);
   };
 
   const storeData = async (userValue: User) => {

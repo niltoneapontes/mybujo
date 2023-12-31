@@ -5,12 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Container,
-  CopyPasteContainer,
-  CopyPasteContainerText,
-  Disclaimer,
-} from './styles';
+import { Container, Disclaimer } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -21,7 +16,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   RefreshControl,
-  TouchableOpacity,
   useColorScheme,
 } from 'react-native';
 import { StyleSheet, ScrollView } from 'react-native';
@@ -32,7 +26,7 @@ import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Clipboard from '@react-native-clipboard/clipboard';
+import CopyPasteButton from '../CopyPasteButton';
 
 interface DailyInputProps {
   selectedDate: string;
@@ -242,7 +236,7 @@ function DailyInput({
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, [selectedDate, user]);
+  }, [clearMessage, selectedDate, setErrorMessage, user]);
 
   return (
     <Container>
@@ -292,34 +286,12 @@ function DailyInput({
           />
         )}
       </ScrollView>
-      <CopyPasteContainer>
-        <TouchableOpacity
-          onPress={() => {
-            Clipboard.setString(contentRef.current);
-            setMessage('Você copiou todo o conteúdo');
-            clearMessage();
-          }}
-          style={{ alignItems: 'center' }}>
-          <Icon name="content-copy" size={24} color={theme.WHITE} />
-          <CopyPasteContainerText>Copiar tudo</CopyPasteContainerText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={async () => {
-            setRefreshing(true);
-            try {
-              const text = await Clipboard.getString();
-              contentRef.current = text;
-              setMessage('Você inseriu todo o conteúdo');
-              clearMessage();
-            } finally {
-              setRefreshing(false);
-            }
-          }}
-          style={{ marginLeft: 8, alignItems: 'center' }}>
-          <Icon name="content-paste" size={24} color={theme.WHITE} />
-          <CopyPasteContainerText>Colar tudo</CopyPasteContainerText>
-        </TouchableOpacity>
-      </CopyPasteContainer>
+      <CopyPasteButton
+        contentRef={contentRef}
+        clearMessage={clearMessage}
+        setMessage={setMessage}
+        setRefreshing={setRefreshing}
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>

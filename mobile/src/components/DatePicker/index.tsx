@@ -11,12 +11,8 @@ interface DatePickerProps {
 const DatePicker = ({ setShow }: DatePickerProps) => {
   const today = new Date();
 
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(
-    today.getMonth() + 1,
-  );
-  const [selectedYear, setSelectedYear] = useState<number | null>(
-    today.getFullYear(),
-  );
+  const [selectedMonth, setSelectedMonth] = useState<number | null>();
+  const [selectedYear, setSelectedYear] = useState<number | null>();
   const [showSecondModal, setShowSecondModal] = useState(false);
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
 

@@ -19,9 +19,14 @@ function Future() {
   const [user, setUser] = useState<User>();
   const isFocused = useIsFocused();
   const [message, setMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const clearMessage = () => {
-    setTimeout(() => setMessage(null), 5000);
+    const timeout = setTimeout(() => {
+      setMessage(null);
+      setSuccessMessage(null);
+    }, 4000);
+    clearTimeout(timeout);
   };
 
   useEffect(() => {
@@ -104,10 +109,16 @@ function Future() {
             />
           </WrappingView>
         ) : (
-          <FutureInput selectedYear={selectedYear} initHTML={initHTML} />
+          <FutureInput
+            selectedYear={selectedYear}
+            initHTML={initHTML}
+            setMessage={setSuccessMessage}
+            clearMessage={clearMessage}
+          />
         )}
       </Container>
       {message && <Toast text={message} type="error" />}
+      {successMessage && <Toast text={successMessage} type="success" />}
     </>
   );
 }
