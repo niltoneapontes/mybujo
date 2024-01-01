@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen flex align-top justify-start overflow-visible bg-white z-50">
+    <div className="h-screen flex align-top absolute justify-start overflow-visible">
       <button onClick={toggleSidebar} className={`absolute top-2 ${isOpen ? "left-56" : "left-3"}  transition-all ease-in-out duration-150`}>
         <svg
           className="h-6 w-6 text-gray-600 cursor-pointer"

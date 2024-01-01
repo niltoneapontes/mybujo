@@ -9,10 +9,6 @@
   outline: none;
 }
 
-#root {
-  width: 100%;
-}
-
 h1, h2, h3, h4, a, p, div {
   font-family: 'Inter', sans-serif;
   color: #343A40;
