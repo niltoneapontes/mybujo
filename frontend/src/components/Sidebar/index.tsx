@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { lightTheme } from '../../tokens/colors';
+import { AuthContext } from '../../context/AuthContext';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -9,7 +10,7 @@ const Sidebar = () => {
     return uriParts[uriParts.length - 1]
   },[])
 
-  console.log(path)
+  const authContext = useContext(AuthContext)
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -46,7 +47,7 @@ const Sidebar = () => {
           overflow-y-auto ${!isOpen && "-translate-x-64"} transition-all ease-in-out duration-150`}
       >
         <div className="flex items-end pb-4 bg-primary justify-between mb-4 h-28 px-4 border-b border-b-slate-400" >
-          <span className="text-lg text-white font-bold">Olá, Fulano</span>
+          <span className="text-lg text-white font-bold">Olá, {authContext?.givenName}</span>
         </div>
         <div className={`w-full h-16 flex justify-start px-4 py-4 border-b border-b-slate-300 hover:opacity-60`}>
           <Link to='/daily' className={`${path.includes('daily') && 'text-primary font-semibold'}`}>Daily Log</Link>
@@ -62,6 +63,9 @@ const Sidebar = () => {
         </div>
         <div className={`w-full h-16 flex justify-start px-4 py-4 border-b border-b-slate-300 hover:opacity-60`}>
           <Link to='/settings' className={`${path.includes('settings') && 'text-primary font-semibold'}`}>Configurações</Link>
+        </div>
+        <div className={`w-full h-16 flex justify-start px-4 py-4 border-b border-b-slate-300 hover:opacity-60`}>
+          <Link to='/logout'>Sair</Link>
         </div>
       </div>
     </div>

@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { db } from '../../App';
 import { collection, getDocs } from 'firebase/firestore';
-import { IDaily } from '../../models/Daily';
+import { IMonthly } from '../../models/Monthly';
 import { AuthContext } from '../../context/AuthContext';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
-function Daily() {
+function Monthly() {
   const today = new Date()
   const todayFormatted = new Date(today.getFullYear(), today.getMonth(), today.getDate())
   .toISOString()
@@ -16,16 +14,13 @@ function Daily() {
 
   const [content, setContent] = useState("")
   const authContext = useContext(AuthContext)
-  const [editorHtml, setEditorHtml] = useState('');
 
-  const handleChange = (html: string) => {
-    setContent(html);
-  };
+  console.log(todayFormatted, authContext)
 
   useEffect(() => {
     const fetchPost = async () => {
 
-      await getDocs(collection(db, "Daily"))
+      await getDocs(collection(db, "Monthly"))
           .then((querySnapshot)=>{
               const newData = querySnapshot.docs
                   .find((doc: any) => (doc.data().date === todayFormatted && doc.data().userId === authContext?.id));
@@ -37,18 +32,15 @@ function Daily() {
   }, [])
 
   return (
-    <div className='w-full bg-white'>
+    <div className='w-full bg-soft-white'>
       <Sidebar></Sidebar>
-      <div className='ml-72 h-screen' >
-      <ReactQuill
-        theme="snow"
-        value={content}
-        onChange={handleChange}
-        className='bg-white'
-      />
-      </div>
+      <div className='ml-72' dangerouslySetInnerHTML={
+        {
+          __html: content
+        }
+      }></div>
     </div>
   );
 }
 
-export default Daily;
+export default Monthly;

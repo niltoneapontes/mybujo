@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import routes from './routes/routes'
 import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import {AuthContext} from './context/AuthContext';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIcjnxnoVZXlQZJtmD_zyOdL3Sb7VidKQ",
@@ -14,12 +17,17 @@ const firebaseConfig = {
   measurementId: "G-7343E9RTVW"
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)
+export const db = getFirestore(app)
 
 function App() {
+  const [user, setUser] = useState(() => localStorage.getItem("@mybujo/id"))
 
   return (
-    <RouterProvider router={routes}></RouterProvider>
+    <AuthContext.Provider value={JSON.parse(user!!) || null}>
+      <RouterProvider router={routes}></RouterProvider>
+    </AuthContext.Provider>
   )
 }
 
