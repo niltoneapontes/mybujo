@@ -65,7 +65,7 @@ const App = () => {
   getUserData().then(async response => {
     try {
       const hasSeenTutorial = await AsyncStorage.getItem(
-        '@mybujo/hasSeenTutorial2',
+        '@mybujo/hasSeenTutorial3',
       );
 
       if (response) {

@@ -1,11 +1,18 @@
 import styled from 'styled-components/native';
 import { lightTheme } from '../../tokens/colors';
+import { Dimensions } from 'react-native';
+
+export const ScrollViewWrapper = styled.View`
+  height: ${() => `${Dimensions.get('window').height}px`};
+  width: 100%;
+`;
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: flex-start;
-  align-items: center;
+  width: 100%;
   padding: 24px;
+  justify-content: space-between;
+  align-items: center;
   background-color: ${() => lightTheme.PRIMARY_COLOR};
 `;
 
@@ -14,8 +21,7 @@ export const TutorialTitle = styled.Text`
   font-size: 40px;
   font-family: 'Inter-Black';
   text-align: left;
-  margin-bottom: 40px;
-  margin-top: 64px;
+  margin-top: 40px;
   color: ${() => lightTheme.WHITE};
 `;
 
@@ -38,7 +44,13 @@ export const TutorialText = styled.Text`
 `;
 
 export const ButtonContainer = styled.View`
+  margin-top: 40px;
   width: 100%;
-  position: absolute;
-  bottom: 32px;
+`;
+
+export const TipsWrapper = styled.View`
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 32px 0;
 `;
