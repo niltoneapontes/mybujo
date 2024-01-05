@@ -138,8 +138,8 @@ android {
         applicationId "br.com.bubblesolutions.mybujo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 18
-        versionName "2.4.4"
+        versionCode 19
+        versionName "2.5.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
