@@ -25,7 +25,7 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
     }
   }};
   align-items: center;
-  justify-content: flex-start;
+  justify-content: ${(props: any) => (props.hasIcon ? 'flex-start' : 'center')};
 `;
 
 export const ButtonText = styled.Text<Props>`
@@ -44,5 +44,5 @@ export const ButtonText = styled.Text<Props>`
         return props.theme.WHITE;
     }
   }};
-  font-size: 14px;
+  font-size: 16px;
 `;

@@ -12,7 +12,13 @@ interface ButtonProps {
   iconName?: string;
 }
 
-function Button({ type, text, onPress, hasIcon, iconName }: ButtonProps) {
+function Button({
+  type,
+  text,
+  onPress,
+  hasIcon = false,
+  iconName,
+}: ButtonProps) {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
 
   const getIconColor = () => {
@@ -31,7 +37,7 @@ function Button({ type, text, onPress, hasIcon, iconName }: ButtonProps) {
   };
 
   return (
-    <ButtonContainer onPress={onPress} type={type}>
+    <ButtonContainer onPress={onPress} type={type} hasIcon={hasIcon}>
       {hasIcon && iconName && (
         <Icon
           name={iconName}
