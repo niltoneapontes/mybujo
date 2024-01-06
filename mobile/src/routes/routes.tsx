@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import { BottomTabNavigator } from './bottomTabNavigator';
 import Tutorial from '../pages/Tutorial';
 import Performance from '../pages/Performance';
+import ScreenShot from '../pages/ScreenShot';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export function Routes({ initialRoute }: RoutesProps) {
       }}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
+      <Stack.Screen name="ScreenShot" component={ScreenShot} />
       <Stack.Screen name="Performance" component={Performance} />
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
     </Stack.Navigator>

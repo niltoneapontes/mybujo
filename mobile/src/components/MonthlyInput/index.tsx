@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container, Disclaimer } from './styles';
+import { ButtonsContainer, Container, Disclaimer, ShareButton } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -28,6 +28,8 @@ import { Monthly } from '../../models/Monthly';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CopyPasteButton from '../CopyPasteButton';
+import FeatherIcons from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 
 interface MonthlyInputProps {
   selectedYear: number;
@@ -44,6 +46,7 @@ function MonthlyInput({
   setMessage,
   clearMessage,
 }: MonthlyInputProps) {
+  const navigation = useNavigation<any>();
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
@@ -261,6 +264,13 @@ function MonthlyInput({
     }, 2000);
   }, [selectedMonth, selectedYear, user]);
 
+  const shareImage = async () => {
+    navigation.navigate('ScreenShot', {
+      initHTML: contentRef.current,
+      selectedDate: `${selectedMonth}/${selectedYear}`,
+    });
+  };
+
   return (
     <Container>
       <ScrollView
@@ -309,12 +319,17 @@ function MonthlyInput({
           />
         )}
       </ScrollView>
-      <CopyPasteButton
-        contentRef={contentRef}
-        clearMessage={clearMessage}
-        setMessage={setMessage}
-        setRefreshing={setRefreshing}
-      />
+      <ButtonsContainer>
+        <CopyPasteButton
+          contentRef={contentRef}
+          clearMessage={clearMessage}
+          setMessage={setMessage}
+          setRefreshing={setRefreshing}
+        />
+        <ShareButton onPress={shareImage}>
+          <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+        </ShareButton>
+      </ButtonsContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}>

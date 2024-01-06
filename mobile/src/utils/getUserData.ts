@@ -4,7 +4,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export const getUserData = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem('@mybujo/user');
+    const jsonValue = await AsyncStorage.getItem('@mybujo-prod/user');
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     console.error('Error reading user from storage', e);

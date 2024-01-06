@@ -60,7 +60,7 @@ function Tutorial() {
               type="cancel"
               text="Continuar"
               onPress={async () => {
-                await AsyncStorage.setItem('@mybujo/hasSeenTutorial2', 'true');
+                await AsyncStorage.setItem('@mybujo/hasSeenTutorial3', 'true');
                 navigation.navigate('BottomTabNavigator');
               }}
             />

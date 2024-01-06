@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container, Disclaimer } from './styles';
+import { ButtonsContainer, Container, Disclaimer, ShareButton } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -27,7 +27,9 @@ import { User } from '../../models/User';
 import { Future } from '../../models/Future';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FeatherIcons from 'react-native-vector-icons/Feather';
 import CopyPasteButton from '../CopyPasteButton';
+import { useNavigation } from '@react-navigation/native';
 
 interface FutureInputProps {
   selectedYear: number;
@@ -42,6 +44,7 @@ function FutureInput({
   setMessage,
   clearMessage,
 }: FutureInputProps) {
+  const navigation = useNavigation<any>();
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
   const disabled = false;
@@ -224,6 +227,13 @@ function FutureInput({
     };
   }, [saveText, user]);
 
+  const shareImage = async () => {
+    navigation.navigate('ScreenShot', {
+      initHTML: contentRef.current,
+      selectedDate: selectedYear,
+    });
+  };
+
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = React.useCallback(() => {
     async function getInitHtml() {
@@ -300,12 +310,17 @@ function FutureInput({
           />
         )}
       </ScrollView>
-      <CopyPasteButton
-        contentRef={contentRef}
-        clearMessage={clearMessage}
-        setMessage={setMessage}
-        setRefreshing={setRefreshing}
-      />
+      <ButtonsContainer>
+        <CopyPasteButton
+          contentRef={contentRef}
+          clearMessage={clearMessage}
+          setMessage={setMessage}
+          setRefreshing={setRefreshing}
+        />
+        <ShareButton onPress={shareImage}>
+          <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+        </ShareButton>
+      </ButtonsContainer>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 0}>

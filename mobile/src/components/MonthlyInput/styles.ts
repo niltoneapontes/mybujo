@@ -13,3 +13,20 @@ export const Disclaimer = styled.Text`
   font-family: 'Inter-Regular';
   color: ${(props: any) => props.theme.GRAY500};
 `;
+
+export const ButtonsContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ShareButton = styled.TouchableOpacity`
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  margin-right: 12px;
+  padding: 0;
+  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+`;

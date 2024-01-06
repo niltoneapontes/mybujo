@@ -54,6 +54,13 @@
             {
               "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "383023240379-m1b6fvtvnquckj5vtupftn15avoonl85.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.bubblesolutions.mybujo"
+              }
             }
           ]
         }

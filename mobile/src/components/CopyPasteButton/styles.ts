@@ -12,7 +12,7 @@ export const CopyPasteContainer = styled.View`
 `;
 
 export const CopyPasteContainerText = styled.Text`
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${(props: any) => props.theme.SOFT_WHITE};
   max-width: 50px;
   font-size: 10px;
   text-align: center;

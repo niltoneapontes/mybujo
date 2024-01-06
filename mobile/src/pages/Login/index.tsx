@@ -28,7 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from '../../components/Toast';
 
 function Login() {
-  const [user, setUser] = useState<any>(null);
+  const [userLocal, setUserLocal] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [tokenInfo, setTokenInfo] = useState<any>(null);
   const navigation = useNavigation<any>();
@@ -41,7 +41,10 @@ function Login() {
 
   const storeData = async (userValue: User) => {
     try {
-      await AsyncStorage.setItem('@mybujo/user', JSON.stringify(userValue));
+      await AsyncStorage.setItem(
+        '@mybujo-prod/user',
+        JSON.stringify(userValue),
+      );
     } catch (e) {
       setMessage('Oops... Não foi possível se conectar ao servidor.');
       clearMessage();
@@ -49,43 +52,67 @@ function Login() {
     }
   };
 
+  async function onGoogleButtonPress() {
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    const { idToken, user } = await GoogleSignin.signIn();
+    const { email, familyName, givenName, id, name, photo } = user;
+
+    const userInfo: User = {
+      email,
+      familyName,
+      givenName,
+      id,
+      name,
+      photo,
+      metadata: null,
+      origin: 'GOOGLE',
+      phoneNumber: null,
+    };
+
+    storeData(userInfo);
+    setUserLocal(user);
+    setTokenInfo(idToken);
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    auth().signInWithCredential(googleCredential);
+    return userInfo;
+  }
+
   const _signInWithGoogle = async () => {
+    const signedUser = await onGoogleButtonPress();
+
+    const {
+      email,
+      givenName,
+      familyName,
+      name,
+      metadata,
+      photo,
+      phoneNumber,
+      id,
+    } = signedUser;
+
+    const signedUserInfo: User = {
+      email,
+      familyName,
+      givenName,
+      id: id,
+      name: name,
+      photo: photo,
+      metadata: JSON.stringify(metadata),
+      origin: 'GOOGLE',
+      phoneNumber: phoneNumber,
+    };
+
     try {
-      await GoogleSignin.hasPlayServices();
-      const userFromGoogleApi = await GoogleSignin.signIn();
-      const tokens = await GoogleSignin.getTokens();
-
-      setUser(userFromGoogleApi);
-      setTokenInfo(tokens);
-
-      const { email, familyName, givenName, id, name, photo } =
-        userFromGoogleApi.user;
-
-      const userInfo: User = {
-        email,
-        familyName,
-        givenName,
-        id,
-        name,
-        photo,
-        metadata: null,
-        origin: 'GOOGLE',
-        phoneNumber: null,
-      };
-
-      storeData(userInfo);
-
-      auth.GoogleAuthProvider.credential(tokens.idToken);
-
       const snapshot = await firestore()
         .collection('Users')
-        .where('id', '==', id.toString())
+        .where('id', '==', signedUserInfo.id.toString())
         .get();
 
       if (snapshot.docs.length === 0) {
         firestore()
           .collection('Users')
-          .add(userInfo)
+          .add(signedUserInfo)
           .then(() => {
             console.info('User added!');
           })
@@ -144,7 +171,7 @@ function Login() {
     try {
       console.info('[USER DATA] ', data);
 
-      setUser(data.user);
+      setUserLocal(data.user);
 
       setTokenInfo(await AccessToken.getCurrentAccessToken());
 
@@ -165,29 +192,39 @@ function Login() {
 
       storeData(userInfo);
 
-      firestore()
+      const snapshot = await firestore()
         .collection('Users')
-        .add(userInfo)
-        .then(() => {
-          console.info('User added!');
-        })
-        .catch(error => {
-          setMessage('Oops... Não foi possível se conectar ao banco de dados.');
-          clearMessage();
-          console.error('Firestore Error: ', error);
-        });
+        .where('id', '==', userInfo.id.toString())
+        .get();
+
+      if (snapshot.docs.length === 0) {
+        firestore()
+          .collection('Users')
+          .add(userInfo)
+          .then(() => {
+            console.info('User added!');
+          })
+          .catch(error => {
+            setMessage(
+              'Oops... Não foi possível se conectar ao banco de dados.',
+            );
+            clearMessage();
+            console.error('Firestore Error: ', error);
+          });
+      } else {
+        console.info('User already in database');
+      }
     } catch (error) {
-      setMessage('Oops... Não foi possível se conectar ao banco de dados.');
+      setMessage('Oops... Não foi possível fazer login com o Google.');
       clearMessage();
-      console.error('Error attempting to save user data');
     }
   };
 
   useEffect(() => {
-    if (user) {
+    if (userLocal) {
       navigation.navigate('BottomTabNavigator');
     }
-  }, [user, navigation]);
+  }, [userLocal, navigation]);
 
   return (
     <>

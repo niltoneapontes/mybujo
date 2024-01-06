@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Container, Disclaimer } from './styles';
+import { ButtonsContainer, Container, Disclaimer, ShareButton } from './styles';
 import {
   IconRecord,
   RichEditor,
@@ -26,7 +26,11 @@ import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FeatherIcons from 'react-native-vector-icons/Feather';
 import CopyPasteButton from '../CopyPasteButton';
+import Share from 'react-native-share';
+import { captureScreen } from 'react-native-view-shot';
+import { useNavigation } from '@react-navigation/native';
 
 interface DailyInputProps {
   selectedDate: string;
@@ -53,6 +57,9 @@ function DailyInput({
   const fontFamily = 'Inter';
   const [stopedTypingTimer, setStopedTypingTimer] = useState<NodeJS.Timeout>();
   const [disclaimerMessage, setDisclaimerMessage] = useState<string>('');
+  const navigation = useNavigation<any>();
+  const richBarTheme =
+    useColorScheme() === 'dark' ? styles.richBarDark : styles.richBar;
 
   function createContentStyle() {
     const contentStyle = {
@@ -191,6 +198,13 @@ function DailyInput({
     [saveText],
   );
 
+  const shareImage = async () => {
+    navigation.navigate('ScreenShot', {
+      initHTML: contentRef.current,
+      selectedDate: selectedDate,
+    });
+  };
+
   const editorInitializedCallback = useCallback(() => {
     // Do nothing
   }, []);
@@ -203,6 +217,7 @@ function DailyInput({
         clearMessage();
         console.error('Error reading user data: ', error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -239,105 +254,109 @@ function DailyInput({
   }, [clearMessage, selectedDate, setErrorMessage, user]);
 
   return (
-    <Container>
-      <ScrollView
-        style={[
-          styles.scroll,
-          useColorScheme() === 'dark' && styles.scrollDark,
-        ]}
-        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
-        ref={scrollRef}
-        showsVerticalScrollIndicator
-        nestedScrollEnabled={true}
-        scrollEventThrottle={20}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={[lightTheme.PRIMARY_COLOR]}
-          />
-        }>
-        {!refreshing && (
-          <RichEditor
-            initialFocus={false}
-            firstFocusEnd={false}
-            disabled={disabled}
-            editorStyle={contentStyle}
-            ref={richText}
-            style={styles.rich}
-            useContainer={true}
-            enterKeyHint={'go'}
-            placeholder={'Planeje o seu dia aqui ✏️'}
-            initialContentHTML={contentRef.current}
-            editorInitializedCallback={editorInitializedCallback}
-            onChange={handleChange}
-            onHeightChange={handleHeightChange}
-            onPaste={handlePaste}
-            onKeyUp={handleKeyUp}
-            onKeyDown={handleKeyDown}
-            onInput={handleInput}
-            onMessage={handleMessage}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onCursorPosition={handleCursorPosition}
-            pasteAsPlainText={true}
-            autoCorrect
-            autoCapitalize="sentences"
-          />
-        )}
-      </ScrollView>
-      <CopyPasteButton
-        contentRef={contentRef}
-        clearMessage={clearMessage}
-        setMessage={setMessage}
-        setRefreshing={setRefreshing}
-      />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
-        <Disclaimer>{disclaimerMessage}</Disclaimer>
-        <RichToolbar
+    <>
+      <Container>
+        <ScrollView
           style={[
-            styles.richBar,
-            useColorScheme() === 'dark' && styles.richBarDark,
+            styles.scroll,
+            useColorScheme() === 'dark' && styles.scrollDark,
           ]}
-          flatContainerStyle={styles.flatStyle}
-          editor={richText}
-          getEditor={richText}
-          disabled={disabled}
-          iconTint={theme.DARK_TEXT_COLOR}
-          selectedIconTint={theme.PRIMARY_COLOR}
-          disabledIconTint={'#bfbfbf'}
-          onInsertLink={onInsertLink}
-          actions={[
-            actions.undo,
-            actions.redo,
-            actions.checkboxList,
-            actions.insertBulletsList,
-            actions.insertOrderedList,
-            actions.heading4,
-            actions.setParagraph,
-            actions.setStrikethrough,
-            actions.blockquote,
-            actions.alignLeft,
-            actions.alignCenter,
-            actions.alignRight,
-            actions.code,
-            actions.line,
-          ]} // default defaultActions
-          iconMap={{
-            [actions.setParagraph]: ({ tintColor }: IconRecord) => (
-              <Icon name="format-paragraph" size={24} color={tintColor} />
-            ),
-            [actions.heading4]: ({ tintColor }: IconRecord) => (
-              <Icon name="format-title" size={24} color={tintColor} />
-            ),
-          }}
-          foreColor={handleForeColor}
-          hiliteColor={handleHaliteColor}
-        />
-      </KeyboardAvoidingView>
-    </Container>
+          keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'none'}
+          ref={scrollRef}
+          showsVerticalScrollIndicator
+          nestedScrollEnabled={true}
+          scrollEventThrottle={20}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[lightTheme.PRIMARY_COLOR]}
+            />
+          }>
+          {!refreshing && (
+            <RichEditor
+              initialFocus={false}
+              firstFocusEnd={false}
+              disabled={disabled}
+              editorStyle={contentStyle}
+              ref={richText}
+              style={styles.rich}
+              useContainer={true}
+              enterKeyHint={'go'}
+              placeholder={'Planeje o seu dia aqui ✏️'}
+              initialContentHTML={contentRef.current}
+              editorInitializedCallback={editorInitializedCallback}
+              onChange={handleChange}
+              onHeightChange={handleHeightChange}
+              onPaste={handlePaste}
+              onKeyUp={handleKeyUp}
+              onKeyDown={handleKeyDown}
+              onInput={handleInput}
+              onMessage={handleMessage}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onCursorPosition={handleCursorPosition}
+              pasteAsPlainText={true}
+              autoCorrect
+              autoCapitalize="sentences"
+            />
+          )}
+        </ScrollView>
+        <ButtonsContainer>
+          <CopyPasteButton
+            contentRef={contentRef}
+            clearMessage={clearMessage}
+            setMessage={setMessage}
+            setRefreshing={setRefreshing}
+          />
+          <ShareButton onPress={shareImage}>
+            <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+          </ShareButton>
+        </ButtonsContainer>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 158 : 0}>
+          <Disclaimer>{disclaimerMessage}</Disclaimer>
+          <RichToolbar
+            style={[richBarTheme]}
+            flatContainerStyle={styles.flatStyle}
+            editor={richText}
+            getEditor={richText}
+            disabled={disabled}
+            iconTint={theme.DARK_TEXT_COLOR}
+            selectedIconTint={theme.PRIMARY_COLOR}
+            disabledIconTint={'#bfbfbf'}
+            onInsertLink={onInsertLink}
+            actions={[
+              actions.undo,
+              actions.redo,
+              actions.checkboxList,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
+              actions.heading4,
+              actions.setParagraph,
+              actions.setStrikethrough,
+              actions.blockquote,
+              actions.alignLeft,
+              actions.alignCenter,
+              actions.alignRight,
+              actions.code,
+              actions.line,
+            ]} // default defaultActions
+            iconMap={{
+              [actions.setParagraph]: ({ tintColor }: IconRecord) => (
+                <Icon name="format-paragraph" size={24} color={tintColor} />
+              ),
+              [actions.heading4]: ({ tintColor }: IconRecord) => (
+                <Icon name="format-title" size={24} color={tintColor} />
+              ),
+            }}
+            foreColor={handleForeColor}
+            hiliteColor={handleHaliteColor}
+          />
+        </KeyboardAvoidingView>
+      </Container>
+    </>
   );
 }
 
@@ -363,6 +382,8 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   richBarDark: {
+    borderColor: lightTheme.GRAY200,
+    borderTopWidth: StyleSheet.hairlineWidth,
     backgroundColor: darkTheme.BACKGROUND_COLOR,
   },
   scroll: {

@@ -5,6 +5,8 @@ export const Container = styled.View`
   width: 100%;
   background-color: ${(props: any) => props.theme.TAB_BAR};
   elevation: 4;
+  position: relative;
+  z-index: 1;
 `;
 
 export const HeaderContainer = styled.ScrollView`
