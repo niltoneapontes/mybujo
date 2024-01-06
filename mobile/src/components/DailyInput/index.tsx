@@ -28,8 +28,6 @@ import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import CopyPasteButton from '../CopyPasteButton';
-import Share from 'react-native-share';
-import { captureScreen } from 'react-native-view-shot';
 import { useNavigation } from '@react-navigation/native';
 
 interface DailyInputProps {
