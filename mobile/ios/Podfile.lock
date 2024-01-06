@@ -1113,6 +1113,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
+  - react-native-view-shot (3.8.0):
+    - React-Core
   - react-native-webview (13.6.3):
     - React-Core
   - React-perflogger (0.69.4)
@@ -1244,6 +1246,8 @@ PODS:
   - RNScreens (3.29.0):
     - React-Core
     - React-RCTImage
+  - RNShare (10.0.2):
+    - React-Core
   - RNSVG (12.5.1):
     - React-Core
   - TouchID (4.4.1):
@@ -1278,6 +1282,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1303,6 +1308,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - TouchID (from `../node_modules/react-native-touch-id`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1392,6 +1398,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fbsdk-next"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -1442,6 +1450,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   TouchID:
@@ -1508,6 +1518,7 @@ SPEC CHECKSUMS:
   React-logger: 1088859f145b8f6dd0d3ed051a647ef0e3e80fad
   react-native-fbsdk-next: 9c40664b1501be29572795c2e4c8e347f39f556f
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
+  react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0
   React-perflogger: cb386fd44c97ec7f8199c04c12b22066b0f2e1e0
   React-RCTActionSheet: f803a85e46cf5b4066c2ac5e122447f918e9c6e5
@@ -1534,6 +1545,7 @@ SPEC CHECKSUMS:
   RNPermissions: 59c96206917535f6373e137a379cd1a0637f4147
   RNReanimated: c6f8f70e96dd6ca21b65aef9b3e4efe4965db905
   RNScreens: fa9b582d85ae5d62c91c66003b5278458fed7aaa
+  RNShare: 859ff710211285676b0bcedd156c12437ea1d564
   RNSVG: d7d7bc8229af3842c9cfc3a723c815a52cdd1105
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: ff994563b2fd98c982ca58e8cd9db2cdaf4dda74
