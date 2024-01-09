@@ -1,4 +1,4 @@
-export interface IDaily {
+export interface Daily {
   userId: string;
   content: string;
   date: string;

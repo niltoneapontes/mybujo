@@ -1,45 +1,120 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Sidebar from '../../components/Sidebar';
+import React, { useEffect, useState } from 'react';
+import { CollectionText, Container, FooterComponent } from './styles';
+import CollectionCard from '../../components/CollectionCard';
+import firestore from 'firebase/firestore';
+import { User } from '../../models/User';
+import { getUserData } from '../../utils/getUserData';
+import WrappingView from '../../components/WrappingView';
+import { darkTheme, lightTheme } from '../../tokens/colors';
+import { Collection } from '../../models/Collection';
+import Toast from '../../components/Toast';
 import { db } from '../../App';
-import { collection, getDocs } from 'firebase/firestore';
-import { ICollection } from '../../models/Collection';
-import { AuthContext } from '../../context/AuthContext';
 
 function Collections() {
-  const today = new Date()
-  const todayFormatted = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-  .toISOString()
-  .split('T')[0]
-
-
-  const [content, setContent] = useState("")
-  const authContext = useContext(AuthContext)
-
-  console.log(todayFormatted, authContext)
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User>();
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const theme = lightTheme;
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<'error' | 'success'>('error');
 
   useEffect(() => {
-    const fetchPost = async () => {
+    getUserData()
+      .then(response => setUser(response))
+      .catch(error => console.error('Error reading user data: ', error));
+  }, []);
 
-      await getDocs(collection(db, "Collection"))
-          .then((querySnapshot)=>{
-              const newData = querySnapshot.docs
-                  .find((doc: any) => (doc.data().date === todayFormatted && doc.data().userId === authContext?.id));
-              setContent(newData?.data().content);
-          })
+  async function getCollections() {
+    if (user && user?.id) {
+      try {
+        const registries = await db
+          .collection('Collections')
+          .where('userId', '==', user?.id)
+          .get();
 
+        if (registries.docs.length > 0) {
+          setCollections(
+            registries.docs.map(doc => {
+              return {
+                id: doc.data().id,
+                userId: doc.data().userId,
+                title: doc.data().title,
+                content: doc.data().content,
+                updatedAt: doc.data().updatedAt,
+              };
+            }),
+          );
+        } else {
+          setCollections([]);
+        }
+      } catch (error) {
+        console.error('Error getting collections: ', error);
+      } finally {
+        setLoading(false);
+      }
+    }
   }
-  fetchPost()
-  }, [])
+
+  useEffect(() => {
+    setLoading(true);
+
+    getCollections();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    setLoading(true);
+    await getCollections();
+    setTimeout(() => {
+      setRefreshing(false);
+      setLoading(false);
+    }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className='w-full bg-soft-white'>
-      <Sidebar></Sidebar>
-      <div className='ml-72' dangerouslySetInnerHTML={
-        {
-          __html: content
-        }
-      }></div>
-    </div>
+    <>
+      <Container>
+        <CollectionText>Suas listas</CollectionText>
+        <CollectionCard
+          isInput
+          collections={collections}
+          setCollections={setCollections}
+          setMessage={setMessage}
+          setMessageType={setMessageType}
+        />
+        {loading ? (
+          <WrappingView>
+            Carregando...
+          </WrappingView>
+        ) : (
+          <>
+          { collections.length > 0 ? collections.map(item => (
+            <>
+            <CollectionCard
+                id={item.id}
+                title={item.title}
+                content={item.content}
+                collections={collections}
+                setCollections={setCollections}
+                setMessage={setMessage}
+                setMessageType={setMessageType}
+              />
+              <div style={{ height: 12, width: '100%' }} />
+              </>
+          )) : (<FooterComponent>
+          <CollectionText>
+            Você ainda não criou nenhuma lista :/
+          </CollectionText>
+        </FooterComponent>)}
+        </>)}
+      </Container>
+      {message && <Toast text={message} type={messageType} />}
+    </>
   );
 }
 

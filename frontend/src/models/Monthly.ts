@@ -1,4 +1,4 @@
-export interface IMonthly {
+export interface Monthly {
   userId: string;
   content: string;
   month: string;

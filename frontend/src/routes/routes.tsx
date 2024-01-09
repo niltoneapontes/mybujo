@@ -2,9 +2,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import ErrorPage from '../pages/ErrorPage';
-import Daily from '../pages/Daily';
 import Login from '../pages/Login';
-import Logout from '../pages/Logout';
 import Monthly from '../pages/Monthly';
 import Future from '../pages/Future';
 import Collections from '../pages/Collections';
@@ -19,11 +17,6 @@ const routes = createBrowserRouter([
   {
     path: '/home',
     element: <Home />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/daily',
-    element: <Daily />,
     errorElement: <ErrorPage />,
   },
   {
@@ -44,11 +37,6 @@ const routes = createBrowserRouter([
   {
     path: '/settings',
     element: <Settings />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/logout',
-    element: <Logout />,
     errorElement: <ErrorPage />,
   },
 ]);
