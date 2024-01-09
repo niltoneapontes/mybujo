@@ -42,7 +42,7 @@ function Login() {
   const storeData = async (userValue: User) => {
     try {
       await AsyncStorage.setItem(
-        '@mybujo-prod/user',
+        '@mybujo/user-prod-v253',
         JSON.stringify(userValue),
       );
     } catch (e) {
@@ -222,7 +222,10 @@ function Login() {
 
   useEffect(() => {
     if (userLocal) {
-      navigation.navigate('BottomTabNavigator');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'BottomTabNavigator' }],
+      });
     }
   }, [userLocal, navigation]);
 

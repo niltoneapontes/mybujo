@@ -35,7 +35,10 @@ function Settings() {
       await GoogleSignin.signOut();
       setUser(undefined);
 
-      navigation.replace('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
     } catch (error) {
       console.error(error);
     }
@@ -93,7 +96,7 @@ function Settings() {
           hasIcon
           iconName="log-out"
         />
-        <Version>Versão: 2.5.2</Version>
+        <Version>Versão: 2.5.3</Version>
       </ContentContainer>
     </Container>
   );

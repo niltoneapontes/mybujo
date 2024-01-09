@@ -101,7 +101,7 @@ const App = () => {
       scopes: ['profile', 'email', 'openid'],
       webClientId:
         '383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com',
-      offlineAccess: true,
+      offlineAccess: false,
     });
   }
 
