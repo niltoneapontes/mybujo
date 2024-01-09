@@ -1,5 +1,5 @@
 import { Container, ToastText, Wrapper } from './styles';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-icons/fa';
 import { lightTheme } from '../../tokens/colors';
 
 interface ToastProps {

@@ -17,7 +17,7 @@ import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import { Monthly } from '../../models/Monthly';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-icons/fa';
 import CopyPasteButton from '../CopyPasteButton';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import { db } from '../../App';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { CopyPasteContainer, CopyPasteContainerText } from './styles';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-icons/fa';
 import { lightTheme } from '../../tokens/colors';
 
 

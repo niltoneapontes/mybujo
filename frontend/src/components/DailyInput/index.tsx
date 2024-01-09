@@ -19,7 +19,7 @@ import { Daily } from '../../models/Daily';
 import { getUserData } from '../../utils/getUserData';
 import { User } from '../../models/User';
 import FontFamilyStylesheet from '../../tokens/richtEditor/stylesheet';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-icons/fa';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import CopyPasteButton from '../CopyPasteButton';
 import { db } from '../../App';

@@ -10,7 +10,7 @@ import {
 import { useTheme } from 'styled-components';
 import { numDays } from '../../utils/getDaysInMonth';
 
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-icons/fa';
 
 interface HeaderProps {
   onSelect: React.Dispatch<React.SetStateAction<number>>;

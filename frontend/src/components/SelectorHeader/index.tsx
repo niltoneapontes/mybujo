@@ -6,7 +6,7 @@ import {
   TextContainer,
   Title,
 } from './styles';
-import Icons from 'react-native-vector-icons/Feather';
+import Icon from 'react-icons/fa'
 import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 

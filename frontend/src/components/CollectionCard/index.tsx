@@ -14,7 +14,8 @@ import { v4 as uuid } from 'uuid'
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import WrappingView from '../WrappingView';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-icons/fa';
+
 import { db } from '../../App';
 
 interface CollectionCardProps {

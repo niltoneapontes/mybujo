@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonContainer, ButtonText } from './styles';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-icons/fa';
 import { darkTheme, lightTheme } from '../../tokens/colors';
 import { useColorScheme } from 'react-native';
 
