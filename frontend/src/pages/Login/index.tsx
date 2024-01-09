@@ -12,7 +12,7 @@ function Login() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem("@mybujo/id")) {
+    if (localStorage.getItem("@mybujo-prod/id")) {
       setTimeout(() => {
         window.location.href = '/home'
       }, 2000)
@@ -62,7 +62,7 @@ function Login() {
               phoneNumber: user.phoneNumber,
               photo: user.photoURL
             }
-            localStorage.setItem("@mybujo/id", JSON.stringify(newUser))
+            localStorage.setItem("@mybujo-prod/id", JSON.stringify(newUser))
 
           } catch (error) {
             alert("Crie a conta pelo app para poder usar na web")
@@ -84,7 +84,7 @@ function Login() {
               phoneNumber: user.phoneNumber,
               photo: user.photoURL
             }
-            localStorage.setItem("@mybujo/id", JSON.stringify(newUser))
+            localStorage.setItem("@mybujo-prod/id", JSON.stringify(newUser))
             window.location.href = "/home"
           } catch (error) {
             console.error(error)

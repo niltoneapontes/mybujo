@@ -4,7 +4,7 @@ import './styles.css'
 
 function Logout() {
   useEffect(() => {
-    localStorage.removeItem("@mybujo/id")
+    localStorage.removeItem("@mybujo-prod/id")
     window.location.href = '/'
   }, [])
 

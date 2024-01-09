@@ -22,7 +22,7 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 function App() {
-  const [user, setUser] = useState(() => localStorage.getItem("@mybujo/id"))
+  const [user, setUser] = useState(() => localStorage.getItem("@mybujo-prod/id"))
 
   return (
     <AuthContext.Provider value={JSON.parse(user!!) || null}>
