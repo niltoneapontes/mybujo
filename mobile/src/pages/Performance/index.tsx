@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  ButtonsContainer,
   Container,
   ExplainingText,
   GeneralWrapper,
   LabelRectangle,
   LabelText,
   LabelWrapper,
+  ShareButton,
+  ShareHeader,
+  ShareHeaderText,
 } from './styles';
 import SimpleHeader from '../../components/SimpleHeader';
 import { VictoryPie } from 'victory-native';
@@ -15,6 +19,9 @@ import firestore from '@react-native-firebase/firestore';
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import { numDays } from '../../utils/getDaysInMonth';
+import FeatherIcons from 'react-native-vector-icons/Feather';
+import { captureScreen } from 'react-native-view-shot';
+import Share from 'react-native-share';
 
 function Performance() {
   const theme = useColorScheme() === 'dark' ? darkTheme : lightTheme;
@@ -24,6 +31,7 @@ function Performance() {
   }, []);
   const [month, setMonth] = useState(today.getMonth() + 1);
   const [year, setYear] = useState(today.getFullYear());
+  const [snapshooting, setSnapshooting] = useState(false);
 
   const days = useMemo(() => {
     return Array.from(
@@ -37,6 +45,24 @@ function Performance() {
     { x: 'Planejados', y: 0 },
     { x: 'Não Planejados', y: days.length },
   ]);
+
+  const shareImage = async () => {
+    setSnapshooting(true);
+    setTimeout(async () => {
+      try {
+        const uri = await captureScreen({
+          format: 'png',
+          fileName: 'performance',
+          quality: 0.8,
+        });
+        await Share.open({ url: uri });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setSnapshooting(false);
+      }
+    }, 2000);
+  };
 
   useEffect(() => {
     getUserData()
@@ -76,7 +102,13 @@ function Performance() {
 
   return (
     <Container>
-      <SimpleHeader text="Performance" />
+      {snapshooting ? (
+        <ShareHeader>
+          <ShareHeaderText>Minha performance</ShareHeaderText>
+        </ShareHeader>
+      ) : (
+        <SimpleHeader text="Performance" />
+      )}
       <VictoryPie
         data={data}
         colorScale={[theme.PRIMARY_COLOR, theme.ERROR_COLOR]} // Custom colors for the pie slices
@@ -109,6 +141,13 @@ function Performance() {
           ? 'Continue assim e parabéns pela organização 🥳'
           : 'Vamos nos organizar mais? 🤓'}
       </ExplainingText>
+      {!snapshooting && (
+        <ButtonsContainer>
+          <ShareButton onPress={shareImage}>
+            <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+          </ShareButton>
+        </ButtonsContainer>
+      )}
     </Container>
   );
 }
