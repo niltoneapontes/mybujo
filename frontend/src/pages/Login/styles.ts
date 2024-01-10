@@ -1,62 +1,75 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
-  flex: 1;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(props: any) => props.theme.GRAY400};
+  background-color: ${(props: any) => lightTheme.GRAY400};
   position: relative;
 `;
 
 export const LoginImage = styled.img`
-  width: 100%;
+width: 50vw;
+  height: 100vh;
 `;
 
 export const ButtonsContainer = styled.div`
-  width: 100%;
-  padding: 16px;
+  width: 50vw;
+  height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const GoogleButton = styled.button`
+display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
   height: 54px;
   width: 100%;
-  background-color: ${(props: any) => props.theme.WHITE};
-  border-radius: 8px;
+  max-width: 20rem;
+  background-color: ${(props: any) => lightTheme.WHITE};
+  border-radius: 0.5rem;
   elevation: 4;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 `;
 
 export const GoogleButtonText = styled.p`
   font-size: 14px;
-  font-family: 'Inter-Bold';
-  margin-left: 16px;
-  color: ${(props: any) => props.theme.GOOGLE_COLOR};
+  font-family: 'Inter', sans-serif;
+  margin-left: 1rem;
+  font-weight: bold;
+  color: ${(props: any) => lightTheme.GOOGLE_COLOR};
 `;
 
 export const Disclaimer = styled.p`
-  font-size: 12px;
-  font-family: 'Inter-Regular';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
   text-align: center;
-  margin: 16px;
+  margin: 1rem;
 `;
 
 export const DisclaimerLink = styled.a`
-  font-size: 12px;
-  font-family: 'Inter-Regular';
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
   text-decoration: underline;
-  color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  color: ${(props: any) => lightTheme.PRIMARY_COLOR};
   text-align: center;
-  margin: 16px;
+  margin: 0.5rem;
 `;
 
 export const FacebookButton = styled.button`
-  padding: 12px;
-  background-color: ${(props: any) => props.theme.FACEBOOK};
-  border-radius: 8px;
+  padding: 0.75rem;
+  background-color: ${(props: any) => lightTheme.FACEBOOK};
+  border-radius: 0.5rem;
   height: 54px;
   width: 100%;
   align-items: center;
@@ -65,8 +78,8 @@ export const FacebookButton = styled.button`
 `;
 
 export const FacebookButtonText = styled.p`
-  color: ${(props: any) => props.theme.WHITE};
-  padding-left: 16px;
+  color: ${(props: any) => lightTheme.WHITE};
+  padding-left: 1rem;
   font-size: 14px;
-  font-family: 'Inter-Bold';
+  font-family: 'Inter', sans-serif;
 `;

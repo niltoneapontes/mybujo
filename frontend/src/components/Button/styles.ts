@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 interface Props {
   type: 'action' | 'cancel' | 'danger';
@@ -13,15 +14,15 @@ export const ButtonContainer = styled.button<Props>`
   background-color: ${(props: any) => {
     switch (props.type) {
       case 'action':
-        return props.theme.PRIMARY_COLOR;
+        return lightTheme.PRIMARY_COLOR;
       case 'cancel':
-        return props.theme.GRAY200;
+        return lightTheme.GRAY200;
       case 'danger':
-        return props.theme.GRAY200;
+        return lightTheme.GRAY200;
       case 'edit':
-        return props.theme.WHITE;
+        return lightTheme.WHITE;
       default:
-        return props.theme.PRIMARY_COLOR;
+        return lightTheme.PRIMARY_COLOR;
     }
   }};
   align-items: center;
@@ -33,15 +34,15 @@ export const ButtonText = styled.p<Props>`
   color: ${(props: any) => {
     switch (props.type) {
       case 'action':
-        return props.theme.WHITE;
+        return lightTheme.WHITE;
       case 'cancel':
-        return props.theme.GRAY600;
+        return lightTheme.GRAY600;
       case 'danger':
-        return props.theme.SECONDARY_COLOR;
+        return lightTheme.SECONDARY_COLOR;
       case 'edit':
-        return props.theme.PRIMARY_COLOR_DARKER;
+        return lightTheme.PRIMARY_COLOR_DARKER;
       default:
-        return props.theme.WHITE;
+        return lightTheme.WHITE;
     }
   }};
   font-size: 16px;

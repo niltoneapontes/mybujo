@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { lightTheme } from '../../tokens/colors';
-import { DatePickerItem, DatePickerItemText, ModalContainer } from './styles';
+import { DatePickerItem, DatePickerItemText, ModalContainer, Positioner } from './styles';
 
 interface DatePickerProps {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -67,7 +67,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
   return (
     <>
       {!showSecondModal ? (
-        <div>
+        <Positioner>
           <ModalContainer>
           <DatePickerItem>
                   <DatePickerItemText>Selecione o mês</DatePickerItemText>
@@ -82,9 +82,9 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
               ))
             )}
             </ModalContainer>
-        </div>
+        </Positioner>
       ) : (
-        <div>
+        <Positioner>
           <ModalContainer>
           <DatePickerItem>
                   <DatePickerItemText>Selecione o ano</DatePickerItemText>
@@ -99,7 +99,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
               ))
             )}
             </ModalContainer>
-        </div>
+        </Positioner>
       )}
     </>
   );

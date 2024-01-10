@@ -48,5 +48,5 @@ export const TipsWrapper = styled.div`
   width: 100%;
   border-radius: 12px;
   max-height: 400px;
-  background-color: ${(props: any) => props.theme.WHITE};
+  background-color: ${(props: any) => lightTheme.WHITE};
 `;

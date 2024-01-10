@@ -1,19 +1,20 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  background-color: ${(props: any) => props.theme.BACKGROUND_COLOR};
+  background-color: ${(props: any) => lightTheme.BACKGROUND_COLOR};
 `;
 
 export const SettingsHeader = styled.div`
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => lightTheme.PRIMARY_COLOR};
   height: 144px;
   width: 100%;
 `;
 
-export const ProfilePicture = styled.Image`
+export const ProfilePicture = styled.img`
   height: 144px;
   width: 144px;
   border-radius: 72px;
@@ -41,7 +42,7 @@ export const ProfileName = styled.p`
   font-size: 32px;
   font-weight: 700;
   font-family: 'Inter-Bold';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const ProfileDescription = styled.p`
@@ -49,7 +50,7 @@ export const ProfileDescription = styled.p`
   font-weight: 400;
   margin-bottom: 24px;
   font-family: 'Inter-Regular';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const Version = styled.p`
@@ -57,5 +58,5 @@ export const Version = styled.p`
   position: absolute;
   bottom: 8px;
   font-family: 'Inter-Regular';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;

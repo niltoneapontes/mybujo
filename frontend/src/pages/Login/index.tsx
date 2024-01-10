@@ -4,9 +4,10 @@ import { User } from '../../models/User';
 import Toast from '../../components/Toast';
 import { GoogleAuthProvider, UserCredential, getAuth, signInWithCredential, signInWithPopup } from 'firebase/auth'
 import { db } from '../../App';
-import LoginImageSource from '../../assets/loginbackground.png'
-import GoogleLogo from '../../assets/google.svg'
+import LoginImageSource from '../../../public/assets/loginbackground.png'
+import GoogleLogo from '../../../public/assets/google.svg'
 import { ButtonsContainer, Container, Disclaimer, DisclaimerLink, GoogleButton, GoogleButtonText, LoginImage } from './styles';
+import { DocumentData, addDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
 
 function Login() {
   const [userLocal, setUserLocal] = useState<any>(null);
@@ -45,7 +46,7 @@ function Login() {
     const user = result.user;
 
     loggedUser = {
-      id: user.uid,
+      id: user.providerData[0].uid,
       email: user.email,
       name: user.displayName,
       familyName: user.displayName?.split(" ")[user.displayName.length - 1]!!,
@@ -98,27 +99,22 @@ function Login() {
       };
 
       try {
-        const snapshot = await
-          db.collection('Users')
-          .where('id', '==', signedUserInfo.id.toString())
-          .get();
+        const q = query(collection(db, 'Users'), where('id', '==', signedUserInfo.id.toString()))
 
-        if (snapshot.docs.length === 0) {
-          db.collection('Users')
-            .add(signedUserInfo)
-            .then(() => {
-              console.info('User added!');
-            })
-            .catch(error => {
-              setMessage(
-                'Oops... Não foi possível se conectar ao banco de dados.',
-              );
-              clearMessage();
-              console.error('Firestore Error: ', error);
-            });
-        } else {
-          console.info('User already in database');
-        }
+        const registries = onSnapshot(q, async (querySnapshot) => {
+          const items: DocumentData[] = []
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data())
+            items.push(doc.data())
+          })
+
+          if(items.length === 0) {
+            await addDoc(collection(db, 'Users'), signedUserInfo)
+          } else {
+            console.info('User already in DB')
+          }
+        })
+
       } catch (error: any) {
         setMessage('Oops... Não foi possível fazer login com o Google.');
         clearMessage();
@@ -216,11 +212,12 @@ function Login() {
       <Container>
         <LoginImage src={LoginImageSource} />
         <ButtonsContainer>
+          <div></div>
           <GoogleButton
             onClick={async () => {
               await onGoogleButtonPress();
             }}>
-            <GoogleLogo />
+            <img src={`${GoogleLogo}`} />
             <GoogleButtonText>Login com Google</GoogleButtonText>
           </GoogleButton>
           {/* <FacebookButton
@@ -236,7 +233,6 @@ function Login() {
             <Icon name="facebook" size={24} color={lightTheme.WHITE} />
             <FacebookButtonText>Continue com Facebook</FacebookButtonText>
           </FacebookButton> */}
-        </ButtonsContainer>
 
         <Disclaimer>
           Ao acessar utilizando alguma das opções acima, você está concordando
@@ -246,6 +242,8 @@ function Login() {
             Termos de Uso.
           </DisclaimerLink>
         </Disclaimer>
+        </ButtonsContainer>
+
       </Container>
       {message && <Toast text={message} type="error" />}
     </>

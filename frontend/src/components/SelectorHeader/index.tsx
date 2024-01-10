@@ -6,9 +6,8 @@ import {
   TextContainer,
   Title,
 } from './styles';
-import Icon from 'react-icons/fa'
-import { useColorScheme } from 'react-native';
-import { darkTheme, lightTheme } from '../../tokens/colors';
+import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
+import { lightTheme } from '../../tokens/colors';
 
 interface SelectorHeaderProps {
   current: any;
@@ -28,14 +27,14 @@ function SelectorHeader({
   return (
     <Container>
       <IconButton onClick={( ) => goOneMonthBack()}>
-        <Icons name="chevron-left" size={24} color={theme.TEXT_COLOR} />
+        <FaChevronLeft size={24} color={theme.TEXT_COLOR} />
       </IconButton>
       <TextContainer>
         <Title>{currentMonth}</Title>
         {suffix && <Subtitle>/{suffix}</Subtitle>}
       </TextContainer>
       <IconButton onClick={( ) => goOneMonthForward()}>
-        <Icons name="chevron-right" size={24} color={theme.TEXT_COLOR} />
+        <FaChevronRight size={24} color={theme.TEXT_COLOR} />
       </IconButton>
     </Container>
   );

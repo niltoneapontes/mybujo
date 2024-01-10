@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   flex: 1;
@@ -6,7 +7,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 16px;
-  background-color: ${(props: any) => props.theme.BACKGROUND_COLOR};
+  background-color: ${(props: any) => lightTheme.BACKGROUND_COLOR};
 `;
 
 export const CollectionText = styled.p`
@@ -15,7 +16,7 @@ export const CollectionText = styled.p`
   margin-bottom: 32px;
   font-family: 'Inter-Bold';
   text-align: center;
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const FooterComponent = styled.div`

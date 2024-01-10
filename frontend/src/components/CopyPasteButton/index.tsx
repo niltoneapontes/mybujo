@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { CopyPasteContainer, CopyPasteContainerText } from './styles';
-import Icon from 'react-icons/fa';
+import { CopyPasteContainer, CopyPasteContainerText, CopyPasteButtonElement } from './styles';
+import {FaCopy, FaPaste} from 'react-icons/fa';
 import { lightTheme } from '../../tokens/colors';
 
 
@@ -27,17 +27,16 @@ export default function CopyPasteButton({
 
   return (
     <CopyPasteContainer>
-      <button
-        onClick={( ) => {
+      <CopyPasteButtonElement
+        onClick={() => {
           navigator.clipboard.writeText(contentRef.current);
           setMessage('Você copiou todo o conteúdo');
           clearMessage();
-        }}
-        style={{ alignItems: 'center' }}>
-        <Icon name="content-copy" size={24} color={theme.SOFT_WHITE} />
+        }}>
+        <FaCopy size={24} color={theme.SOFT_WHITE} />
         <CopyPasteContainerText>Copiar tudo</CopyPasteContainerText>
-      </button>
-      <button
+      </CopyPasteButtonElement>
+      <CopyPasteButtonElement
         onClick={async () => {
           setRefreshing(true);
           try {
@@ -49,10 +48,10 @@ export default function CopyPasteButton({
             setRefreshing(false);
           }
         }}
-        style={{ marginLeft: 8, alignItems: 'center' }}>
-        <Icon name="content-paste" size={24} color={theme.SOFT_WHITE} />
+        >
+        <FaPaste size={24} color={theme.SOFT_WHITE} />
         <CopyPasteContainerText>Colar tudo</CopyPasteContainerText>
-      </button>
+      </CopyPasteButtonElement>
     </CopyPasteContainer>
   );
 }

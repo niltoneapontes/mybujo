@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid'
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import WrappingView from '../WrappingView';
-import Icon from 'react-icons/fa';
+import {FaTrash, FaSave} from 'react-icons/fa';
 
 import { db } from '../../App';
 
@@ -172,21 +172,14 @@ function CollectionCard({
     <Card>
       <TitleInput
         placeholder="Insira um título..."
-        placeholderTextColor={theme.PLACEHOLDER}
-        onChangeText={setTitleInput}
+        onChange={(value) => setTitleInput(value.target.value)}
         value={titleInput}
-        multiline
-        numberOfLines={2}
-        autoCorrect
         autoCapitalize="sentences"
       />
       <ContentInput
         placeholder="Insira um conteúdo..."
-        placeholderTextColor={theme.PLACEHOLDER}
-        onChangeText={setContentInput}
-        multiline
+        onChange={(value) => setContentInput(value.target.value)}
         value={contentInput}
-        autoCorrect
         autoCapitalize="sentences"
       />
 
@@ -195,11 +188,11 @@ function CollectionCard({
       ) : (
         <>
           <CloseButton onClick={( ) => handleRemove()}>
-            <Icon name="trash" size={24} color={theme.TEXT_COLOR} />
+            <FaTrash size={24} color={theme.TEXT_COLOR} />
           </CloseButton>
 
           <DeleteButton onClick={( ) => handleSave()}>
-            <Icon name="save" size={24} color={theme.TEXT_COLOR} />
+            <FaSave size={24} color={theme.TEXT_COLOR} />
           </DeleteButton>
         </>
       )}

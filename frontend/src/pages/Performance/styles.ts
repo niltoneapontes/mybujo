@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   flex: 1;
   justify-content: flex-start;
   align-items: center;
-  background-color: ${(props: any) => props.theme.BACKGROUND_COLOR};
+  background-color: ${(props: any) => lightTheme.BACKGROUND_COLOR};
 `;
 
 export const GeneralWrapper = styled.div`
@@ -30,7 +31,7 @@ export const LabelText = styled.p`
   font-size: 16px;
   font-family: 'Inter-Bold';
   text-align: left;
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const ExplainingText = styled.p`
@@ -39,7 +40,7 @@ export const ExplainingText = styled.p`
   font-size: 24px;
   font-family: 'Inter-Bold';
   text-align: left;
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const ButtonsContainer = styled.div`
@@ -59,7 +60,7 @@ export const ShareButton = styled.button`
   border-radius: 28px;
   margin-right: 12px;
   padding: 0;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => lightTheme.PRIMARY_COLOR};
 `;
 
 export const ShareHeader = styled.div`
@@ -72,11 +73,11 @@ export const ShareHeader = styled.div`
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   elevation: 4;
-  background: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background: ${(props: any) => lightTheme.PRIMARY_COLOR};
 `;
 
 export const ShareHeaderText = styled.p`
   font-size: 24px;
   font-family: 'Inter-Bold';
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${(props: any) => lightTheme.WHITE};
 `;

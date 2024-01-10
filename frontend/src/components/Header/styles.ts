@@ -1,40 +1,48 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   height: 124px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  background-color: ${(props: any) => props.theme.TAB_BAR};
-  elevation: 4;
-  position: relative;
+  overflow: scroll;
+  padding: 0.25rem;
+  background-color: ${(props: any) => lightTheme.TAB_BAR};
   z-index: 1;
 `;
 
 export const HeaderContainer = styled.div`
-  width: 100%;
-  padding: 4px 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
 `;
 
 export const DateComponent = styled.button`
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 36px;
-  margin: 0 6px;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  margin: 0 0.3rem;
   background-color: ${(props: any) =>
-    props.isSelected ? props.theme.PRIMARY_COLOR : props.theme.GRAY400};
+    props.isselected ? lightTheme.PRIMARY_COLOR : lightTheme.GRAY400};
 `;
 
 export const DateText = styled.p`
-  font-size: 24px;
-  font-family: 'Inter-Regular';
+  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
   color: ${(props: any) =>
-    props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
+    props.isselected ? lightTheme.WHITE : lightTheme.DARK_TEXT_COLOR};
 `;
 
 export const SubtitleButton = styled.button`
   flex-direction: row;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => lightTheme.PRIMARY_COLOR};
   align-self: center;
   justify-content: center;
   padding: 4px 8px;
@@ -44,7 +52,7 @@ export const SubtitleButton = styled.button`
 
 export const Subtitle = styled.p`
   font-size: 16px;
-  font-family: 'Inter-SemiBold';
-  color: ${(props: any) => props.theme.WHITE};
+  font-family: 'Inter', sans-serif;
+  color: ${(props: any) => lightTheme.WHITE};
   margin-right: 4px;
 `;

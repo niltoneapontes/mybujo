@@ -19,7 +19,7 @@ import firestore from 'firebase/firestore';
 import { User } from '../../models/User';
 import { getUserData } from '../../utils/getUserData';
 import { numDays } from '../../utils/getDaysInMonth';
-import FeatherIcons from 'react-native-vector-icons/Feather';
+import {FaShare} from 'react-icons/fa'
 import { captureScreen } from 'react-native-view-shot';
 import Share from 'react-native-share';
 
@@ -143,8 +143,8 @@ function Performance() {
       </ExplainingText>
       {!snapshooting && (
         <ButtonsContainer>
-          <ShareButton onPress={shareImage}>
-            <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+          <ShareButton onClick={shareImage}>
+            <FaShare  size={24} color={theme.SOFT_WHITE} />
           </ShareButton>
         </ButtonsContainer>
       )}

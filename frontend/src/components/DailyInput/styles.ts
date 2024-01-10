@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   flex: 1;
@@ -11,13 +12,17 @@ export const Disclaimer = styled.p`
   padding-right: 12px;
   font-size: 12px;
   font-family: 'Inter-Regular';
-  color: ${(props: any) => props.theme.GRAY500};
+  color: ${(props: any) => lightTheme.GRAY500};
 `;
 
 export const ButtonsContainer = styled.div`
+display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
 `;
 
 export const ShareButton = styled.button`
@@ -28,5 +33,5 @@ export const ShareButton = styled.button`
   border-radius: 28px;
   margin-right: 12px;
   padding: 0;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => lightTheme.PRIMARY_COLOR};
 `;

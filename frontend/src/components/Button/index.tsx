@@ -1,8 +1,6 @@
 import React from 'react';
 import { ButtonContainer, ButtonText } from './styles';
-import Icon from 'react-icons/fa';
-import { darkTheme, lightTheme } from '../../tokens/colors';
-import { useColorScheme } from 'react-native';
+import { lightTheme } from '../../tokens/colors';
 
 interface ButtonProps {
   type: 'action' | 'cancel' | 'danger' | 'edit';
@@ -37,15 +35,7 @@ function Button({
   };
 
   return (
-    <ButtonContainer onClick={onClick} type={type} hasIcon={hasIcon}>
-      {hasIcon && iconName && (
-        <Icon
-          name={iconName}
-          size={24}
-          color={getIconColor()}
-          style={{ marginRight: 8 }}
-        />
-      )}
+    <ButtonContainer onClick={onClick} type={type}>
       <ButtonText type={type}>{text}</ButtonText>
     </ButtonContainer>
   );

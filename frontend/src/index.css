@@ -7,6 +7,15 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  flex-direction: column;
+}
+
+button {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
 h1, h2, h3, h4, a, p, div {

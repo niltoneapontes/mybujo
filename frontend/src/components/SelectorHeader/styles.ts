@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lightTheme } from '../../tokens/colors';
 
 export const Container = styled.div`
   flex-direction: row;
@@ -8,7 +9,7 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 16px 12px;
   elevation: 4;
-  background: ${(props: any) => props.theme.TAB_BAR};
+  background: ${(props: any) => lightTheme.TAB_BAR};
 `;
 
 export const IconButton = styled.button``;
@@ -22,11 +23,11 @@ export const TextContainer = styled.div`
 export const Title = styled.p`
   font-size: 24px;
   font-family: 'Inter-Bold';
-  color: ${(props: any) => props.theme.TEXT_COLOR};
+  color: ${(props: any) => lightTheme.TEXT_COLOR};
 `;
 
 export const Subtitle = styled.p`
   font-size: 20px;
   font-family: 'Inter-Bold';
-  color: ${(props: any) => props.theme.GRAY500};
+  color: ${(props: any) => lightTheme.GRAY500};
 `;

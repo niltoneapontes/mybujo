@@ -1,5 +1,5 @@
 import { Container, ToastText, Wrapper } from './styles';
-import Icon from 'react-icons/fa';
+import {FaInfo} from 'react-icons/fa';
 import { lightTheme } from '../../tokens/colors';
 
 interface ToastProps {
@@ -12,8 +12,8 @@ function Toast({ text, type }: ToastProps) {
     <h1>
       <Container type={type}>
         <Wrapper>
-          <Icon name="info" size={24} color={lightTheme.WHITE} />
-          <ToastText multiline>{text}</ToastText>
+          <FaInfo size={24} color={lightTheme.WHITE} />
+          <ToastText>{text}</ToastText>
         </Wrapper>
       </Container>
     </h1>

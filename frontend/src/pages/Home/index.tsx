@@ -9,6 +9,7 @@ import WrappingView from '../../components/WrappingView';
 import MyDatePicker from '../../components/DatePicker';
 import Toast from '../../components/Toast';
 import { db } from '../../App';
+import { DocumentData, collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
 
 function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,17 +46,16 @@ function Home() {
     setLoading(true);
     async function getInitHtml() {
       try {
-        const registries = await db
-          .collection('Daily')
-          .where('userId', '==', user?.id)
-          .where('date', '==', selectedDate)
-          .get();
+        const q = query(collection(db, 'Daily'), where('userId', '==', user?.id), where('date', '==', selectedDate))
 
-        if (registries.docs.length > 0) {
-          setInitHTML(registries.docs[0].get('content')?.toString()!!);
-        } else {
-          setInitHTML('');
-        }
+        const registries = onSnapshot(q, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if(doc.data() && doc.data().content) {
+              setInitHTML(doc.data().content)
+            }
+          })
+        })
+
       } catch (error) {
         setMessage('Oops... Não conseguimos nos conectar com o servidor.');
         clearMessage();

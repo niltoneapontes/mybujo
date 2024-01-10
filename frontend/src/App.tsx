@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import routes from './routes/routes'
-import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase-admin/firestore';
+import {initializeApp} from 'firebase/app'
+import { getAuth } from 'firebase/auth';
 import {AuthContext} from './context/AuthContext';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIcjnxnoVZXlQZJtmD_zyOdL3Sb7VidKQ",

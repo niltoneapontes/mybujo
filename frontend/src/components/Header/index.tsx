@@ -7,10 +7,10 @@ import {
   Subtitle,
   SubtitleButton,
 } from './styles';
-import { useTheme } from 'styled-components';
 import { numDays } from '../../utils/getDaysInMonth';
 
-import Icon from 'react-icons/fa';
+import {FaChevronDown} from 'react-icons/fa';
+import { lightTheme } from '../../tokens/colors';
 
 interface HeaderProps {
   onSelect: React.Dispatch<React.SetStateAction<number>>;
@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 function Header({ onSelect, onShowDatePicker, selectedDate }: HeaderProps) {
-  const theme = useTheme() as any;
+  const theme = lightTheme
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const today = new Date();
   const [month, setMonth] = useState(today.getMonth() + 1);
@@ -80,8 +80,7 @@ function Header({ onSelect, onShowDatePicker, selectedDate }: HeaderProps) {
         <Subtitle>
           {month}/{year}
         </Subtitle>
-        <Icon
-          name="chevron-down"
+        <FaChevronDown
           size={18}
           color={theme.WHITE}
           style={{ alignSelf: 'center' }}
@@ -100,13 +99,15 @@ function Header({ onSelect, onShowDatePicker, selectedDate }: HeaderProps) {
             {days.map(day => {
               return (
                 <DateComponent
-                  isSelected={day === selectedDay}
+                // @ts-ignore
+                  isselected={day === selectedDay}
                   key={Math.random().toString()}
                   onClick={( ) => {
                     onSelect(day);
                     setSelectedDay(day);
                   }}>
-                  <DateText isSelected={day === selectedDay}>{day}</DateText>
+                    {/* @ts-ignore */}
+                  <DateText isselected={day === selectedDay}>{day}</DateText>
                 </DateComponent>
               );
             })}
