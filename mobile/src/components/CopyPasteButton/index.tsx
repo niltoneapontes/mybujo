@@ -37,7 +37,7 @@ export default function CopyPasteButton({
           clearMessage();
         }}
         style={{ alignItems: 'center' }}>
-        <Icon name="content-copy" size={24} color={theme.SOFT_WHITE} />
+        <Icon name="content-copy" size={24} color={theme.ACCENT_COLOR_TEXT} />
         <CopyPasteContainerText>Copiar tudo</CopyPasteContainerText>
       </TouchableOpacity>
       <TouchableOpacity
@@ -53,7 +53,7 @@ export default function CopyPasteButton({
           }
         }}
         style={{ marginLeft: 8, alignItems: 'center' }}>
-        <Icon name="content-paste" size={24} color={theme.SOFT_WHITE} />
+        <Icon name="content-paste" size={24} color={theme.ACCENT_COLOR_TEXT} />
         <CopyPasteContainerText>Colar tudo</CopyPasteContainerText>
       </TouchableOpacity>
     </CopyPasteContainer>

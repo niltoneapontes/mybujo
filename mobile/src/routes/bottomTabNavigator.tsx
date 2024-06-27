@@ -2,12 +2,12 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
 import Settings from '../pages/Settings';
-import Icons from 'react-native-vector-icons/Feather';
+import Icons from 'react-native-vector-icons/AntDesign';
 import { darkTheme, lightTheme } from '../tokens/colors';
 import Monthly from '../pages/Monthly';
 import Future from '../pages/Future';
-import Collections from '../pages/Collections';
 import { useColorScheme } from 'react-native';
+import Reader from '../pages/Reader';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +24,7 @@ export function BottomTabNavigator() {
           backgroundColor: theme.TAB_BAR,
         },
         tabBarShowLabel: true,
-        tabBarActiveTintColor: theme.PRIMARY_COLOR,
+        tabBarActiveTintColor: theme.ACCENT_COLOR_INVERTED,
         tabBarInactiveTintColor: theme.GRAY500,
       }}
       initialRouteName="Home">
@@ -34,7 +34,7 @@ export function BottomTabNavigator() {
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
-            return <Icons name="home" color={color} size={32} />;
+            return <Icons name="home" color={color} size={24} />;
           },
         }}
         name="Home"
@@ -46,7 +46,7 @@ export function BottomTabNavigator() {
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
-            return <Icons name="calendar" color={color} size={32} />;
+            return <Icons name="calendar" color={color} size={24} />;
           },
         }}
         name="Monthly"
@@ -54,15 +54,15 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: 'Listas',
+          tabBarLabel: 'Reader',
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="plus" color={color} size={32} />;
           },
         }}
-        name="Collections"
-        component={Collections}
+        name="Reader"
+        component={Reader}
       />
       <Tab.Screen
         options={{
@@ -70,7 +70,7 @@ export function BottomTabNavigator() {
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
-            return <Icons name="compass" color={color} size={32} />;
+            return <Icons name="pushpino" color={color} size={24} />;
           },
         }}
         name="Future"
@@ -82,7 +82,7 @@ export function BottomTabNavigator() {
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
-            return <Icons name="menu" color={color} size={32} />;
+            return <Icons name="menufold" color={color} size={24} />;
           },
         }}
         name="Settings"

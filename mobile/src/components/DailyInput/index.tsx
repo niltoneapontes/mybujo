@@ -308,7 +308,11 @@ function DailyInput({
             setRefreshing={setRefreshing}
           />
           <ShareButton onPress={shareImage}>
-            <FeatherIcons name="share" size={24} color={theme.SOFT_WHITE} />
+            <FeatherIcons
+              name="share"
+              size={24}
+              color={theme.ACCENT_COLOR_TEXT}
+            />
           </ShareButton>
         </ButtonsContainer>
         <KeyboardAvoidingView

@@ -80,7 +80,7 @@ function Header({ onSelect, onShowDatePicker, selectedDate }: HeaderProps) {
   useEffect(() => {
     if (Platform.OS === 'android') {
       scrollViewRef.current?.scrollTo({
-        x: (selectedDay - 1) * 78,
+        x: (selectedDay - 1) * 66,
         animated: true,
       });
     }
@@ -95,7 +95,7 @@ function Header({ onSelect, onShowDatePicker, selectedDate }: HeaderProps) {
         <Icon
           name="chevron-down"
           size={18}
-          color={theme.WHITE}
+          color={theme.ACCENT_COLOR_TEXT}
           style={{ alignSelf: 'center' }}
         />
       </SubtitleButton>

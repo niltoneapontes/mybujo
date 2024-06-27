@@ -28,5 +28,5 @@ export const ShareButton = styled.TouchableOpacity`
   border-radius: 28px;
   margin-right: 12px;
   padding: 0;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => props.theme.ACCENT_COLOR};
 `;
