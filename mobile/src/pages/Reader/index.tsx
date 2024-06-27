@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import TextRecognition from 'react-native-text-recognition';
 import { darkTheme } from '../../tokens/colors';
 
 function Reader() {
+  const [text, setText] = useState('');
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
   // @ts-ignore
@@ -23,7 +25,8 @@ function Reader() {
   const takePhoto = async () => {
     if (camera.current) {
       const photo = await camera.current.takePhoto();
-      console.log(photo.path);
+      const result = await TextRecognition.recognize(photo.path);
+      setText(result.toString());
     }
   };
 
@@ -51,14 +54,16 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 50,
-    width: 50,
-    height: 50,
+    bottom: 20,
+    borderWidth: 10,
+    borderColor: darkTheme.WHITE,
+    width: 100,
+    height: 100,
     left: '50%',
     transform: [{ translateX: -50 }],
-    padding: 10,
-    backgroundColor: darkTheme.PRIMARY_COLOR,
-    borderRadius: 25,
+    backgroundColor: darkTheme.SECONDARY_COLOR,
+    borderRadius: 50,
+    opacity: 0.7,
   },
 });
 
