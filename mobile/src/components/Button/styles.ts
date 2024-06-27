@@ -13,7 +13,7 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
   background-color: ${(props: any) => {
     switch (props.type) {
       case 'action':
-        return props.theme.PRIMARY_COLOR;
+        return props.theme.PRIMARY_COLOR_DARKER;
       case 'cancel':
         return props.theme.GRAY200;
       case 'danger':
@@ -24,6 +24,8 @@ export const ButtonContainer = styled.TouchableOpacity<Props>`
         return props.theme.PRIMARY_COLOR;
     }
   }};
+  border: ${(props: any) =>
+    props.type === 'action' ? `1px solid ${props.theme.WHITE}` : 'none'};
   align-items: center;
   justify-content: ${(props: any) => (props.hasIcon ? 'flex-start' : 'center')};
 `;

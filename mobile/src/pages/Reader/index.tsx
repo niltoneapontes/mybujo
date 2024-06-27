@@ -1,15 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import TextRecognition from 'react-native-text-recognition';
 import { darkTheme } from '../../tokens/colors';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 function Reader() {
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
   // @ts-ignore
   const device = devices.back || null;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const copyToClipboard = (textToCopy: string) => {
+    if (textToCopy.length > 0) {
+      Clipboard.setString(textToCopy);
+    }
+  };
 
   useEffect(() => {
     async function getPermission() {
@@ -22,11 +38,18 @@ function Reader() {
     getPermission();
   }, []);
 
+  useEffect(() => {
+    copyToClipboard(text);
+    setLoading(false);
+  }, [copyToClipboard, text]);
+
   const takePhoto = async () => {
+    setLoading(true);
     if (camera.current) {
       const photo = await camera.current.takePhoto();
       const result = await TextRecognition.recognize(photo.path);
       setText(result.toString());
+      console.info('ML Reading...', result);
     }
   };
 
@@ -35,16 +58,22 @@ function Reader() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Camera
-        style={StyleSheet.absoluteFill}
-        ref={camera}
-        device={device}
-        isActive={true}
-        photo={true}
-      />
-      <TouchableOpacity onPress={takePhoto} style={styles.button} />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.container}>
+        <Camera
+          style={StyleSheet.absoluteFill}
+          ref={camera}
+          device={device}
+          isActive={true}
+          photo={true}
+        />
+        <TouchableOpacity onPress={takePhoto} style={styles.button}>
+          {loading && (
+            <ActivityIndicator size="large" color={darkTheme.WHITE} />
+          )}
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
   );
 }
 

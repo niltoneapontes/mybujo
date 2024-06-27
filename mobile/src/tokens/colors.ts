@@ -21,6 +21,9 @@ const darkTheme = {
   GOOGLE_COLOR: '#212529',
   ERROR_COLOR: '#C63434',
   TAB_BAR: '#212529',
+  ACCENT_COLOR: '#181819',
+  ACCENT_COLOR_INVERTED: '#F5F5F5',
+  ACCENT_COLOR_TEXT: '#FFFFFF',
 };
 const lightTheme = {
   PRIMARY_COLOR: '#226CE0',
@@ -45,6 +48,9 @@ const lightTheme = {
   GOOGLE_COLOR: '#212529',
   ERROR_COLOR: '#C63434',
   TAB_BAR: '#FFFFFF',
+  ACCENT_COLOR: '#fff',
+  ACCENT_COLOR_INVERTED: '#181819',
+  ACCENT_COLOR_TEXT: '#141A10',
 };
 
 export { lightTheme, darkTheme };

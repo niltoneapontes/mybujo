@@ -96,7 +96,7 @@ function Settings() {
           hasIcon
           iconName="log-out"
         />
-        <Version>Versão: 2.5.3</Version>
+        <Version>Versão: 2.6.0</Version>
       </ContentContainer>
     </Container>
   );

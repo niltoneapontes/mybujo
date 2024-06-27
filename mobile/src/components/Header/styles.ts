@@ -17,24 +17,24 @@ export const HeaderContainer = styled.ScrollView`
 export const DateComponent = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 36px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
   margin: 0 6px;
   background-color: ${(props: any) =>
-    props.isSelected ? props.theme.PRIMARY_COLOR : props.theme.GRAY400};
+    props.isSelected ? props.theme.GRAY400 : props.theme.ACCENT_COLOR};
 `;
 
 export const DateText = styled.Text`
   font-size: 24px;
   font-family: 'Inter-Regular';
   color: ${(props: any) =>
-    props.isSelected ? props.theme.WHITE : props.theme.DARK_TEXT_COLOR};
+    props.isSelected ? props.theme.ACCENT_COLOR_TEXT : props.theme.GRAY400};
 `;
 
 export const SubtitleButton = styled.TouchableOpacity`
   flex-direction: row;
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR};
+  background-color: ${(props: any) => props.theme.ACCENT_COLOR};
   align-self: center;
   justify-content: center;
   padding: 4px 8px;
@@ -45,6 +45,6 @@ export const SubtitleButton = styled.TouchableOpacity`
 export const Subtitle = styled.Text`
   font-size: 16px;
   font-family: 'Inter-SemiBold';
-  color: ${(props: any) => props.theme.WHITE};
+  color: ${(props: any) => props.theme.ACCENT_COLOR_TEXT};
   margin-right: 4px;
 `;
