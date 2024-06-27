@@ -1,23 +1,11 @@
 import React from 'react';
-import { Container, LogoWrapper } from './styles';
-import Logo from '../../../assets/splashlogo.svg';
+import { Container } from './styles';
+import Logo from '../../../assets/b_icon.svg';
 
 function SplashScreen() {
   return (
     <Container>
-      <LogoWrapper
-        from={{
-          translateX: -500,
-        }}
-        animate={{
-          translateX: -265,
-        }}
-        transition={{
-          type: 'timing',
-          duration: 1000,
-        }}>
-        <Logo />
-      </LogoWrapper>
+      <Logo width={100} />
     </Container>
   );
 }
