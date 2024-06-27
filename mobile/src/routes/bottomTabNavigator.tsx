@@ -6,8 +6,8 @@ import Icons from 'react-native-vector-icons/Feather';
 import { darkTheme, lightTheme } from '../tokens/colors';
 import Monthly from '../pages/Monthly';
 import Future from '../pages/Future';
-import Collections from '../pages/Collections';
 import { useColorScheme } from 'react-native';
+import Reader from '../pages/Reader';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,15 +54,15 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: 'Listas',
+          tabBarLabel: 'Reader',
           tabBarLabelStyle: { marginBottom: 8 },
           tabBarIconStyle: { maxHeight: 34 },
           tabBarIcon: ({ color }) => {
             return <Icons name="plus" color={color} size={32} />;
           },
         }}
-        name="Collections"
-        component={Collections}
+        name="Reader"
+        component={Reader}
       />
       <Tab.Screen
         options={{
