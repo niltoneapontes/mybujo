@@ -97,7 +97,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 borderBottomStartRadius: 0,
               }}
               style={{
-                backgroundColor: theme.PRIMARY_COLOR_DARKER,
+                backgroundColor: theme.ACCENT_COLOR,
                 width: 'auto',
                 maxHeight: months.length * 32,
                 borderRadius: 8,
@@ -139,7 +139,7 @@ const DatePicker = ({ setShow }: DatePickerProps) => {
                 })
               }
               style={{
-                backgroundColor: theme.PRIMARY_COLOR_DARKER,
+                backgroundColor: theme.ACCENT_COLOR,
                 width: 'auto',
                 maxHeight: years.length * 32,
                 borderRadius: 8,

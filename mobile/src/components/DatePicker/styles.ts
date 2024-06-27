@@ -9,7 +9,7 @@ export const ModalContainer = styled.View`
 `;
 
 export const DatePickerItem = styled.TouchableOpacity`
-  background-color: ${(props: any) => props.theme.PRIMARY_COLOR_DARKER};
+  background-color: ${(props: any) => props.theme.ACCENT_COLOR};
   width: 100%;
   padding: 8px;
 `;
