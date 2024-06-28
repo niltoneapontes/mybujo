@@ -1,8 +1,9 @@
-package com.mybujo;
+package br.com.bubblesolutions.mybujo;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.facebook.FacebookSdk;
 
 public class MainActivity extends ReactActivity {
 

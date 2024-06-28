@@ -7,7 +7,7 @@
     /* Completeness */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/custom.d.ts"],
+  "include": ["./src/custom.d.ts"],
   "paths": {
     "@components/*": ["./src/components/*"],
     "@assets/*": ["./assets/*"],

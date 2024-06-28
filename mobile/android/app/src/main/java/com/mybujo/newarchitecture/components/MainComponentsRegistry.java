@@ -1,4 +1,4 @@
-package com.mybujo.newarchitecture.components;
+package br.com.bubblesolutions.mybujo.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

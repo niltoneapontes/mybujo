@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState } from 'react'
+import { RouterProvider } from 'react-router-dom'
+import routes from './routes/routes'
+import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import {AuthContext} from './context/AuthContext';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAIcjnxnoVZXlQZJtmD_zyOdL3Sb7VidKQ",
+  authDomain: "mybujo-399813.firebaseapp.com",
+  databaseURL: "https://mybujo-399813-default-rtdb.firebaseio.com",
+  projectId: "mybujo-399813",
+  storageBucket: "mybujo-399813.appspot.com",
+  messagingSenderId: "383023240379",
+  appId: "1:383023240379:web:4e06b41298b3de7c25c59e",
+  measurementId: "G-7343E9RTVW"
+};
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)
+export const db = getFirestore(app)
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(() => localStorage.getItem("@mybujo-prod/id"))
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <AuthContext.Provider value={JSON.parse(user!!) || null}>
+      <RouterProvider router={routes}></RouterProvider>
+    </AuthContext.Provider>
   )
 }
 

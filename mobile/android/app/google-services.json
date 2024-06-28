@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "383023240379",
+    "firebase_url": "https://mybujo-399813-default-rtdb.firebaseio.com",
+    "project_id": "mybujo-399813",
+    "storage_bucket": "mybujo-399813.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383023240379:android:071afd18ab83c93c25c59e",
+        "android_client_info": {
+          "package_name": "br.com.bubblesolutions.mybujo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383023240379-dml1kmhqq5f573rs41o84s9umlb8qmf5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bubblesolutions.mybujo",
+            "certificate_hash": "2d9e5cc2cdd2efe74ffa9dcb6518cdb5940b29f2"
+          }
+        },
+        {
+          "client_id": "383023240379-ef88u314rcea13da2ui7ehpaumumunc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bubblesolutions.mybujo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "383023240379-ujauta9rddn2ipgjfndp4kf0oh44omqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.bubblesolutions.mybujo",
+            "certificate_hash": "2e2466dfd39cabc7475bf79334c2f022e5bd1489"
+          }
+        },
+        {
+          "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIfT29koicOrU4RwKA_FQ5KFpkfT2FUcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383023240379-d9gl8c26p18ir1ep68kjd13abq47bhsp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "383023240379-m1b6fvtvnquckj5vtupftn15avoonl85.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.bubblesolutions.mybujo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
