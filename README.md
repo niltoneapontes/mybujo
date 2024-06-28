@@ -16,7 +16,7 @@ Em seguida, para executar a aplicação, possua um ambiente de desenvolvimento R
 
 ```yarn android```
 
-Desse modo, a aplicação mobile será executada em modo debug. 
+Desse modo, a aplicação mobile será executada em modo debug. A aplicação para iOS ainda está passando por ajustes.
 
 ## Para contribuir
 
