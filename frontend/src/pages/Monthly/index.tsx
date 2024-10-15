@@ -44,7 +44,9 @@ function Monthly() {
     <div className='w-full bg-white'>
       <Sidebar></Sidebar>
       <div className='ml-64 h-screen' >
-        <h1 className='text-4xl text-gray-dark font-bold p-4'>Monthly Log: {todayFormatted.split("-")[1]}</h1>
+        <h1 className='text-4xl text-gray-dark font-bold p-4 capitalize'>Monthly Log: {today.toLocaleDateString("pt-BR", {
+          month: "long"
+        })}</h1>
       <ReactQuill
       ref={editorRef}
         theme="snow"

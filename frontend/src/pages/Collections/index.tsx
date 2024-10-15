@@ -34,8 +34,12 @@ function Collections() {
     return (
       <div className="w-full">
         <Sidebar></Sidebar>
-        <div className="w-full flex items-center justify-center h-screen">
-          <h1 className="text-2xl font-bold ml-72">Oops... Parece que você não tem Collections :(</h1>
+        <div className="w-full flex flex-col items-center justify-center h-screen pl-72">
+          <h1 className="text-2xl font-bold">Oops... Parece que você não tem Collections :(</h1>
+          <p className="text-xl font-regular">Por enquanto, só é possível criá-las no App</p>
+          <a href="https://play.google.com/store/apps/details?id=br.com.bubblesolutions.mybujo&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">
+            <img src="./google-play-badge.png" alt="Badge do Google Play" className='w-48 mt-8'/>
+          </a>
         </div>
       </div>
     )
