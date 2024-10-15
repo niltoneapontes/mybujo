@@ -7,14 +7,14 @@ import { getFirestore } from 'firebase/firestore';
 import {AuthContext} from './context/AuthContext';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAIcjnxnoVZXlQZJtmD_zyOdL3Sb7VidKQ",
+  apiKey: process.env.API_KEY,
   authDomain: "mybujo-399813.firebaseapp.com",
-  databaseURL: "https://mybujo-399813-default-rtdb.firebaseio.com",
+  databaseURL: process.env.DATABASE_URL,
   projectId: "mybujo-399813",
   storageBucket: "mybujo-399813.appspot.com",
-  messagingSenderId: "383023240379",
-  appId: "1:383023240379:web:4e06b41298b3de7c25c59e",
-  measurementId: "G-7343E9RTVW"
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 
 export const app = initializeApp(firebaseConfig);
