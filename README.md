@@ -42,3 +42,5 @@ Desse modo, a aplicação mobile será executada em modo debug. Para executar pa
 ## Para contribuir
 
 Abra uma Pull Request para a branch "develop" com título e descrição que, em breve, irei revisá-la e estaremos trabalhando em conjunto 🥳.
+
+PS.: Para executar o projeto com as chaves originais do firebase, por favor abra uma issue e entrarei em contato. 
