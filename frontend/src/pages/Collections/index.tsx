@@ -15,8 +15,6 @@ function Collections() {
   const [content, setContent] = useState("")
   const authContext = useContext(AuthContext)
 
-  console.log(todayFormatted, authContext)
-
   useEffect(() => {
     const fetchPost = async () => {
 
@@ -26,10 +24,22 @@ function Collections() {
                   .find((doc: any) => (doc.data().date === todayFormatted && doc.data().userId === authContext?.id));
               setContent(newData?.data().content);
           })
-
   }
   fetchPost()
   }, [])
+
+  console.log(content)
+
+  if(!content) {
+    return (
+      <div className="w-full">
+        <Sidebar></Sidebar>
+        <div className="w-full flex items-center justify-center h-screen">
+          <h1 className="text-2xl font-bold ml-72">Oops... Parece que você não tem Collections :(</h1>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className='w-full bg-soft-white'>

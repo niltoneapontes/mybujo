@@ -63,7 +63,7 @@ function Login() {
               photo: user.photoURL
             }
             localStorage.setItem("@mybujo-prod/id", JSON.stringify(newUser))
-
+            window.location.reload()
           } catch (error) {
             alert("Crie a conta pelo app para poder usar na web")
             console.error(error)

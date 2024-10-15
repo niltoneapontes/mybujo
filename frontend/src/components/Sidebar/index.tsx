@@ -47,7 +47,7 @@ const Sidebar = () => {
           overflow-y-auto ${!isOpen && "-translate-x-64"} transition-all ease-in-out duration-150`}
       >
         <div className="flex items-end pb-4 bg-primary justify-between mb-4 h-28 px-4 border-b border-b-slate-400" >
-          <span className="text-lg text-white font-bold">Olá, {authContext?.givenName}</span>
+          <span className="text-3xl text-white font-bold">Olá, {authContext?.givenName}</span>
         </div>
         <div className={`w-full h-16 flex justify-start px-4 py-4 border-b border-b-slate-300 hover:opacity-60`}>
           <Link to='/daily' className={`${path.includes('daily') && 'text-primary font-semibold'}`}>Daily Log</Link>

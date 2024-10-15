@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { db } from '../../App';
 import { collection, getDocs } from 'firebase/firestore';
-import { IDaily } from '../../models/Daily';
 import { AuthContext } from '../../context/AuthContext';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -38,19 +37,16 @@ function Daily() {
   fetchPost()
   }, [])
 
-  const insertCheckbox = () => {
-    const editor = editorRef.current!!.getEditor();
-    const range = editor.getSelection(true);
-    const textToInsert = '<input type="checkbox"/>';
-    editor.insertText(range.index, textToInsert);
-    editor.setSelection(range.index, textToInsert.length);
-  };
-
+  useEffect(() => {
+    // Send new content to firestore
+    console.log("Sending to firestore")
+  }, [content])
 
   return (
     <div className='w-full bg-white'>
       <Sidebar></Sidebar>
       <div className='ml-64 h-screen' >
+        <h1 className='text-4xl text-gray-dark font-bold p-4'>Daily Log: {todayFormatted}</h1>
       <ReactQuill
       ref={editorRef}
         theme="snow"
@@ -64,12 +60,8 @@ function Daily() {
               ['bold', 'italic', 'underline', 'strike'],
               [{ list: 'ordered' }, { list: 'bullet' }],
               ['clean'],
-              [{ 'custom': 'customButton' }],
             ],
-            handlers: {
-              customButton: insertCheckbox,
-            },
-          }
+          },
         }
         }
       />
