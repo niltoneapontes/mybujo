@@ -18,7 +18,7 @@ No início desse projeto pensei em utilizar Nest, Prisma e algum banco de dados 
 
 ## Download & Install - Frontend Web
 
-Clone este repositório e, na branch "develop", acesse a pasta "frontend" e execute o comando abaixo para instalar as depencências.
+Clone este repositório e, na branch "develop", acesse a pasta "frontend" e execute o comando abaixo para instalar as dependências.
 
 ```yarn```
 
@@ -31,7 +31,7 @@ E assim, irá aparecer no terminal em qual porta o projeto está funcionando.
 
 ## Download & Install - Mobile
 
-Clone este repositório e, na branch "develop", acesse a pasta "mobile" e execute o comando abaixo para instalar as depencências.
+Clone este repositório e, na branch "develop", acesse a pasta "mobile" e execute o comando abaixo para instalar as dependências.
 
 ```yarn```
 
